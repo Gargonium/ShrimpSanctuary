@@ -13,18 +13,23 @@ func main() {
 	rl.SetTargetFPS(config.FPS)
 	rl.SetConfigFlags(rl.FlagMsaa4xHint)
 
-	g := game.NewGame()
 	r := render.NewRender()
+	g := game.NewGame()
+	r.SetGame(*g)
 
 	for !rl.WindowShouldClose() {
-		g.Update()
+		r.Update()
 
 		rl.BeginDrawing()
 		rl.ClearBackground(colors.BackgroundColor)
 
-		r.Draw(g)
+		r.Draw()
 
 		rl.EndDrawing()
+
+		if !r.GameIsRunning() {
+			break
+		}
 	}
 
 	rl.CloseWindow()

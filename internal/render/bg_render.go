@@ -12,9 +12,8 @@ func (r *Render) DrawBackground() {
 }
 
 func (r *Render) drawButtons() {
-	//mouseX, mouseY := input.HandleMouseInput()
-	rl.DrawTextEx(r.btnFont, "FEED", rl.Vector2{X: config.FeedBtnX, Y: config.ButtonY}, config.OtherBtnFontSize, 2, rl.Black)
-	rl.DrawTextEx(r.btnFont, "CLEAN", rl.Vector2{X: config.CleanBtnX, Y: config.ButtonY}, config.CleanBtnFontSize, 2, rl.Black)
-	rl.DrawTextEx(r.btnFont, "SHOP", rl.Vector2{X: config.ShopBtnX, Y: config.ButtonY}, config.OtherBtnFontSize, 2, rl.Black)
-	rl.DrawTextEx(r.btnFont, "EXIT", rl.Vector2{X: config.ExitBtnX, Y: config.ButtonY}, config.OtherBtnFontSize, 2, rl.Black)
+	rl.DrawTextEx(r.btnFont, config.FeedBtnName, rl.Vector2{X: config.FeedBtnTextX, Y: config.ButtonTextY}, config.OtherBtnFontSize, 2, r.buttonsColor["FEED"])
+	rl.DrawTextEx(r.btnFont, config.CleanBtnName, rl.Vector2{X: config.CleanBtnTextX, Y: config.ButtonTextY}, config.CleanBtnFontSize, 2, r.buttonsColor["CLEAN"])
+	rl.DrawTextEx(r.btnFont, config.ShopBtnName, rl.Vector2{X: config.ShopBtnTextX, Y: config.ButtonTextY}, config.OtherBtnFontSize, 2, r.buttonsColor["SHOP"])
+	rl.DrawTextEx(r.btnFont, config.ExitBtnName, rl.Vector2{X: config.ExitBtnTextX, Y: config.ButtonTextY}, config.OtherBtnFontSize, 2, r.buttonsColor["EXIT"])
 }

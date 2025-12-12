@@ -13,7 +13,7 @@ type Shrimp struct {
 	Behaviour int32
 }
 
-func NewShrimp() *Shrimp {
+func NewShrimp() Shrimp {
 	shrimp := new(Shrimp)
 	shrimp.X = (rand.Int31() % config.PlayFieldWidth) + config.PlayFieldX
 	shrimp.Y = (rand.Int31() % config.PlayerFieldHeight) + config.PlayFieldY
@@ -21,7 +21,7 @@ func NewShrimp() *Shrimp {
 	shrimp.Delay = config.ShrimpMaxDelay
 	shrimp.Behaviour = rand.Int31() % 3
 	shrimp.ShrimpWallCollide()
-	return shrimp
+	return *shrimp
 }
 
 func (s *Shrimp) ShrimpWallCollide() {

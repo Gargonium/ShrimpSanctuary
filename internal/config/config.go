@@ -1,5 +1,7 @@
 package config
 
+import rl "github.com/gen2brain/raylib-go/raylib"
+
 // Game constants
 const (
 	FPS          = 20
@@ -15,14 +17,14 @@ const (
 	AquariumHeight      = 500
 	AquariumBorderWidth = 5
 	SandHeight          = 25
-	SandWidth           = AquariumWidth - 2*AquariumBorderWidth
-	SandX               = AquariumX + AquariumBorderWidth
-	SandY               = AquariumY + AquariumHeight - AquariumBorderWidth - SandHeight
-	TableX              = AquariumX
-	TableY              = AquariumY + AquariumHeight
-	TableWidth          = AquariumWidth
-	TableHeight         = 30
-	TableLegWidth       = 25
+	//SandWidth           = AquariumWidth - 2*AquariumBorderWidth
+	//SandX               = AquariumX + AquariumBorderWidth
+	//SandY               = AquariumY + AquariumHeight - AquariumBorderWidth - SandHeight
+	//TableX              = AquariumX
+	//TableY              = AquariumY + AquariumHeight
+	//TableWidth          = AquariumWidth
+	//TableHeight         = 30
+	//TableLegWidth       = 25
 )
 
 // Dimensions of the playing field
@@ -55,13 +57,43 @@ const (
 	WinterFont = "assets/fonts/Winter.ttf"
 )
 
-// Buttons
+// ButtonsX
 const (
-	ButtonY          = 630
-	FeedBtnX         = 245
-	CleanBtnX        = 440
-	ShopBtnX         = 643
-	ExitBtnX         = 850
+	ButtonTextY      = 630
+	FeedBtnTextX     = 245
+	CleanBtnTextX    = 440
+	ShopBtnTextX     = 643
+	ExitBtnTextX     = 850
 	CleanBtnFontSize = 50
 	OtherBtnFontSize = 55
+
+	ButtonY      = 600
+	ButtonWidth  = 132
+	ButtonHeight = 136
+	FeedBtnX     = 234
+	CleanBtnX    = 434
+	ShopBtnX     = 634
+	ExitBtnX     = 834
+
+	FeedBtnName  = "FEED"
+	CleanBtnName = "CLEAN"
+	ShopBtnName  = "SHOP"
+	ExitBtnName  = "EXIT"
+
+	WaitingBtnStatus = "waiting"
+	HoveredBtnStatus = "hovered"
+	ClickedBtnStatus = "clicked"
 )
+
+var ButtonsX = map[string]float32{
+	FeedBtnName:  FeedBtnX,
+	CleanBtnName: CleanBtnX,
+	ShopBtnName:  ShopBtnX,
+	ExitBtnName:  ExitBtnX,
+}
+
+var ButtonColorFromStatus = map[string]rl.Color{
+	WaitingBtnStatus: rl.Black,
+	HoveredBtnStatus: rl.Yellow,
+	ClickedBtnStatus: rl.Green,
+}
