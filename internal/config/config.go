@@ -105,3 +105,11 @@ const (
 	FoodVelocity = 1
 	FoodLifeTime = FPS * 2
 )
+
+// Pollute
+const (
+	PolluteSpawnDelay       = FPS * 120
+	PolluteSpawnDelaySpread = FPS * 30
+	PolluteMaxDurability    = 4
+	PolluteRadius           = 10
+)

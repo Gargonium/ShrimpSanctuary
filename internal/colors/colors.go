@@ -23,3 +23,6 @@ var ButtonColorFromStatus = map[string]rl.Color{
 // Food
 var FoodColor = rl.Brown
 var FoodBorderColor = rl.DarkBrown
+
+// Pollute
+var PolluteColor = rl.NewColor(0, 0, 0, 200)

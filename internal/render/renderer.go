@@ -87,6 +87,7 @@ func (r *Render) Draw() {
 	r.DrawBackground()
 	r.DrawShrimps()
 	r.DrawFood()
+	r.DrawPollute()
 }
 
 func (r *Render) Update() {

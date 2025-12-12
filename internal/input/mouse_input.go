@@ -16,6 +16,7 @@ func MouseButtonCollide(btn string) string {
 		}
 		return config.HoveredBtnStatus
 	}
+
 	return config.WaitingBtnStatus
 }
 
@@ -27,10 +28,6 @@ func MousePlayFieldClick() bool {
 		}
 	}
 	return false
-}
-
-func GetMouseXY() (int32, int32) {
-	return rl.GetMouseX(), rl.GetMouseY()
 }
 
 func GetMouseVector() rl.Vector2 {

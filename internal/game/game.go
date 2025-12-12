@@ -3,22 +3,30 @@ package game
 import (
 	"ShrimpSanctuary/internal/config"
 	rl "github.com/gen2brain/raylib-go/raylib"
+	"math/rand"
 )
 
 type Game struct {
-	Shrimps    []Shrimp
-	Foods      []Food
-	IsRunning  bool
-	IsFeeding  bool
-	IsCleaning bool
+	Shrimps      []Shrimp
+	Foods        []Food
+	Pollution    []Pollute
+	PolluteDelay int32
+	IsRunning    bool
+	IsFeeding    bool
+	IsCleaning   bool
 }
 
 func NewGame() Game {
 	g := Game{}
 	g.Shrimps = make([]Shrimp, 0)
+	g.Foods = make([]Food, 0)
+	g.Pollution = make([]Pollute, 0)
+
 	for i := 0; i < config.ShrimpStartCount; i++ {
 		g.AddShrimpInstance(NewShrimp())
 	}
+
+	g.PolluteDelay = 0 //config.PolluteSpawnDelay + rand.Int31n(config.PolluteSpawnDelaySpread * 2) - config.PolluteSpawnDelaySpread
 	g.IsRunning = true
 	g.IsFeeding = false
 	g.IsCleaning = false
@@ -41,11 +49,34 @@ func (g *Game) Update() {
 	if len(foodsToDelete) != 0 {
 		g.DeleteFood(foodsToDelete)
 	}
+
+	if g.PolluteDelay == 0 {
+		g.AddPollute()
+		g.PolluteDelay = config.PolluteSpawnDelay + rand.Int31n(config.PolluteSpawnDelaySpread*2) - config.PolluteSpawnDelaySpread
+	}
+	g.PolluteDelay--
+
+}
+
+func (g *Game) AddPollute() {
+	p := NewPollute()
+	g.Pollution = append(g.Pollution, p)
 }
 
 func (g *Game) ClickInPlayField(pos rl.Vector2) {
 	if g.IsFeeding {
 		g.AddFood(pos)
+	}
+	if g.IsCleaning {
+		for i := range g.Pollution {
+			if rl.CheckCollisionPointCircle(pos, g.Pollution[i].Position, config.PolluteRadius) {
+				g.Pollution[i].Durability--
+				if g.Pollution[i].Durability == 0 {
+					g.DeletePollute(i)
+				}
+				break
+			}
+		}
 	}
 }
 
@@ -75,4 +106,14 @@ func (g *Game) AddShrimpXY(X, Y float32) {
 
 func (g *Game) AddShrimpInstance(shrimp Shrimp) {
 	g.Shrimps = append(g.Shrimps, shrimp)
+}
+
+func (g *Game) DeletePollute(toDel int) {
+	var newPollution []Pollute
+	for i := range g.Pollution {
+		if i != toDel {
+			newPollution = append(newPollution, g.Pollution[i])
+		}
+	}
+	g.Pollution = newPollution
 }
