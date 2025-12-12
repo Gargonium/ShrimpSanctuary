@@ -4,11 +4,13 @@ import (
 	"ShrimpSanctuary/internal/config"
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/input"
+	"ShrimpSanctuary/internal/sound_bar"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 type Render struct {
 	game                  game.Game
+	sb                    sound_bar.SoundBar
 	bgTexture             rl.Texture2D
 	shrimpTexture         rl.Texture2D
 	shrimpTextureReversed rl.Texture2D
@@ -16,7 +18,7 @@ type Render struct {
 	buttonsColor          map[string]rl.Color
 }
 
-func NewRender() *Render {
+func NewRender(g game.Game, sb sound_bar.SoundBar) *Render {
 	r := Render{}
 	r.bgTexture = spriteToTexture(config.BgSprite)
 	r.shrimpTexture = spriteToTexture(config.CherryShrimpSprite)
@@ -27,6 +29,9 @@ func NewRender() *Render {
 	r.buttonsColor[config.CleanBtnName] = rl.Black
 	r.buttonsColor[config.ShopBtnName] = rl.Black
 	r.buttonsColor[config.ExitBtnName] = rl.Black
+
+	r.game = g
+	r.sb = sb
 
 	return &r
 }
@@ -76,10 +81,7 @@ func (r *Render) Draw() {
 func (r *Render) Update() {
 	r.HandleInput()
 	r.game.Update()
-}
-
-func (r *Render) SetGame(g game.Game) {
-	r.game = g
+	r.sb.Update()
 }
 
 func (r *Render) HandleFeedBtnClick() {

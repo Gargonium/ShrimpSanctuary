@@ -4,7 +4,7 @@ import rl "github.com/gen2brain/raylib-go/raylib"
 
 // Game constants
 const (
-	FPS          = 20
+	FPS          = 60
 	ScreenWidth  = 1200
 	ScreenHeight = 800
 )
@@ -55,6 +55,11 @@ const (
 // Fonts paths
 const (
 	WinterFont = "assets/fonts/Winter.ttf"
+)
+
+// Sound paths
+const (
+	BgMusicPath = "assets/sounds/Background.mp3"
 )
 
 // ButtonsX

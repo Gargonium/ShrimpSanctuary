@@ -9,8 +9,8 @@ type Game struct {
 	IsRunning bool
 }
 
-func NewGame() *Game {
-	g := &Game{}
+func NewGame() Game {
+	g := Game{}
 	g.Shrimps = make([]Shrimp, 0)
 	for i := 0; i < config.ShrimpStartCount; i++ {
 		g.AddShrimpInstance(NewShrimp())
