@@ -1,6 +1,7 @@
 package render
 
 import (
+	"ShrimpSanctuary/internal/colors"
 	"ShrimpSanctuary/internal/config"
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/input"
@@ -51,7 +52,7 @@ func spriteToTexture(spritePath string) rl.Texture2D {
 func (r *Render) HandleInput() {
 
 	if input.MousePlayFieldClick() {
-		r.game.ClickInPlayField(input.GetMouseXY())
+		r.game.ClickInPlayField(input.GetMouseVector())
 	}
 
 	feedBtnStatus := input.MouseButtonCollide(config.FeedBtnName)
@@ -60,13 +61,13 @@ func (r *Render) HandleInput() {
 	exitBtnStatus := input.MouseButtonCollide(config.ExitBtnName)
 
 	if !r.game.IsFeeding || r.game.IsCleaning {
-		r.buttonsColor[config.FeedBtnName] = config.ButtonColorFromStatus[feedBtnStatus]
+		r.buttonsColor[config.FeedBtnName] = colors.ButtonColorFromStatus[feedBtnStatus]
 	}
 	if !r.game.IsCleaning || r.game.IsFeeding {
-		r.buttonsColor[config.CleanBtnName] = config.ButtonColorFromStatus[cleanBtnStatus]
+		r.buttonsColor[config.CleanBtnName] = colors.ButtonColorFromStatus[cleanBtnStatus]
 	}
-	r.buttonsColor[config.ShopBtnName] = config.ButtonColorFromStatus[shopBtnStatus]
-	r.buttonsColor[config.ExitBtnName] = config.ButtonColorFromStatus[exitBtnStatus]
+	r.buttonsColor[config.ShopBtnName] = colors.ButtonColorFromStatus[shopBtnStatus]
+	r.buttonsColor[config.ExitBtnName] = colors.ButtonColorFromStatus[exitBtnStatus]
 
 	if feedBtnStatus == config.ClickedBtnStatus {
 		r.HandleFeedBtnClick()

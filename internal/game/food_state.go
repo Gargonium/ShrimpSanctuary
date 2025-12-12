@@ -1,23 +1,26 @@
 package game
 
-import "ShrimpSanctuary/internal/config"
+import (
+	"ShrimpSanctuary/internal/config"
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 type Food struct {
-	X, Y     int32
+	Position rl.Vector2
 	lifeTime int
 }
 
-func NewFood(X, Y int32) Food {
+func NewFood(pos rl.Vector2) Food {
 	f := Food{}
-	f.X = X
-	f.Y = Y
+	f.Position = pos
+
 	f.lifeTime = config.FoodLifeTime
 	return f
 }
 
 func (f *Food) MoveAndDisappear() bool {
-	if f.lifeTime != 0 && f.Y < config.PlayFieldY+config.PlayerFieldHeight {
-		f.Y += config.FoodVelocity
+	if f.lifeTime != 0 && f.Position.Y < config.PlayFieldY+config.PlayerFieldHeight {
+		f.Position.Y += config.FoodVelocity
 		f.lifeTime--
 	} else if f.lifeTime == 0 {
 		return true

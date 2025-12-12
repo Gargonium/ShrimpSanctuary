@@ -20,10 +20,9 @@ func MouseButtonCollide(btn string) string {
 }
 
 func MousePlayFieldClick() bool {
-	var mouseX, mouseY int32
 	if rl.IsMouseButtonPressed(rl.MouseButtonLeft) {
-		mouseX, mouseY = rl.GetMouseX(), rl.GetMouseY()
-		if utils.InBounds(rl.Vector2{X: float32(mouseX), Y: float32(mouseY)}, config.PlayFieldBounds) {
+		mousePos := rl.GetMousePosition()
+		if utils.InBounds(mousePos, config.PlayFieldBounds) {
 			return true
 		}
 	}
@@ -32,4 +31,8 @@ func MousePlayFieldClick() bool {
 
 func GetMouseXY() (int32, int32) {
 	return rl.GetMouseX(), rl.GetMouseY()
+}
+
+func GetMouseVector() rl.Vector2 {
+	return rl.GetMousePosition()
 }

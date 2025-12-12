@@ -43,7 +43,7 @@ const (
 	ShrimpWidth             = 32
 	ShrimpHeight            = 32
 	ShrimpStartCount        = 3
-	ShrimpVelocity          = 1
+	ShrimpMaxVelocity       = 0.5
 	ShrimpBehaviourMaxDelay = FPS * 5
 )
 
@@ -64,7 +64,7 @@ const (
 	BgMusicPath = "assets/sounds/Background.mp3"
 )
 
-// ButtonsX
+// Buttons
 const (
 	ButtonTextY      = 630
 	FeedBtnTextX     = 245
@@ -99,16 +99,7 @@ var ButtonsX = map[string]float32{
 	ExitBtnName:  ExitBtnX,
 }
 
-var ButtonColorFromStatus = map[string]rl.Color{
-	WaitingBtnStatus: rl.Black,
-	HoveredBtnStatus: rl.Yellow,
-	ClickedBtnStatus: rl.Green,
-}
-
-// food
-var FoodColor = rl.Brown
-var FoodBorderColor = rl.DarkBrown
-
+// Food
 const (
 	FoodRadius   = 5
 	FoodVelocity = 1

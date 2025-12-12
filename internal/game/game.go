@@ -2,6 +2,7 @@ package game
 
 import (
 	"ShrimpSanctuary/internal/config"
+	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 type Game struct {
@@ -42,14 +43,14 @@ func (g *Game) Update() {
 	}
 }
 
-func (g *Game) ClickInPlayField(X, Y int32) {
+func (g *Game) ClickInPlayField(pos rl.Vector2) {
 	if g.IsFeeding {
-		g.AddFood(X, Y)
+		g.AddFood(pos)
 	}
 }
 
-func (g *Game) AddFood(X, Y int32) {
-	f := NewFood(X, Y)
+func (g *Game) AddFood(pos rl.Vector2) {
+	f := NewFood(pos)
 	g.Foods = append(g.Foods, f)
 }
 
@@ -65,8 +66,10 @@ func (g *Game) DeleteFood(foodsToDelete []int) {
 	g.Foods = newFoods
 }
 
-func (g *Game) AddShrimpXY(X int32, Y int32) {
-	s := Shrimp{X: X, Y: Y}
+func (g *Game) AddShrimpXY(X, Y float32) {
+	s := Shrimp{}
+	s.Position.X = X
+	s.Position.Y = Y
 	g.Shrimps = append(g.Shrimps, s)
 }
 
