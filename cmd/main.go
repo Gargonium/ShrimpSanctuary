@@ -21,7 +21,7 @@ func main() {
 
 	sb.PlayBgMusic()
 
-	for !rl.WindowShouldClose() {
+	for !rl.WindowShouldClose() && r.GameIsRunning() {
 		r.Update()
 
 		rl.BeginDrawing()
@@ -30,10 +30,6 @@ func main() {
 		r.Draw()
 
 		rl.EndDrawing()
-
-		if !r.GameIsRunning() {
-			break
-		}
 	}
 
 	sb.StopBgMusic()

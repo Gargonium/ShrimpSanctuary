@@ -49,13 +49,22 @@ func spriteToTexture(spritePath string) rl.Texture2D {
 }
 
 func (r *Render) HandleInput() {
+
+	if input.MousePlayFieldClick() {
+		r.game.ClickInPlayField(input.GetMouseXY())
+	}
+
 	feedBtnStatus := input.MouseButtonCollide(config.FeedBtnName)
 	cleanBtnStatus := input.MouseButtonCollide(config.CleanBtnName)
 	shopBtnStatus := input.MouseButtonCollide(config.ShopBtnName)
 	exitBtnStatus := input.MouseButtonCollide(config.ExitBtnName)
 
-	r.buttonsColor[config.FeedBtnName] = config.ButtonColorFromStatus[feedBtnStatus]
-	r.buttonsColor[config.CleanBtnName] = config.ButtonColorFromStatus[cleanBtnStatus]
+	if !r.game.IsFeeding || r.game.IsCleaning {
+		r.buttonsColor[config.FeedBtnName] = config.ButtonColorFromStatus[feedBtnStatus]
+	}
+	if !r.game.IsCleaning || r.game.IsFeeding {
+		r.buttonsColor[config.CleanBtnName] = config.ButtonColorFromStatus[cleanBtnStatus]
+	}
 	r.buttonsColor[config.ShopBtnName] = config.ButtonColorFromStatus[shopBtnStatus]
 	r.buttonsColor[config.ExitBtnName] = config.ButtonColorFromStatus[exitBtnStatus]
 
@@ -76,6 +85,7 @@ func (r *Render) HandleInput() {
 func (r *Render) Draw() {
 	r.DrawBackground()
 	r.DrawShrimps()
+	r.DrawFood()
 }
 
 func (r *Render) Update() {
@@ -85,11 +95,13 @@ func (r *Render) Update() {
 }
 
 func (r *Render) HandleFeedBtnClick() {
-
+	r.game.IsFeeding = !r.game.IsFeeding
+	r.game.IsCleaning = false
 }
 
 func (r *Render) HandleCleanBtnClick() {
-
+	r.game.IsCleaning = !r.game.IsCleaning
+	r.game.IsFeeding = false
 }
 
 func (r *Render) HandleShopBtnClick() {

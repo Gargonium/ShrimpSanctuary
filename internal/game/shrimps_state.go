@@ -18,7 +18,7 @@ func NewShrimp() Shrimp {
 	shrimp.X = (rand.Int31() % config.PlayFieldWidth) + config.PlayFieldX
 	shrimp.Y = (rand.Int31() % config.PlayerFieldHeight) + config.PlayFieldY
 	shrimp.Vx, shrimp.Vy = config.ShrimpVelocity, config.ShrimpVelocity
-	shrimp.Delay = config.ShrimpMaxDelay
+	shrimp.Delay = config.ShrimpBehaviourMaxDelay
 	shrimp.Behaviour = rand.Int31() % 3
 	shrimp.ShrimpWallCollide()
 	return *shrimp
@@ -33,6 +33,17 @@ func (s *Shrimp) ShrimpWallCollide() {
 
 	s.X, s.Vx = utils.ClampAndBounce(s.X, minX, maxX, s.Vx)
 	s.Y, s.Vy = utils.ClampAndBounce(s.Y, minY, maxY, s.Vy)
+}
+
+func (g *Game) ShrimpFoodCollide(s Shrimp) []int {
+	var foodCollide []int
+	for i := range g.Foods {
+		f := g.Foods[i]
+		if utils.CollideCircleRect(f.X, f.Y, config.FoodRadius, s.X, s.Y, config.ShrimpWidth, config.ShrimpHeight) {
+			foodCollide = append(foodCollide, i)
+		}
+	}
+	return foodCollide
 }
 
 func (s *Shrimp) Move() {
@@ -59,7 +70,7 @@ func (s *Shrimp) Move() {
 				s.Vy = -config.ShrimpVelocity
 			}
 		}
-		s.Delay = rand.Int31()%config.ShrimpMaxDelay + config.FPS
+		s.Delay = rand.Int31()%config.ShrimpBehaviourMaxDelay + config.FPS
 	}
 	if s.Behaviour != 0 {
 		s.X += s.Vx

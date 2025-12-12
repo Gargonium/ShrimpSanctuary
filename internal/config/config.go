@@ -36,13 +36,15 @@ const (
 	BorderOffset      = 5
 )
 
+var PlayFieldBounds = rl.Rectangle{X: PlayFieldX, Y: PlayFieldY, Width: PlayFieldWidth, Height: PlayerFieldHeight}
+
 // Shrimps
 const (
-	ShrimpWidth      = 32
-	ShrimpHeight     = 32
-	ShrimpStartCount = 3
-	ShrimpVelocity   = 1
-	ShrimpMaxDelay   = 300
+	ShrimpWidth             = 32
+	ShrimpHeight            = 32
+	ShrimpStartCount        = 3
+	ShrimpVelocity          = 1
+	ShrimpBehaviourMaxDelay = FPS * 5
 )
 
 // Sprites paths
@@ -102,3 +104,13 @@ var ButtonColorFromStatus = map[string]rl.Color{
 	HoveredBtnStatus: rl.Yellow,
 	ClickedBtnStatus: rl.Green,
 }
+
+// food
+var FoodColor = rl.Brown
+var FoodBorderColor = rl.DarkBrown
+
+const (
+	FoodRadius   = 5
+	FoodVelocity = 1
+	FoodLifeTime = FPS * 2
+)
