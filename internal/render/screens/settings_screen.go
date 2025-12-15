@@ -10,22 +10,22 @@ import (
 )
 
 const (
-	SSBtnFontSize = 55
+	SetBtnFontSize = 55
 
-	SSBackBtnName  = "BACK"
-	SSApplyBtnName = "APPLY"
+	SetBackBtnName  = "BACK"
+	SetApplyBtnName = "APPLY"
 
-	SSButtonsY      = 610
-	SSButtonsWidth  = 300
-	SSButtonsHeight = 60
-	SSBackBtnX      = 300
-	SSApplyBtnX     = 680
+	SetButtonsY      = 610
+	SetButtonsWidth  = 300
+	SetButtonsHeight = 60
+	SetBackBtnX      = 300
+	SetApplyBtnX     = 680
 
-	SSSliderMinX       = 700
-	SSSliderMaxX       = 1000
-	SSSliderSquareSide = 25
-	SSMusicSliderY     = 385
-	SSEffectsSliderY   = 505
+	SetSliderMinX       = 700
+	SetSliderMaxX       = 1000
+	SetSliderSquareSide = 25
+	SetMusicSliderY     = 385
+	SetEffectsSliderY   = 505
 )
 
 type SettingsScreen struct {
@@ -42,31 +42,31 @@ func NewSettingsScreen(game *game.Game, sb *sound_bar.SoundBar) *SettingsScreen 
 	ss.bgTexture = utils.SpriteToTexture(config.SettingsBgSprite)
 	ss.Game = game
 	ss.SoundBar = sb
-	ss.MusicSliderX = SSSliderMinX + (SSSliderMaxX-SSSliderMinX)/2
-	ss.EffectsSliderX = SSSliderMinX + (SSSliderMaxX-SSSliderMinX)/2
+	ss.MusicSliderX = SetSliderMinX + (SetSliderMaxX-SetSliderMinX)/2
+	ss.EffectsSliderX = SetSliderMinX + (SetSliderMaxX-SetSliderMinX)/2
 
 	ss.Buttons = []*input.Button{
 		input.NewButton(
 			rl.NewRectangle(
-				SSBackBtnX,
-				SSButtonsY,
-				SSButtonsWidth,
-				SSButtonsHeight,
+				SetBackBtnX,
+				SetButtonsY,
+				SetButtonsWidth,
+				SetButtonsHeight,
 			),
-			SSBackBtnName,
+			SetBackBtnName,
 			ss.HandleBackBtnClick,
-			SSBtnFontSize,
+			SetBtnFontSize,
 		),
 		input.NewButton(
 			rl.NewRectangle(
-				SSApplyBtnX,
-				SSButtonsY,
-				SSButtonsWidth,
-				SSButtonsHeight,
+				SetApplyBtnX,
+				SetButtonsY,
+				SetButtonsWidth,
+				SetButtonsHeight,
 			),
-			SSApplyBtnName,
+			SetApplyBtnName,
 			ss.HandleApplyBtnClick,
-			SSBtnFontSize,
+			SetBtnFontSize,
 		),
 	}
 
@@ -83,14 +83,14 @@ func (ss *SettingsScreen) HandleInput() {
 	}
 	mousePosX := rl.GetMousePosition().X
 
-	musicSliderStatus := input.MouseSliderCollide(rl.NewRectangle(ss.MusicSliderX, SSMusicSliderY, SSSliderSquareSide, SSSliderSquareSide))
+	musicSliderStatus := input.MouseSliderCollide(rl.NewRectangle(ss.MusicSliderX, SetMusicSliderY, SetSliderSquareSide, SetSliderSquareSide))
 	if musicSliderStatus == config.ClickedBtnStatus {
-		ss.MusicSliderX = utils.Clamp(mousePosX-SSSliderSquareSide/2, SSSliderMinX, SSSliderMaxX)
+		ss.MusicSliderX = utils.Clamp(mousePosX-SetSliderSquareSide/2, SetSliderMinX, SetSliderMaxX)
 	}
 
-	effectsSliderStatus := input.MouseSliderCollide(rl.NewRectangle(ss.EffectsSliderX, SSEffectsSliderY, SSSliderSquareSide, SSSliderSquareSide))
+	effectsSliderStatus := input.MouseSliderCollide(rl.NewRectangle(ss.EffectsSliderX, SetEffectsSliderY, SetSliderSquareSide, SetSliderSquareSide))
 	if effectsSliderStatus == config.ClickedBtnStatus {
-		ss.EffectsSliderX = utils.Clamp(mousePosX-SSSliderSquareSide/2, SSSliderMinX, SSSliderMaxX)
+		ss.EffectsSliderX = utils.Clamp(mousePosX-SetSliderSquareSide/2, SetSliderMinX, SetSliderMaxX)
 	}
 }
 
@@ -101,8 +101,8 @@ func (ss *SettingsScreen) Draw() {
 }
 
 func (ss *SettingsScreen) drawVolumeSlider() {
-	rl.DrawRectangleRounded(rl.NewRectangle(ss.MusicSliderX, SSMusicSliderY, SSSliderSquareSide, SSSliderSquareSide), 10, 1, config.VolumeSliderColor)
-	rl.DrawRectangleRounded(rl.NewRectangle(ss.EffectsSliderX, SSEffectsSliderY, SSSliderSquareSide, SSSliderSquareSide), 10, 1, config.VolumeSliderColor)
+	rl.DrawRectangleRounded(rl.NewRectangle(ss.MusicSliderX, SetMusicSliderY, SetSliderSquareSide, SetSliderSquareSide), 10, 1, config.VolumeSliderColor)
+	rl.DrawRectangleRounded(rl.NewRectangle(ss.EffectsSliderX, SetEffectsSliderY, SetSliderSquareSide, SetSliderSquareSide), 10, 1, config.VolumeSliderColor)
 }
 
 func (ss *SettingsScreen) drawButtons() {
@@ -129,6 +129,6 @@ func (ss *SettingsScreen) HandleApplyBtnClick() {
 }
 
 func (ss *SettingsScreen) ApplyVolume() {
-	ss.SoundBar.ChangeMusicVolume((ss.MusicSliderX - SSSliderMinX) / (SSSliderMaxX - SSSliderMinX))
-	ss.SoundBar.ChangeEffectsVolume((ss.EffectsSliderX - SSSliderMinX) / (SSSliderMaxX - SSSliderMinX))
+	ss.SoundBar.ChangeMusicVolume((ss.MusicSliderX - SetSliderMinX) / (SetSliderMaxX - SetSliderMinX))
+	ss.SoundBar.ChangeEffectsVolume((ss.EffectsSliderX - SetSliderMinX) / (SetSliderMaxX - SetSliderMinX))
 }

@@ -104,7 +104,7 @@ func (ms *MenuScreen) HandleInput() {
 }
 
 func (ms *MenuScreen) HandlePlayBtnClick() {
-	ms.Game.State = config.StatePlaying
+	ms.Game.State = config.StateAquarium
 }
 
 func (ms *MenuScreen) HandleSettingsBtnClick() {

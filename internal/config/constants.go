@@ -59,6 +59,7 @@ const (
 	AquariumBgSprite           = "assets/sprites/Aquarium.png"
 	MenuBgSprite               = "assets/sprites/Menu.png"
 	SettingsBgSprite           = "assets/sprites/Settings.png"
+	ShopBgSprite               = "assets/sprites/Shop.png"
 	CherryShrimpSprite         = "assets/sprites/CherryShrimp.png"
 	CherryShrimpReversedSprite = "assets/sprites/CherryShrimpReversed.png"
 )
@@ -93,7 +94,7 @@ type GameState int
 
 const (
 	StateMenu GameState = iota
-	StatePlaying
+	StateAquarium
 	StateSettings
 	StateShop
 	StateQuit

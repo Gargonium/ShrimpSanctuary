@@ -183,7 +183,7 @@ func (as *AquariumScreen) HandleCleanBtnClick() {
 	as.Game.IsFeeding = false
 }
 func (as *AquariumScreen) HandleShopBtnClick() {
-	//as.Game.State = config.StateShop
+	as.Game.State = config.StateShop
 }
 func (as *AquariumScreen) HandleMenuBtnClick() {
 	as.Game.State = config.StateMenu

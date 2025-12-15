@@ -38,7 +38,7 @@ func NewGame() *Game {
 
 func (g *Game) Update() {
 
-	if g.State == config.StatePlaying {
+	if g.State == config.StateAquarium {
 		var foodsToDelete []int
 		for i := range g.Shrimps {
 			g.Shrimps[i].Move()

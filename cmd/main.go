@@ -24,10 +24,7 @@ func main() {
 		r.Update()
 
 		rl.BeginDrawing()
-		//rl.ClearBackground(config.BackgroundColor)
-
 		r.Draw()
-
 		rl.EndDrawing()
 	}
 
