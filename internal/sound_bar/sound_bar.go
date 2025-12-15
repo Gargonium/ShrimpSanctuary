@@ -9,8 +9,8 @@ type SoundBar struct {
 	background rl.Music
 }
 
-func NewSoundBar() SoundBar {
-	sb := SoundBar{}
+func NewSoundBar() *SoundBar {
+	sb := new(SoundBar)
 	sb.background = loadSound(config.BgMusicPath)
 
 	if !rl.IsAudioDeviceReady() {
@@ -22,6 +22,14 @@ func NewSoundBar() SoundBar {
 
 func (sb *SoundBar) Update() {
 	rl.UpdateMusicStream(sb.background)
+}
+
+func (sb *SoundBar) ChangeMusicVolume(volume float32) {
+	rl.SetMusicVolume(sb.background, volume)
+}
+
+func (sb *SoundBar) ChangeEffectsVolume(volume float32) {
+
 }
 
 func (sb *SoundBar) PlayBgMusic() {

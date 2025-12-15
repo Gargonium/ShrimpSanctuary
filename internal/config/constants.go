@@ -5,14 +5,14 @@ import rl "github.com/gen2brain/raylib-go/raylib"
 // Game constants
 const (
 	FPS          = 60
-	ScreenWidth  = 1200
-	ScreenHeight = 800
+	ScreenWidth  = 1280
+	ScreenHeight = 720
 )
 
 // Aquarium constants
 const (
-	AquariumX           = 100
-	AquariumY           = 100
+	AquariumX           = 140
+	AquariumY           = 20
 	AquariumWidth       = 1000
 	AquariumHeight      = 500
 	AquariumBorderWidth = 5
@@ -36,6 +36,13 @@ const (
 	BorderOffset      = 5
 )
 
+// Buttons
+const (
+	WaitingBtnStatus = "waiting"
+	HoveredBtnStatus = "hovered"
+	ClickedBtnStatus = "clicked"
+)
+
 var PlayFieldBounds = rl.Rectangle{X: PlayFieldX, Y: PlayFieldY, Width: PlayFieldWidth, Height: PlayerFieldHeight}
 
 // Shrimps
@@ -49,7 +56,9 @@ const (
 
 // Sprites paths
 const (
-	AquariumBgSprite           = "assets/sprites/Background.png"
+	AquariumBgSprite           = "assets/sprites/Aquarium.png"
+	MenuBgSprite               = "assets/sprites/Menu.png"
+	SettingsBgSprite           = "assets/sprites/Settings.png"
 	CherryShrimpSprite         = "assets/sprites/CherryShrimp.png"
 	CherryShrimpReversedSprite = "assets/sprites/CherryShrimpReversed.png"
 )
@@ -63,35 +72,6 @@ const (
 const (
 	BgMusicPath = "assets/sounds/Background.mp3"
 )
-
-// Buttons
-const (
-	BtnFontSize = 55
-
-	ButtonY      = 600
-	ButtonWidth  = 132
-	ButtonHeight = 136
-	FeedBtnX     = 234
-	CleanBtnX    = 434
-	ShopBtnX     = 634
-	ExitBtnX     = 834
-
-	FeedBtnName  = "FEED"
-	CleanBtnName = "CLEAN"
-	ShopBtnName  = "SHOP"
-	ExitBtnName  = "EXIT"
-
-	WaitingBtnStatus = "waiting"
-	HoveredBtnStatus = "hovered"
-	ClickedBtnStatus = "clicked"
-)
-
-var ButtonsX = map[string]float32{
-	FeedBtnName:  FeedBtnX,
-	CleanBtnName: CleanBtnX,
-	ShopBtnName:  ShopBtnX,
-	ExitBtnName:  ExitBtnX,
-}
 
 // Food
 const (

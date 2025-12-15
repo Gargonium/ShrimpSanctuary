@@ -31,38 +31,35 @@ func NewGame() *Game {
 	g.PolluteDelay = 0 //config.PolluteSpawnDelay + rand.Int31n(config.PolluteSpawnDelaySpread * 2) - config.PolluteSpawnDelaySpread
 	g.IsFeeding = false
 	g.IsCleaning = false
-	g.State = config.StatePlaying
+	g.State = config.StateMenu
 
 	return g
 }
 
 func (g *Game) Update() {
 
-	//switch g.State {
-	//case config.StateMenu:
-	//	g.Menu.UpdateMenu()
-	//}
-
-	var foodsToDelete []int
-	for i := range g.Shrimps {
-		g.Shrimps[i].Move()
-		foodsToDelete = append(foodsToDelete, g.ShrimpFoodCollide(g.Shrimps[i])...)
-	}
-
-	for i := range g.Foods {
-		if g.Foods[i].MoveAndDisappear() {
-			foodsToDelete = append(foodsToDelete, i)
+	if g.State == config.StatePlaying {
+		var foodsToDelete []int
+		for i := range g.Shrimps {
+			g.Shrimps[i].Move()
+			foodsToDelete = append(foodsToDelete, g.ShrimpFoodCollide(g.Shrimps[i])...)
 		}
-	}
-	if len(foodsToDelete) != 0 {
-		g.DeleteFood(foodsToDelete)
-	}
 
-	if g.PolluteDelay == 0 {
-		g.AddPollute()
-		g.PolluteDelay = config.PolluteSpawnDelay + rand.Int31n(config.PolluteSpawnDelaySpread*2) - config.PolluteSpawnDelaySpread
+		for i := range g.Foods {
+			if g.Foods[i].MoveAndDisappear() {
+				foodsToDelete = append(foodsToDelete, i)
+			}
+		}
+		if len(foodsToDelete) != 0 {
+			g.DeleteFood(foodsToDelete)
+		}
+
+		if g.PolluteDelay == 0 {
+			g.AddPollute()
+			g.PolluteDelay = config.PolluteSpawnDelay + rand.Int31n(config.PolluteSpawnDelaySpread*2) - config.PolluteSpawnDelaySpread
+		}
+		g.PolluteDelay--
 	}
-	g.PolluteDelay--
 
 }
 

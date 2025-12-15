@@ -9,6 +9,23 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
+const (
+	ASBtnFontSize = 55
+
+	ASButtonsY      = 520
+	ASButtonsWidth  = 140
+	ASButtonsHeight = 134
+	ASFeedBtnX      = 270
+	ASCleanBtnX     = 470
+	ASShopBtnX      = 670
+	ASMenuBtnX      = 870
+
+	ASFeedBtnName  = "FEED"
+	ASCleanBtnName = "CLEAN"
+	ASShopBtnName  = "SHOP"
+	ASMenuBtnName  = "MENU"
+)
+
 type AquariumScreen struct {
 	Game                  *game.Game
 	Buttons               []*input.Button
@@ -17,62 +34,62 @@ type AquariumScreen struct {
 	shrimpTextureReversed rl.Texture2D
 }
 
-func NewAquariumScreen(game *game.Game) AquariumScreen {
-	as := AquariumScreen{}
+func NewAquariumScreen(game *game.Game) *AquariumScreen {
+	as := new(AquariumScreen)
 
 	as.Game = game
-
-	as.Buttons = []*input.Button{
-		input.NewButton(
-			rl.NewRectangle(
-				config.ButtonsX[config.FeedBtnName],
-				config.ButtonY,
-				config.ButtonWidth,
-				config.ButtonHeight,
-			),
-			config.FeedBtnName,
-			as.HandleFeedBtnClick,
-			config.BtnFontSize,
-		),
-		input.NewButton(
-			rl.NewRectangle(
-				config.ButtonsX[config.CleanBtnName],
-				config.ButtonY,
-				config.ButtonWidth,
-				config.ButtonHeight,
-			),
-			config.CleanBtnName,
-			as.HandleCleanBtnClick,
-			config.BtnFontSize,
-		),
-		input.NewButton(
-			rl.NewRectangle(
-				config.ButtonsX[config.ShopBtnName],
-				config.ButtonY,
-				config.ButtonWidth,
-				config.ButtonHeight,
-			),
-			config.ShopBtnName,
-			as.HandleShopBtnClick,
-			config.BtnFontSize,
-		),
-		input.NewButton(
-			rl.NewRectangle(
-				config.ButtonsX[config.ExitBtnName],
-				config.ButtonY,
-				config.ButtonWidth,
-				config.ButtonHeight,
-			),
-			config.ExitBtnName,
-			as.HandleExitBtnClick,
-			config.BtnFontSize,
-		),
-	}
 
 	as.bgTexture = utils.SpriteToTexture(config.AquariumBgSprite)
 
 	as.shrimpTexture = utils.SpriteToTexture(config.CherryShrimpSprite)
 	as.shrimpTextureReversed = utils.SpriteToTexture(config.CherryShrimpReversedSprite)
+
+	as.Buttons = []*input.Button{
+		input.NewButton(
+			rl.NewRectangle(
+				ASFeedBtnX,
+				ASButtonsY,
+				ASButtonsWidth,
+				ASButtonsHeight,
+			),
+			ASFeedBtnName,
+			as.HandleFeedBtnClick,
+			ASBtnFontSize,
+		),
+		input.NewButton(
+			rl.NewRectangle(
+				ASCleanBtnX,
+				ASButtonsY,
+				ASButtonsWidth,
+				ASButtonsHeight,
+			),
+			ASCleanBtnName,
+			as.HandleCleanBtnClick,
+			ASBtnFontSize,
+		),
+		input.NewButton(
+			rl.NewRectangle(
+				ASShopBtnX,
+				ASButtonsY,
+				ASButtonsWidth,
+				ASButtonsHeight,
+			),
+			ASShopBtnName,
+			as.HandleShopBtnClick,
+			ASBtnFontSize,
+		),
+		input.NewButton(
+			rl.NewRectangle(
+				ASMenuBtnX,
+				ASButtonsY,
+				ASButtonsWidth,
+				ASButtonsHeight,
+			),
+			ASMenuBtnName,
+			as.HandleMenuBtnClick,
+			ASBtnFontSize,
+		),
+	}
 
 	return as
 }
@@ -80,9 +97,9 @@ func NewAquariumScreen(game *game.Game) AquariumScreen {
 func (as *AquariumScreen) Draw() {
 	rl.DrawTexture(as.bgTexture, 0, 0, rl.White)
 	as.drawButtons()
-	as.DrawShrimps()
-	as.DrawFood()
-	as.DrawPollute()
+	as.drawShrimps()
+	as.drawFood()
+	as.drawPollute()
 }
 
 func (as *AquariumScreen) drawButtons() {
@@ -100,7 +117,7 @@ func (as *AquariumScreen) drawButtons() {
 	}
 }
 
-func (as *AquariumScreen) DrawShrimps() {
+func (as *AquariumScreen) drawShrimps() {
 	for i := range as.Game.Shrimps {
 		if as.Game.Shrimps[i].Vx < 0 {
 			rl.DrawTextureV(as.shrimpTextureReversed, as.Game.Shrimps[i].Position, rl.White)
@@ -110,7 +127,7 @@ func (as *AquariumScreen) DrawShrimps() {
 	}
 }
 
-func (as *AquariumScreen) DrawPollute() {
+func (as *AquariumScreen) drawPollute() {
 	for i := range as.Game.Pollution {
 		polCol := config.PolluteColor
 		polCol.A = uint8(float32(polCol.A) * float32(as.Game.Pollution[i].Durability) / float32(config.PolluteMaxDurability))
@@ -118,7 +135,7 @@ func (as *AquariumScreen) DrawPollute() {
 	}
 }
 
-func (as *AquariumScreen) DrawFood() {
+func (as *AquariumScreen) drawFood() {
 	for i := range as.Game.Foods {
 		rl.DrawCircleV(as.Game.Foods[i].Position, config.FoodRadius, config.FoodColor)
 		rl.DrawCircleLinesV(as.Game.Foods[i].Position, config.FoodRadius, config.FoodBorderColor)
@@ -131,16 +148,16 @@ func (as *AquariumScreen) HandleInput() {
 	}
 
 	for _, btn := range as.Buttons {
-		btnStatus := input.MouseButtonCollide(*btn)
+		btnStatus := input.MouseButtonCollide(btn)
 
 		allowColorUpdate := true
 
 		switch btn.Text {
-		case config.FeedBtnName:
+		case ASFeedBtnName:
 			if as.Game.IsFeeding && !as.Game.IsCleaning {
 				allowColorUpdate = false
 			}
-		case config.CleanBtnName:
+		case ASCleanBtnName:
 			if as.Game.IsCleaning && !as.Game.IsFeeding {
 				allowColorUpdate = false
 			}
@@ -166,8 +183,8 @@ func (as *AquariumScreen) HandleCleanBtnClick() {
 	as.Game.IsFeeding = false
 }
 func (as *AquariumScreen) HandleShopBtnClick() {
-
+	//as.Game.State = config.StateShop
 }
-func (as *AquariumScreen) HandleExitBtnClick() {
-	as.Game.State = config.StateQuit
+func (as *AquariumScreen) HandleMenuBtnClick() {
+	as.Game.State = config.StateMenu
 }

@@ -6,7 +6,7 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-func MouseButtonCollide(btn Button) string {
+func MouseButtonCollide(btn *Button) string {
 	mousePos := rl.GetMousePosition()
 
 	if utils.InBounds(mousePos, btn.Bounds) {
@@ -16,6 +16,18 @@ func MouseButtonCollide(btn Button) string {
 		return config.HoveredBtnStatus
 	}
 
+	return config.WaitingBtnStatus
+}
+
+func MouseSliderCollide(bounds rl.Rectangle) string {
+	mousePos := rl.GetMousePosition()
+
+	if utils.InBounds(mousePos, bounds) {
+		if rl.IsMouseButtonDown(rl.MouseButtonLeft) {
+			return config.ClickedBtnStatus
+		}
+		return config.HoveredBtnStatus
+	}
 	return config.WaitingBtnStatus
 }
 
