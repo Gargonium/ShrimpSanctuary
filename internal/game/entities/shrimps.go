@@ -1,4 +1,4 @@
-package game
+package entities
 
 import (
 	"ShrimpSanctuary/internal/config"
@@ -13,14 +13,14 @@ type Shrimp struct {
 	Delay    int32
 }
 
-func NewShrimp() Shrimp {
+func NewShrimp() *Shrimp {
 	shrimp := new(Shrimp)
 	shrimp.Position.X = (rand.Float32() * config.PlayFieldWidth) + config.PlayFieldX
 	shrimp.Position.Y = (rand.Float32() * config.PlayerFieldHeight) + config.PlayFieldY
 	shrimp.Vx, shrimp.Vy = config.ShrimpMaxVelocity, config.ShrimpMaxVelocity
 	shrimp.Delay = config.ShrimpBehaviourMaxDelay
 	shrimp.ShrimpWallCollide()
-	return *shrimp
+	return shrimp
 }
 
 func (s *Shrimp) ShrimpWallCollide() {
@@ -32,17 +32,6 @@ func (s *Shrimp) ShrimpWallCollide() {
 
 	s.Position.X, s.Vx = utils.ClampAndBounce(s.Position.X, minX, maxX, s.Vx)
 	s.Position.Y, s.Vy = utils.ClampAndBounce(s.Position.Y, minY, maxY, s.Vy)
-}
-
-func (g *Game) ShrimpFoodCollide(s Shrimp) []int {
-	var foodCollide []int
-	for i := range g.Foods {
-		f := g.Foods[i]
-		if utils.CollideCircleRect(f.Position, config.FoodRadius, s.Position.X, s.Position.Y, config.ShrimpWidth, config.ShrimpHeight) {
-			foodCollide = append(foodCollide, i)
-		}
-	}
-	return foodCollide
 }
 
 // Move TODO Переделать

@@ -24,3 +24,15 @@ func CollideCircleRect(circleCenter rl.Vector2, radius float32, X2, Y2, Width2, 
 	rec := rl.NewRectangle(X2, Y2, Width2, Height2)
 	return rl.CheckCollisionCircleRec(circleCenter, radius, rec)
 }
+
+func LoadFont(fontPath string) rl.Font {
+	fontTtf := rl.LoadFont(fontPath) //rl.LoadFontEx(config.WinterFont, 8, 0, 250)
+	return fontTtf
+}
+
+func SpriteToTexture(spritePath string) rl.Texture2D {
+	image := rl.LoadImage(spritePath)
+	texture := rl.LoadTextureFromImage(image)
+	rl.UnloadImage(image)
+	return texture
+}

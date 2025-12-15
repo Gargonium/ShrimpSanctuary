@@ -49,7 +49,7 @@ const (
 
 // Sprites paths
 const (
-	BgSprite                   = "assets/sprites/Background.png"
+	AquariumBgSprite           = "assets/sprites/Background.png"
 	CherryShrimpSprite         = "assets/sprites/CherryShrimp.png"
 	CherryShrimpReversedSprite = "assets/sprites/CherryShrimpReversed.png"
 )
@@ -66,13 +66,7 @@ const (
 
 // Buttons
 const (
-	ButtonTextY      = 630
-	FeedBtnTextX     = 245
-	CleanBtnTextX    = 440
-	ShopBtnTextX     = 643
-	ExitBtnTextX     = 850
-	CleanBtnFontSize = 50
-	OtherBtnFontSize = 55
+	BtnFontSize = 55
 
 	ButtonY      = 600
 	ButtonWidth  = 132
@@ -112,4 +106,15 @@ const (
 	PolluteSpawnDelaySpread = FPS * 30
 	PolluteMaxDurability    = 4
 	PolluteRadius           = 10
+)
+
+// GameStates
+type GameState int
+
+const (
+	StateMenu GameState = iota
+	StatePlaying
+	StateSettings
+	StateShop
+	StateQuit
 )

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"ShrimpSanctuary/internal/colors"
 	"ShrimpSanctuary/internal/config"
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/render"
@@ -21,11 +20,11 @@ func main() {
 
 	sb.PlayBgMusic()
 
-	for !rl.WindowShouldClose() && r.GameIsRunning() {
+	for !rl.WindowShouldClose() && g.State != config.StateQuit {
 		r.Update()
 
 		rl.BeginDrawing()
-		rl.ClearBackground(colors.BackgroundColor)
+		rl.ClearBackground(config.BackgroundColor)
 
 		r.Draw()
 

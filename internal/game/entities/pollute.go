@@ -1,4 +1,4 @@
-package game
+package entities
 
 import (
 	"ShrimpSanctuary/internal/config"
@@ -11,8 +11,8 @@ type Pollute struct {
 	Durability int32
 }
 
-func NewPollute() Pollute {
-	p := Pollute{}
+func NewPollute() *Pollute {
+	p := new(Pollute)
 	p.Position.X = (rand.Float32() * config.PlayFieldWidth) + config.PlayFieldX
 	p.Position.Y = (rand.Float32() * config.PlayerFieldHeight) + config.PlayFieldY
 	p.Durability = config.PolluteMaxDurability - 1

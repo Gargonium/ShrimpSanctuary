@@ -1,4 +1,4 @@
-package game
+package entities
 
 import (
 	"ShrimpSanctuary/internal/config"
@@ -10,8 +10,8 @@ type Food struct {
 	lifeTime int
 }
 
-func NewFood(pos rl.Vector2) Food {
-	f := Food{}
+func NewFood(pos rl.Vector2) *Food {
+	f := new(Food)
 	f.Position = pos
 
 	f.lifeTime = config.FoodLifeTime

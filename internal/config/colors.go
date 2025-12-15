@@ -1,7 +1,6 @@
-package colors
+package config
 
 import (
-	"ShrimpSanctuary/internal/config"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -15,9 +14,9 @@ var (
 )
 
 var ButtonColorFromStatus = map[string]rl.Color{
-	config.WaitingBtnStatus: rl.Black,
-	config.HoveredBtnStatus: rl.Yellow,
-	config.ClickedBtnStatus: rl.Green,
+	WaitingBtnStatus: rl.Black,
+	HoveredBtnStatus: rl.Yellow,
+	ClickedBtnStatus: rl.Green,
 }
 
 // Food
