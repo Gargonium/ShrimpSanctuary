@@ -6,12 +6,16 @@ import (
 )
 
 type SoundBar struct {
-	background rl.Music
+	isMuted       bool
+	musicVolume   float32
+	effectsVolume float32
+	background    rl.Music
 }
 
 func NewSoundBar() *SoundBar {
 	sb := new(SoundBar)
 	sb.background = loadSound(config.BgMusicPath)
+	sb.isMuted = false
 
 	if !rl.IsAudioDeviceReady() {
 		rl.TraceLog(rl.LogError, "Аудиоустройство не готово! Проверьте драйверы.")
@@ -26,21 +30,43 @@ func (sb *SoundBar) Update() {
 
 func (sb *SoundBar) ChangeMusicVolume(volume float32) {
 	rl.SetMusicVolume(sb.background, volume)
+	if !sb.isMuted {
+		sb.musicVolume = volume
+	}
 }
 
 func (sb *SoundBar) ChangeEffectsVolume(volume float32) {
+	if !sb.isMuted {
+		sb.effectsVolume = volume
+	}
+}
 
+func (sb *SoundBar) Mute() {
+	sb.isMuted = !sb.isMuted
+	if sb.isMuted {
+		sb.ChangeMusicVolume(0)
+		sb.ChangeEffectsVolume(0)
+	} else {
+		sb.ChangeMusicVolume(sb.musicVolume)
+		sb.ChangeEffectsVolume(sb.effectsVolume)
+	}
 }
 
 func (sb *SoundBar) PlayBgMusic() {
 	sb.background.Looping = true
-	rl.SetMusicVolume(sb.background, 0.5)
+	sb.musicVolume = 0.5
+	sb.effectsVolume = 0.5
+	rl.SetMusicVolume(sb.background, sb.musicVolume)
 	rl.PlayMusicStream(sb.background)
 }
 
 func (sb *SoundBar) StopBgMusic() {
 	rl.StopMusicStream(sb.background)
 	rl.UnloadMusicStream(sb.background)
+}
+
+func (sb *SoundBar) IsMuted() bool {
+	return sb.isMuted
 }
 
 func loadSound(musicPath string) rl.Music {

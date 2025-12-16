@@ -6,6 +6,9 @@ import (
 )
 
 type TextureStorage struct {
+	Mute   rl.Texture2D
+	Unmute rl.Texture2D
+
 	MenuScreen     rl.Texture2D
 	AquariumScreen rl.Texture2D
 	SettingsScreen rl.Texture2D
@@ -23,6 +26,10 @@ type TextureStorage struct {
 
 func NewTextureStorage() *TextureStorage {
 	ts := new(TextureStorage)
+
+	ts.Mute = utils.SpriteToTexture(MuteSprite)
+	ts.Unmute = utils.SpriteToTexture(UnmuteSprite)
+
 	ts.MenuScreen = utils.SpriteToTexture(MenuBgSprite)
 	ts.AquariumScreen = utils.SpriteToTexture(AquariumBgSprite)
 	ts.SettingsScreen = utils.SpriteToTexture(SettingsBgSprite)

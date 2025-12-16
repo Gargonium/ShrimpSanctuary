@@ -2,12 +2,12 @@
 setlocal enabledelayedexpansion
 
 REM Выбор архитектуры
-echo Выберите архитектуру:
-echo 1. Windows 64-bit (по умолчанию)
+echo Choose architecture:
+echo 1. Windows 64-bit (default)
 echo 2. Windows 32-bit
 echo 3. Linux 64-bit
 echo 4. macOS 64-bit
-set /p choice="Введите номер [1]: "
+set /p choice="Enter the number [1]: "
 
 if "%choice%"=="" set choice=1
 
@@ -37,7 +37,7 @@ if not exist "%RELEASE_FOLDER%" mkdir "%RELEASE_FOLDER%"
 if not exist "%RELEASE_FOLDER%\assets" mkdir "%RELEASE_FOLDER%\assets"
 
 REM Сборка для выбранной платформы
-echo Сборка для %OS% %ARCH%...
+echo Start build for %OS% %ARCH%...
 set GOOS=%OS%
 set GOARCH=%ARCH%
 if "%choice%"=="1" (
@@ -56,5 +56,5 @@ powershell "Compress-Archive -Path * -DestinationPath 'ShrimpSanctuary_%OS%_%ARC
 cd ..
 
 echo.
-echo Архив создан: %RELEASE_FOLDER%\ShrimpSanctuary_%OS%_%ARCH%.zip
+echo Archive created: %RELEASE_FOLDER%\ShrimpSanctuary_%OS%_%ARCH%.zip
 pause

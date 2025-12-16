@@ -4,6 +4,7 @@ import (
 	"ShrimpSanctuary/internal/config"
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/input"
+	"ShrimpSanctuary/internal/sound_bar"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -17,20 +18,26 @@ const (
 	MSButtonsX      = 490
 	MSButtonsWidth  = 300
 	MSButtonsHeight = 60
-	MSPlayBtnY      = 250
-	MSSettingsBtnY  = 340
-	MSExitBtnY      = 430
+	MSPlayBtnY      = 280
+	MSSettingsBtnY  = 370
+	MSExitBtnY      = 460
+
+	MSMuteX       = 15
+	MSMuteY       = 15
+	MSMuteBtnName = "MUTE"
 )
 
 type MenuScreen struct {
 	Game    *game.Game
 	Buttons []*input.Button
+	sb      *sound_bar.SoundBar
 	ts      *config.TextureStorage
 }
 
-func NewMenuScreen(game *game.Game, ts *config.TextureStorage) *MenuScreen {
+func NewMenuScreen(game *game.Game, sb *sound_bar.SoundBar, ts *config.TextureStorage) *MenuScreen {
 	ms := new(MenuScreen)
 	ms.Game = game
+	ms.sb = sb
 	ms.ts = ts
 
 	ms.Buttons = []*input.Button{
@@ -67,6 +74,17 @@ func NewMenuScreen(game *game.Game, ts *config.TextureStorage) *MenuScreen {
 			ms.HandleExitBtnClick,
 			MSBtnFontSize,
 		),
+		input.NewButton(
+			rl.NewRectangle(
+				MSMuteX,
+				MSMuteY,
+				config.BigSquareSpriteSide,
+				config.BigSquareSpriteSide,
+			),
+			MSMuteBtnName,
+			ms.HandleMuteBtnClick,
+			MSBtnFontSize,
+		),
 	}
 
 	return ms
@@ -80,6 +98,14 @@ func (ms *MenuScreen) Draw() {
 func (ms *MenuScreen) drawButtons() {
 	for _, btn := range ms.Buttons {
 		textVector := rl.MeasureTextEx(btn.Font, btn.Text, btn.FontSize, 2)
+		if btn.Text == MSMuteBtnName {
+			if ms.sb.IsMuted() {
+				rl.DrawTexture(ms.ts.Mute, 0, 0, rl.White)
+			} else {
+				rl.DrawTexture(ms.ts.Unmute, 0, 0, rl.White)
+			}
+			continue
+		}
 		rl.DrawTextEx(
 			btn.Font,
 			btn.Text,
@@ -112,4 +138,8 @@ func (ms *MenuScreen) HandleSettingsBtnClick() {
 
 func (ms *MenuScreen) HandleExitBtnClick() {
 	ms.Game.State = config.StateQuit
+}
+
+func (ms *MenuScreen) HandleMuteBtnClick() {
+	ms.sb.Mute()
 }

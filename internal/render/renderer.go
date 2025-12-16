@@ -20,7 +20,7 @@ type Render struct {
 func NewRender(g *game.Game, sb *sound_bar.SoundBar, ts *config.TextureStorage) *Render {
 	r := new(Render)
 	r.AquariumScreen = screens.NewAquariumScreen(g, ts)
-	r.MenuScreen = screens.NewMenuScreen(g, ts)
+	r.MenuScreen = screens.NewMenuScreen(g, sb, ts)
 	r.SettingsScreen = screens.NewSettingsScreen(g, sb, ts)
 	r.ShopScreen = screens.NewShopScreen(g, ts)
 	r.Game = g

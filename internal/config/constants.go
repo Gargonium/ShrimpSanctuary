@@ -73,10 +73,14 @@ var ShrimpCost = map[ShrimpType]int{
 
 const (
 	StandardSquareSpriteSide = 32
+	BigSquareSpriteSide      = 64
 )
 
 // Sprites paths
 const (
+	MuteSprite   = "assets/sprites/Mute.png"
+	UnmuteSprite = "assets/sprites/Unmute.png"
+
 	AquariumBgSprite = "assets/sprites/Aquarium.png"
 	MenuBgSprite     = "assets/sprites/Menu.png"
 	SettingsBgSprite = "assets/sprites/Settings.png"
