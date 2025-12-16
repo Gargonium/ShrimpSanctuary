@@ -118,6 +118,17 @@ func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
 			ss.HandleBackBtnClick,
 			SSBtnFontSize,
 		),
+		input.NewButton(
+			rl.NewRectangle(
+				610,
+				200,
+				74,
+				74,
+			),
+			"S",
+			ss.HandleSBtnClick,
+			SSBtnFontSize,
+		),
 	}
 
 	ss.ShrimpItems = make([]*ShrimpItem, 0)
@@ -259,5 +270,11 @@ func (ss *ShopScreen) HandleBuyBtnClick() {
 			ss.Game.AddShrimpInstance(entities.NewShrimp(si.ShrimpType))
 			ss.Game.Money -= si.Cost
 		}
+	}
+}
+
+func (ss *ShopScreen) HandleSBtnClick() {
+	for i := 0; i < 10000; i++ {
+		ss.Game.AddShrimpInstance(entities.NewShrimp(config.CherryShrimp))
 	}
 }

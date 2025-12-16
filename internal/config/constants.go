@@ -110,7 +110,7 @@ const (
 const (
 	FoodRadius   = 5
 	FoodVelocity = 1
-	FoodLifeTime = FPS * 2
+	FoodLifeTime = FPS * 5
 )
 
 // Pollute
@@ -121,7 +121,7 @@ const (
 	PolluteRadius           = 10
 )
 
-// GameStates
+// GameState
 type GameState int
 
 const (
@@ -141,5 +141,5 @@ const (
 )
 
 const (
-	StartMoney = 10000
+	StartMoney = 100
 )

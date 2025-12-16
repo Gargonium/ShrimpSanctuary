@@ -1,6 +1,8 @@
 package utils
 
-import rl "github.com/gen2brain/raylib-go/raylib"
+import (
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 func ClampAndBounce(pos, min, max, vel float32) (float32, float32) {
 	if pos < min {
@@ -30,8 +32,8 @@ func InBounds(target rl.Vector2, bounds rl.Rectangle) bool {
 	return false
 }
 
-func CollideCircleRect(circleCenter rl.Vector2, radius float32, X2, Y2, Width2, Height2 float32) bool {
-	rec := rl.NewRectangle(X2, Y2, Width2, Height2)
+func CollideCircleRect(circleCenter rl.Vector2, radius float32, X, Y, Width, Height float32) bool {
+	rec := rl.NewRectangle(X, Y, Width, Height)
 	return rl.CheckCollisionCircleRec(circleCenter, radius, rec)
 }
 

@@ -92,10 +92,10 @@ func NewAquariumScreen(game *game.Game, ts *config.TextureStorage) *AquariumScre
 func (as *AquariumScreen) Draw() {
 	rl.DrawTexture(as.ts.AquariumScreen, 0, 0, rl.White)
 	as.drawButtons()
-	as.drawMoney()
 	as.drawShrimps()
 	as.drawFood()
 	as.drawPollute()
+	as.drawMoney()
 }
 
 func (as *AquariumScreen) drawButtons() {
@@ -140,9 +140,12 @@ func (as *AquariumScreen) drawPollute() {
 }
 
 func (as *AquariumScreen) drawFood() {
-	for i := range as.Game.Foods {
-		rl.DrawCircleV(as.Game.Foods[i].Position, config.FoodRadius, config.FoodColor)
-		rl.DrawCircleLinesV(as.Game.Foods[i].Position, config.FoodRadius, config.FoodBorderColor)
+	for _, f := range as.Game.Foods {
+		if !f.IsAlive {
+			continue
+		}
+		rl.DrawCircleV(f.Position, config.FoodRadius, config.FoodColor)
+		rl.DrawCircleLinesV(f.Position, config.FoodRadius, config.FoodBorderColor)
 	}
 }
 

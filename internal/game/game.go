@@ -41,20 +41,14 @@ func NewGame() *Game {
 func (g *Game) Update() {
 
 	if g.State == config.StateAquarium {
-		var foodsToDelete []int
 		for _, s := range g.Shrimps {
 			s.Move()
-			foodsToDelete = append(foodsToDelete, g.ShrimpFoodCollide(s)...)
+			g.ShrimpFoodCollide(s)
 			g.Money += s.PoopMoney()
 		}
 
-		for i := range g.Foods {
-			if g.Foods[i].MoveAndDisappear() {
-				foodsToDelete = append(foodsToDelete, i)
-			}
-		}
-		if len(foodsToDelete) != 0 {
-			g.DeleteFood(foodsToDelete)
+		for i := 0; i < len(g.Foods); i++ {
+			g.Foods[i].MoveAndDisappear()
 		}
 
 		if g.PolluteDelay == 0 {
@@ -63,8 +57,18 @@ func (g *Game) Update() {
 		}
 		g.PolluteDelay--
 
+		g.deleteDeadFood()
 	}
+}
 
+func (g *Game) deleteDeadFood() {
+	var newFoods []*entities.Food
+	for _, f := range g.Foods {
+		if f.IsAlive {
+			newFoods = append(newFoods, f)
+		}
+	}
+	g.Foods = newFoods
 }
 
 func (g *Game) AddPollute() {
@@ -120,13 +124,10 @@ func (g *Game) DeletePollute(toDel int) {
 	g.Pollution = newPollution
 }
 
-func (g *Game) ShrimpFoodCollide(s *entities.Shrimp) []int {
-	var foodCollide []int
-	for i := range g.Foods {
-		f := g.Foods[i]
+func (g *Game) ShrimpFoodCollide(s *entities.Shrimp) {
+	for _, f := range g.Foods {
 		if utils.CollideCircleRect(f.Position, config.FoodRadius, s.Position.X, s.Position.Y, config.StandardSquareSpriteSide, config.StandardSquareSpriteSide) {
-			foodCollide = append(foodCollide, i)
+			f.SelfDestruct()
 		}
 	}
-	return foodCollide
 }

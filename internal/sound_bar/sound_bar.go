@@ -54,8 +54,8 @@ func (sb *SoundBar) Mute() {
 
 func (sb *SoundBar) PlayBgMusic() {
 	sb.background.Looping = true
-	sb.musicVolume = 0.5
-	sb.effectsVolume = 0.5
+	sb.musicVolume = 0.1
+	sb.effectsVolume = 0.1
 	rl.SetMusicVolume(sb.background, sb.musicVolume)
 	rl.PlayMusicStream(sb.background)
 }
