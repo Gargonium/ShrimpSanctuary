@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	rl.InitWindow(config.ScreenWidth, config.ScreenHeight, "CherryShrimp Sanctuary")
+	rl.InitWindow(config.ScreenWidth, config.ScreenHeight, "Shrimp Sanctuary")
 	rl.InitAudioDevice()
 	rl.SetTargetFPS(config.FPS)
 	rl.SetConfigFlags(rl.FlagMsaa4xHint)

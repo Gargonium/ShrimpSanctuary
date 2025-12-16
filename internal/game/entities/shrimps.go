@@ -19,8 +19,9 @@ func NewShrimp(t config.ShrimpType) *Shrimp {
 	shrimp := new(Shrimp)
 	shrimp.Position.X = (rand.Float32() * config.PlayFieldWidth) + config.PlayFieldX
 	shrimp.Position.Y = (rand.Float32() * config.PlayerFieldHeight) + config.PlayFieldY
-	shrimp.Vx, shrimp.Vy = config.ShrimpMaxVelocity, config.ShrimpMaxVelocity
-	shrimp.BehaviourDelay = config.ShrimpBehaviourMaxDelay
+	shrimp.Vx = rand.Float32()*2*config.ShrimpMaxVelocity - config.ShrimpMaxVelocity
+	shrimp.Vy = rand.Float32()*2*config.ShrimpMaxVelocity - config.ShrimpMaxVelocity
+	shrimp.BehaviourDelay = rand.Int31()%config.ShrimpBehaviourMaxDelay + config.FPS
 	shrimp.Type = t
 	shrimp.MoneyDelay = config.ShrimpMoneyDelay
 	shrimp.ShrimpWallCollide()

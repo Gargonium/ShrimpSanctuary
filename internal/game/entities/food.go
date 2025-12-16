@@ -21,9 +21,9 @@ func NewFood(pos rl.Vector2) *Food {
 func (f *Food) MoveAndDisappear() bool {
 	if f.lifeTime != 0 && f.Position.Y < config.PlayFieldY+config.PlayerFieldHeight {
 		f.Position.Y += config.FoodVelocity
-		f.lifeTime--
 	} else if f.lifeTime == 0 {
 		return true
 	}
+	f.lifeTime--
 	return false
 }

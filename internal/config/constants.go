@@ -54,7 +54,7 @@ const (
 	ShrimpStartCount        = 3
 	ShrimpMaxVelocity       = 0.5
 	ShrimpBehaviourMaxDelay = FPS * 5
-	ShrimpMoneyDelay        = FPS * 30
+	ShrimpMoneyDelay        = FPS * 60
 )
 
 type ShrimpType int
