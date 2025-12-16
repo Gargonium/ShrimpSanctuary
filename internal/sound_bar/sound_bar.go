@@ -77,3 +77,11 @@ func loadSound(musicPath string) rl.Music {
 	}
 	return music
 }
+
+func (sb *SoundBar) GetMusicVolume() float32 {
+	return sb.musicVolume
+}
+
+func (sb *SoundBar) GetEffectsVolume() float32 {
+	return sb.effectsVolume
+}
