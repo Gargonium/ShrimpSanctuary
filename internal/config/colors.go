@@ -4,7 +4,7 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-var ButtonColorFromStatus = map[string]rl.Color{
+var ButtonColorFromStatus = map[ButtonStatus]rl.Color{
 	WaitingBtnStatus: rl.Black,
 	HoveredBtnStatus: rl.Gray,
 	ClickedBtnStatus: rl.Green,

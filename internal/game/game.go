@@ -24,7 +24,7 @@ func NewGame() *Game {
 	g.Shrimps = make([]*entities.Shrimp, 0)
 	g.Foods = make([]*entities.Food, 0)
 	g.Pollution = make([]*entities.Pollute, 0)
-	g.Money = 0
+	g.Money = config.StartMoney
 
 	for i := 0; i < config.ShrimpStartCount; i++ {
 		g.AddShrimpInstance(entities.NewShrimp(config.CherryShrimp))

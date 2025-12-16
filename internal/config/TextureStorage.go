@@ -9,7 +9,11 @@ type TextureStorage struct {
 	MenuScreen     rl.Texture2D
 	AquariumScreen rl.Texture2D
 	SettingsScreen rl.Texture2D
-	ShopScreen     rl.Texture2D
+
+	ShopScreen    rl.Texture2D
+	ShopShrimps   rl.Texture2D
+	ShopWallpaper rl.Texture2D
+	ShopDecor     rl.Texture2D
 
 	CherryShrimp         rl.Texture2D
 	CherryShrimpReversed rl.Texture2D
@@ -22,7 +26,11 @@ func NewTextureStorage() *TextureStorage {
 	ts.MenuScreen = utils.SpriteToTexture(MenuBgSprite)
 	ts.AquariumScreen = utils.SpriteToTexture(AquariumBgSprite)
 	ts.SettingsScreen = utils.SpriteToTexture(SettingsBgSprite)
+
 	ts.ShopScreen = utils.SpriteToTexture(ShopBgSprite)
+	ts.ShopShrimps = utils.SpriteToTexture(ShopShrimpsSprite)
+	ts.ShopWallpaper = utils.SpriteToTexture(ShopWallpaperSprite)
+	ts.ShopDecor = utils.SpriteToTexture(ShopDecorSprite)
 
 	ts.CherryShrimp = utils.SpriteToTexture(CherryShrimpSprite)
 	ts.CherryShrimpReversed = utils.SpriteToTexture(CherryShrimpReversedSprite)

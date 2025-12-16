@@ -38,11 +38,13 @@ const (
 	BorderOffset      = 5
 )
 
+type ButtonStatus string
+
 // Buttons
 const (
-	WaitingBtnStatus = "waiting"
-	HoveredBtnStatus = "hovered"
-	ClickedBtnStatus = "clicked"
+	WaitingBtnStatus ButtonStatus = "waiting"
+	HoveredBtnStatus ButtonStatus = "hovered"
+	ClickedBtnStatus ButtonStatus = "clicked"
 )
 
 var PlayFieldBounds = rl.Rectangle{X: PlayFieldX, Y: PlayFieldY, Width: PlayFieldWidth, Height: PlayerFieldHeight}
@@ -65,19 +67,29 @@ var MoneyByShrimp = map[ShrimpType]int{
 	CherryShrimp: 25,
 }
 
+var ShrimpCost = map[ShrimpType]int{
+	CherryShrimp: 100,
+}
+
 const (
 	StandardSquareSpriteSide = 32
 )
 
 // Sprites paths
 const (
-	AquariumBgSprite           = "assets/sprites/Aquarium.png"
-	MenuBgSprite               = "assets/sprites/Menu.png"
-	SettingsBgSprite           = "assets/sprites/Settings.png"
-	ShopBgSprite               = "assets/sprites/Shop.png"
+	AquariumBgSprite = "assets/sprites/Aquarium.png"
+	MenuBgSprite     = "assets/sprites/Menu.png"
+	SettingsBgSprite = "assets/sprites/Settings.png"
+
+	ShopBgSprite        = "assets/sprites/Shop.png"
+	ShopShrimpsSprite   = "assets/sprites/ShopShrimps.png"
+	ShopWallpaperSprite = "assets/sprites/ShopWallpaper.png"
+	ShopDecorSprite     = "assets/sprites/ShopDecor.png"
+
 	CherryShrimpSprite         = "assets/sprites/CherryShrimp.png"
 	CherryShrimpReversedSprite = "assets/sprites/CherryShrimpReversed.png"
-	CoinSprite                 = "assets/sprites/Coin.png"
+
+	CoinSprite = "assets/sprites/Coin.png"
 )
 
 // Fonts paths
@@ -114,4 +126,16 @@ const (
 	StateSettings
 	StateShop
 	StateQuit
+)
+
+type ShopState int
+
+const (
+	ShopStateShrimps ShopState = iota
+	ShopStateWallpaper
+	ShopStateDecor
+)
+
+const (
+	StartMoney = 10000
 )

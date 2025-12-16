@@ -7,14 +7,13 @@ import (
 )
 
 type Button struct {
-	Bounds     rl.Rectangle
-	Text       string
-	Action     func()
-	Font       rl.Font
-	FontSize   float32
-	Color      rl.Color
-	HoverColor rl.Color
-	ClickColor rl.Color
+	Bounds   rl.Rectangle
+	Text     string
+	Action   func()
+	Font     rl.Font
+	FontSize float32
+	Color    rl.Color
+	Status   config.ButtonStatus
 }
 
 func NewButton(bounds rl.Rectangle, text string, action func(), fontSize float32) *Button {
@@ -25,7 +24,6 @@ func NewButton(bounds rl.Rectangle, text string, action func(), fontSize float32
 	b.Font = utils.LoadFont(config.WinterFont)
 	b.FontSize = fontSize
 	b.Color = config.ButtonColorFromStatus["waiting"]
-	b.HoverColor = config.ButtonColorFromStatus["hovered"]
-	b.ClickColor = config.ButtonColorFromStatus["clicked"]
+	b.Status = config.WaitingBtnStatus
 	return b
 }
