@@ -4,7 +4,6 @@ import (
 	"ShrimpSanctuary/internal/config"
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/input"
-	"ShrimpSanctuary/pkg/utils"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -24,15 +23,15 @@ const (
 )
 
 type MenuScreen struct {
-	Game      *game.Game
-	Buttons   []*input.Button
-	bgTexture rl.Texture2D
+	Game    *game.Game
+	Buttons []*input.Button
+	ts      *config.TextureStorage
 }
 
-func NewMenuScreen(game *game.Game) *MenuScreen {
+func NewMenuScreen(game *game.Game, ts *config.TextureStorage) *MenuScreen {
 	ms := new(MenuScreen)
 	ms.Game = game
-	ms.bgTexture = utils.SpriteToTexture(config.MenuBgSprite)
+	ms.ts = ts
 
 	ms.Buttons = []*input.Button{
 		input.NewButton(
@@ -74,7 +73,7 @@ func NewMenuScreen(game *game.Game) *MenuScreen {
 }
 
 func (ms *MenuScreen) Draw() {
-	rl.DrawTexture(ms.bgTexture, 0, 0, rl.White)
+	rl.DrawTexture(ms.ts.MenuScreen, 0, 0, rl.White)
 	ms.drawButtons()
 }
 

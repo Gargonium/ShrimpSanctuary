@@ -32,16 +32,16 @@ type SettingsScreen struct {
 	Game           *game.Game
 	SoundBar       *sound_bar.SoundBar
 	Buttons        []*input.Button
-	bgTexture      rl.Texture2D
+	ts             *config.TextureStorage
 	MusicSliderX   float32
 	EffectsSliderX float32
 }
 
-func NewSettingsScreen(game *game.Game, sb *sound_bar.SoundBar) *SettingsScreen {
+func NewSettingsScreen(game *game.Game, sb *sound_bar.SoundBar, ts *config.TextureStorage) *SettingsScreen {
 	ss := new(SettingsScreen)
-	ss.bgTexture = utils.SpriteToTexture(config.SettingsBgSprite)
 	ss.Game = game
 	ss.SoundBar = sb
+	ss.ts = ts
 	ss.MusicSliderX = SetSliderMinX + (SetSliderMaxX-SetSliderMinX)/2
 	ss.EffectsSliderX = SetSliderMinX + (SetSliderMaxX-SetSliderMinX)/2
 
@@ -95,7 +95,7 @@ func (ss *SettingsScreen) HandleInput() {
 }
 
 func (ss *SettingsScreen) Draw() {
-	rl.DrawTexture(ss.bgTexture, 0, 0, rl.White)
+	rl.DrawTexture(ss.ts.SettingsScreen, 0, 0, rl.White)
 	ss.drawVolumeSlider()
 	ss.drawButtons()
 }

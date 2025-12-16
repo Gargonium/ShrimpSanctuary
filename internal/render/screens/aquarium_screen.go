@@ -5,12 +5,13 @@ import (
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/input"
 	_ "ShrimpSanctuary/internal/input"
-	"ShrimpSanctuary/pkg/utils"
 	rl "github.com/gen2brain/raylib-go/raylib"
+	"strconv"
 )
 
 const (
-	ASBtnFontSize = 55
+	ASBtnFontSize   = 55
+	ASMoneyFontSize = 30
 
 	ASButtonsY      = 520
 	ASButtonsWidth  = 140
@@ -27,22 +28,16 @@ const (
 )
 
 type AquariumScreen struct {
-	Game                  *game.Game
-	Buttons               []*input.Button
-	bgTexture             rl.Texture2D
-	shrimpTexture         rl.Texture2D
-	shrimpTextureReversed rl.Texture2D
+	Game    *game.Game
+	Buttons []*input.Button
+	ts      *config.TextureStorage
 }
 
-func NewAquariumScreen(game *game.Game) *AquariumScreen {
+func NewAquariumScreen(game *game.Game, ts *config.TextureStorage) *AquariumScreen {
 	as := new(AquariumScreen)
 
 	as.Game = game
-
-	as.bgTexture = utils.SpriteToTexture(config.AquariumBgSprite)
-
-	as.shrimpTexture = utils.SpriteToTexture(config.CherryShrimpSprite)
-	as.shrimpTextureReversed = utils.SpriteToTexture(config.CherryShrimpReversedSprite)
+	as.ts = ts
 
 	as.Buttons = []*input.Button{
 		input.NewButton(
@@ -95,8 +90,9 @@ func NewAquariumScreen(game *game.Game) *AquariumScreen {
 }
 
 func (as *AquariumScreen) Draw() {
-	rl.DrawTexture(as.bgTexture, 0, 0, rl.White)
+	rl.DrawTexture(as.ts.AquariumScreen, 0, 0, rl.White)
 	as.drawButtons()
+	as.drawMoney()
 	as.drawShrimps()
 	as.drawFood()
 	as.drawPollute()
@@ -117,12 +113,20 @@ func (as *AquariumScreen) drawButtons() {
 	}
 }
 
+func (as *AquariumScreen) drawMoney() {
+	rl.DrawTexture(as.ts.Coin, config.MoneyX, config.MoneyY, rl.White)
+	rl.DrawText(strconv.Itoa(as.Game.Money),
+		config.MoneyX+config.StandardSquareSpriteSide+config.BorderOffset,
+		config.MoneyY+(config.StandardSquareSpriteSide-ASMoneyFontSize)/2,
+		ASMoneyFontSize, rl.White)
+}
+
 func (as *AquariumScreen) drawShrimps() {
 	for i := range as.Game.Shrimps {
 		if as.Game.Shrimps[i].Vx < 0 {
-			rl.DrawTextureV(as.shrimpTextureReversed, as.Game.Shrimps[i].Position, rl.White)
+			rl.DrawTextureV(as.ts.CherryShrimpReversed, as.Game.Shrimps[i].Position, rl.White)
 		} else {
-			rl.DrawTextureV(as.shrimpTexture, as.Game.Shrimps[i].Position, rl.White)
+			rl.DrawTextureV(as.ts.CherryShrimp, as.Game.Shrimps[i].Position, rl.White)
 		}
 	}
 }

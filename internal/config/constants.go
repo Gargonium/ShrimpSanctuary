@@ -17,6 +17,8 @@ const (
 	AquariumHeight      = 500
 	AquariumBorderWidth = 5
 	SandHeight          = 25
+	MoneyX              = 10
+	MoneyY              = 25
 	//SandWidth           = AquariumWidth - 2*AquariumBorderWidth
 	//SandX               = AquariumX + AquariumBorderWidth
 	//SandY               = AquariumY + AquariumHeight - AquariumBorderWidth - SandHeight
@@ -47,11 +49,24 @@ var PlayFieldBounds = rl.Rectangle{X: PlayFieldX, Y: PlayFieldY, Width: PlayFiel
 
 // Shrimps
 const (
-	ShrimpWidth             = 32
-	ShrimpHeight            = 32
 	ShrimpStartCount        = 3
 	ShrimpMaxVelocity       = 0.5
 	ShrimpBehaviourMaxDelay = FPS * 5
+	ShrimpMoneyDelay        = FPS * 30
+)
+
+type ShrimpType int
+
+const (
+	CherryShrimp ShrimpType = iota
+)
+
+var MoneyByShrimp = map[ShrimpType]int{
+	CherryShrimp: 25,
+}
+
+const (
+	StandardSquareSpriteSide = 32
 )
 
 // Sprites paths
@@ -62,6 +77,7 @@ const (
 	ShopBgSprite               = "assets/sprites/Shop.png"
 	CherryShrimpSprite         = "assets/sprites/CherryShrimp.png"
 	CherryShrimpReversedSprite = "assets/sprites/CherryShrimpReversed.png"
+	CoinSprite                 = "assets/sprites/Coin.png"
 )
 
 // Fonts paths

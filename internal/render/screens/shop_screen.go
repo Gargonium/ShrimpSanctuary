@@ -4,20 +4,19 @@ import (
 	"ShrimpSanctuary/internal/config"
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/input"
-	"ShrimpSanctuary/pkg/utils"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 type ShopScreen struct {
-	Game      *game.Game
-	Buttons   []*input.Button
-	bgTexture rl.Texture2D
+	Game    *game.Game
+	Buttons []*input.Button
+	ts      *config.TextureStorage
 }
 
-func NewShopScreen(game *game.Game) *ShopScreen {
+func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
 	ss := new(ShopScreen)
 	ss.Game = game
-	ss.bgTexture = utils.SpriteToTexture(config.ShopBgSprite)
+	ss.ts = ts
 	return ss
 }
 
@@ -27,7 +26,7 @@ func (ss *ShopScreen) HandleInput() {
 	}
 }
 func (ss *ShopScreen) Draw() {
-	rl.DrawTexture(ss.bgTexture, 0, 0, rl.White)
+	rl.DrawTexture(ss.ts.ShopScreen, 0, 0, rl.White)
 }
 func (ss *ShopScreen) drawButtons() {
 

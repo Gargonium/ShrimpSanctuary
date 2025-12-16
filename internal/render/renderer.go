@@ -10,20 +10,22 @@ import (
 type Render struct {
 	Game           *game.Game
 	sb             *sound_bar.SoundBar
+	ts             *config.TextureStorage
 	AquariumScreen *screens.AquariumScreen
 	MenuScreen     *screens.MenuScreen
 	SettingsScreen *screens.SettingsScreen
 	ShopScreen     *screens.ShopScreen
 }
 
-func NewRender(g *game.Game, sb *sound_bar.SoundBar) *Render {
+func NewRender(g *game.Game, sb *sound_bar.SoundBar, ts *config.TextureStorage) *Render {
 	r := new(Render)
-	r.AquariumScreen = screens.NewAquariumScreen(g)
-	r.MenuScreen = screens.NewMenuScreen(g)
-	r.SettingsScreen = screens.NewSettingsScreen(g, sb)
-	r.ShopScreen = screens.NewShopScreen(g)
+	r.AquariumScreen = screens.NewAquariumScreen(g, ts)
+	r.MenuScreen = screens.NewMenuScreen(g, ts)
+	r.SettingsScreen = screens.NewSettingsScreen(g, sb, ts)
+	r.ShopScreen = screens.NewShopScreen(g, ts)
 	r.Game = g
 	r.sb = sb
+	r.ts = ts
 
 	return r
 }

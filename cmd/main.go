@@ -9,14 +9,15 @@ import (
 )
 
 func main() {
-	rl.InitWindow(config.ScreenWidth, config.ScreenHeight, "Shrimp Sanctuary")
+	rl.InitWindow(config.ScreenWidth, config.ScreenHeight, "CherryShrimp Sanctuary")
 	rl.InitAudioDevice()
 	rl.SetTargetFPS(config.FPS)
 	rl.SetConfigFlags(rl.FlagMsaa4xHint)
 
+	ts := config.NewTextureStorage()
 	sb := sound_bar.NewSoundBar()
 	g := game.NewGame()
-	r := render.NewRender(g, sb)
+	r := render.NewRender(g, sb, ts)
 
 	sb.PlayBgMusic()
 

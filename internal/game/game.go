@@ -14,6 +14,7 @@ type Game struct {
 	Foods        []*entities.Food
 	Pollution    []*entities.Pollute
 	PolluteDelay int32
+	Money        int
 	IsFeeding    bool
 	IsCleaning   bool
 }
@@ -23,9 +24,10 @@ func NewGame() *Game {
 	g.Shrimps = make([]*entities.Shrimp, 0)
 	g.Foods = make([]*entities.Food, 0)
 	g.Pollution = make([]*entities.Pollute, 0)
+	g.Money = 0
 
 	for i := 0; i < config.ShrimpStartCount; i++ {
-		g.AddShrimpInstance(entities.NewShrimp())
+		g.AddShrimpInstance(entities.NewShrimp(config.CherryShrimp))
 	}
 
 	g.PolluteDelay = 0 //config.PolluteSpawnDelay + rand.Int31n(config.PolluteSpawnDelaySpread * 2) - config.PolluteSpawnDelaySpread
@@ -40,9 +42,10 @@ func (g *Game) Update() {
 
 	if g.State == config.StateAquarium {
 		var foodsToDelete []int
-		for i := range g.Shrimps {
-			g.Shrimps[i].Move()
-			foodsToDelete = append(foodsToDelete, g.ShrimpFoodCollide(g.Shrimps[i])...)
+		for _, s := range g.Shrimps {
+			s.Move()
+			foodsToDelete = append(foodsToDelete, g.ShrimpFoodCollide(s)...)
+			g.Money += s.PoopMoney()
 		}
 
 		for i := range g.Foods {
@@ -59,6 +62,7 @@ func (g *Game) Update() {
 			g.PolluteDelay = config.PolluteSpawnDelay + rand.Int31n(config.PolluteSpawnDelaySpread*2) - config.PolluteSpawnDelaySpread
 		}
 		g.PolluteDelay--
+
 	}
 
 }
@@ -120,7 +124,7 @@ func (g *Game) ShrimpFoodCollide(s *entities.Shrimp) []int {
 	var foodCollide []int
 	for i := range g.Foods {
 		f := g.Foods[i]
-		if utils.CollideCircleRect(f.Position, config.FoodRadius, s.Position.X, s.Position.Y, config.ShrimpWidth, config.ShrimpHeight) {
+		if utils.CollideCircleRect(f.Position, config.FoodRadius, s.Position.X, s.Position.Y, config.StandardSquareSpriteSide, config.StandardSquareSpriteSide) {
 			foodCollide = append(foodCollide, i)
 		}
 	}
