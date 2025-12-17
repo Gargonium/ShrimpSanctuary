@@ -5,6 +5,8 @@ import (
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/render"
 	"ShrimpSanctuary/internal/sound_bar"
+	"ShrimpSanctuary/pkg"
+	"fmt"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -14,12 +16,30 @@ func main() {
 	rl.SetTargetFPS(config.FPS)
 	rl.SetConfigFlags(rl.FlagMsaa4xHint)
 
+	sv := pkg.NewSaveManager()
 	ts := config.NewTextureStorage()
 	sb := sound_bar.NewSoundBar()
 	g := game.NewGame()
+
+	if sv.SaveExists() {
+		err := sv.LoadGame(g)
+		if err != nil {
+			fmt.Println("Load Error:", err)
+		}
+	}
+
 	r := render.NewRender(g, sb, ts)
 
+	defer func() {
+		fmt.Println("Saving game...")
+		if err := sv.SaveGame(g); err != nil {
+			fmt.Println("Save Error:", err)
+		}
+	}()
+
 	sb.PlayBgMusic()
+
+	var beforeAutoSave = config.AutoSaveDelay
 
 	for !rl.WindowShouldClose() && g.State != config.StateQuit {
 		r.Update()
@@ -27,6 +47,15 @@ func main() {
 		rl.BeginDrawing()
 		r.Draw()
 		rl.EndDrawing()
+
+		if beforeAutoSave == 0 {
+			err := sv.AutoSave(g)
+			if err != nil {
+				fmt.Println("Auto Save Error:", err)
+			}
+			beforeAutoSave = config.AutoSaveDelay
+		}
+		beforeAutoSave--
 	}
 
 	sb.StopBgMusic()

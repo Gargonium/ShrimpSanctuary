@@ -7,6 +7,7 @@ const (
 	FPS          = 60
 	ScreenWidth  = 1280
 	ScreenHeight = 720
+	StartMoney   = 100000
 )
 
 // Aquarium constants
@@ -159,5 +160,5 @@ var WallpaperCost = map[WallpaperState]int{
 }
 
 const (
-	StartMoney = 100000
+	AutoSaveDelay = FPS * 5 * 60
 )

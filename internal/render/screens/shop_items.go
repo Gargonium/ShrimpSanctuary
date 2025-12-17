@@ -36,3 +36,8 @@ func NewWallpaperItem(btn *input.Button, wt int) *WallpaperItem {
 	wi.IsActive = false
 	return wi
 }
+
+func (wi *WallpaperItem) SetBoughtAndActive(isBought, isActive bool) {
+	wi.IsBought = isBought
+	wi.IsActive = isActive
+}

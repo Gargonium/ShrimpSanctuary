@@ -148,8 +148,12 @@ func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
 				ss.HandleBuyBtnClick,
 				SSBuyBtnFontSize,
 			)
-			ss.WallpaperItems = append(ss.WallpaperItems,
-				NewWallpaperItem(btn, SSWallpapersItemRowCount*i+j))
+			wi := NewWallpaperItem(btn, SSWallpapersItemRowCount*i+j)
+			ss.WallpaperItems = append(ss.WallpaperItems, wi)
+			wi.SetBoughtAndActive(ss.wallpaperUnlocked(wi.Type), ss.wallpaperActive(wi.Type))
+			if wi.IsBought {
+				btn.Text = SSApplyBtnName
+			}
 		}
 	}
 
@@ -367,6 +371,7 @@ func (ss *ShopScreen) HandleBuyBtnClick() {
 					ss.Game.Money -= wi.Cost
 					wi.IsBought = true
 					wi.BuyButton.Text = SSApplyBtnName
+					ss.Game.UnlockedWallpaper = append(ss.Game.UnlockedWallpaper, wi.Type)
 				}
 			} else {
 				if wi.IsActive {
@@ -384,4 +389,20 @@ func (ss *ShopScreen) HandleBuyBtnClick() {
 		}
 	case config.ShopStateDecor:
 	}
+}
+
+func (ss *ShopScreen) wallpaperUnlocked(wt config.WallpaperState) bool {
+	for _, w := range ss.Game.UnlockedWallpaper {
+		if w == wt {
+			return true
+		}
+	}
+	return false
+}
+
+func (ss *ShopScreen) wallpaperActive(wt config.WallpaperState) bool {
+	if ss.Game.WallpaperState == wt {
+		return true
+	}
+	return false
 }
