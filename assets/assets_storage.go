@@ -1,8 +1,17 @@
-package config
+package assets
 
 import (
-	"ShrimpSanctuary/pkg/utils"
 	rl "github.com/gen2brain/raylib-go/raylib"
+)
+
+// Fonts paths
+const (
+	WinterFontPath = "assets/fonts/Winter.ttf"
+)
+
+// Sound paths
+const (
+	BgMusicPath = "assets/sounds/Background.mp3"
 )
 
 // Sprites paths
@@ -29,7 +38,13 @@ const (
 	UnmuteSprite = "assets/sprites/Other/Unmute.png"
 )
 
-type TextureStorage struct {
+type AssetStorage struct {
+	assetMgr *AssetManager
+
+	BackgroundMusic rl.Music
+
+	WinterFont rl.Font
+
 	Mute   rl.Texture2D
 	Unmute rl.Texture2D
 
@@ -53,29 +68,33 @@ type TextureStorage struct {
 	Coin rl.Texture2D
 }
 
-func NewTextureStorage() *TextureStorage {
-	ts := new(TextureStorage)
+func NewTextureStorage(manager *AssetManager) *AssetStorage {
+	ts := new(AssetStorage)
 
-	ts.MenuScreen = utils.SpriteToTexture(MenuBgSprite)
-	ts.AquariumScreen = utils.SpriteToTexture(AquariumBgSprite)
-	ts.SettingsScreen = utils.SpriteToTexture(SettingsBgSprite)
+	ts.BackgroundMusic = manager.LoadMusic(BgMusicPath)
 
-	ts.ShopScreen = utils.SpriteToTexture(ShopBgSprite)
-	ts.ShopShrimps = utils.SpriteToTexture(ShopShrimpsSprite)
-	ts.ShopWallpaper = utils.SpriteToTexture(ShopWallpaperSprite)
-	ts.ShopDecor = utils.SpriteToTexture(ShopDecorSprite)
+	ts.WinterFont = manager.LoadFont(WinterFontPath)
 
-	ts.CherryShrimp = utils.SpriteToTexture(CherryShrimpSprite)
-	ts.CherryShrimpReversed = utils.SpriteToTexture(CherryShrimpReversedSprite)
+	ts.MenuScreen = manager.LoadScreensTexture(MenuBgSprite)
+	ts.AquariumScreen = manager.LoadScreensTexture(AquariumBgSprite)
+	ts.SettingsScreen = manager.LoadScreensTexture(SettingsBgSprite)
 
-	ts.PvZWallpaper = utils.SpriteToTexture(PvZWallpaper)
-	ts.CityWallpaper = utils.SpriteToTexture(CityWallpaper)
-	ts.NiceWallpaper = utils.SpriteToTexture(NiceWallpaper)
-	ts.GundamWallpaper = utils.SpriteToTexture(GundamWallpaper)
+	ts.ShopScreen = manager.LoadScreensTexture(ShopBgSprite)
+	ts.ShopShrimps = manager.LoadScreensTexture(ShopShrimpsSprite)
+	ts.ShopWallpaper = manager.LoadScreensTexture(ShopWallpaperSprite)
+	ts.ShopDecor = manager.LoadScreensTexture(ShopDecorSprite)
 
-	ts.Coin = utils.SpriteToTexture(CoinSprite)
-	ts.Mute = utils.SpriteToTexture(MuteSprite)
-	ts.Unmute = utils.SpriteToTexture(UnmuteSprite)
+	ts.CherryShrimp = manager.LoadShrimpsTexture(CherryShrimpSprite)
+	ts.CherryShrimpReversed = manager.LoadShrimpsTexture(CherryShrimpReversedSprite)
+
+	ts.PvZWallpaper = manager.LoadWallpapersTexture(PvZWallpaper)
+	ts.CityWallpaper = manager.LoadWallpapersTexture(CityWallpaper)
+	ts.NiceWallpaper = manager.LoadWallpapersTexture(NiceWallpaper)
+	ts.GundamWallpaper = manager.LoadWallpapersTexture(GundamWallpaper)
+
+	ts.Coin = manager.LoadOtherTexture(CoinSprite)
+	ts.Mute = manager.LoadOtherTexture(MuteSprite)
+	ts.Unmute = manager.LoadOtherTexture(UnmuteSprite)
 
 	return ts
 }

@@ -1,6 +1,7 @@
 package screens
 
 import (
+	"ShrimpSanctuary/assets"
 	"ShrimpSanctuary/internal/config"
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/input"
@@ -38,16 +39,16 @@ type SettingsScreen struct {
 	Game           *game.Game
 	SoundBar       *sound_bar.SoundBar
 	Buttons        []*input.Button
-	ts             *config.TextureStorage
+	ts             *assets.AssetStorage
 	MusicSliderX   float32
 	EffectsSliderX float32
 }
 
-func NewSettingsScreen(game *game.Game, sb *sound_bar.SoundBar, ts *config.TextureStorage) *SettingsScreen {
+func NewSettingsScreen(game *game.Game, sb *sound_bar.SoundBar, as *assets.AssetStorage) *SettingsScreen {
 	ss := new(SettingsScreen)
 	ss.Game = game
 	ss.SoundBar = sb
-	ss.ts = ts
+	ss.ts = as
 	ss.MusicSliderX = SeSSliderMinX + (SeSSliderMaxX-SeSSliderMinX)*sb.GetMusicVolume()
 	ss.EffectsSliderX = SeSSliderMinX + (SeSSliderMaxX-SeSSliderMinX)*sb.GetEffectsVolume()
 
@@ -62,6 +63,7 @@ func NewSettingsScreen(game *game.Game, sb *sound_bar.SoundBar, ts *config.Textu
 			SeSBackBtnName,
 			ss.HandleBackBtnClick,
 			SeSBtnFontSize,
+			as,
 		),
 		input.NewButton(
 			rl.NewRectangle(
@@ -73,6 +75,7 @@ func NewSettingsScreen(game *game.Game, sb *sound_bar.SoundBar, ts *config.Textu
 			SeSApplyBtnName,
 			ss.HandleApplyBtnClick,
 			SeSBtnFontSize,
+			as,
 		),
 	}
 

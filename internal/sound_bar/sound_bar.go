@@ -1,7 +1,7 @@
 package sound_bar
 
 import (
-	"ShrimpSanctuary/internal/config"
+	"ShrimpSanctuary/assets"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -12,9 +12,9 @@ type SoundBar struct {
 	background    rl.Music
 }
 
-func NewSoundBar() *SoundBar {
+func NewSoundBar(ts *assets.AssetStorage) *SoundBar {
 	sb := new(SoundBar)
-	sb.background = loadSound(config.BgMusicPath)
+	sb.background = ts.BackgroundMusic
 	sb.isMuted = false
 
 	if !rl.IsAudioDeviceReady() {
@@ -67,15 +67,6 @@ func (sb *SoundBar) StopBgMusic() {
 
 func (sb *SoundBar) IsMuted() bool {
 	return sb.isMuted
-}
-
-func loadSound(musicPath string) rl.Music {
-	music := rl.LoadMusicStream(musicPath)
-
-	if music.Stream.Buffer == nil {
-		rl.TraceLog(rl.LogError, "Не удалось загрузить музыку! Проверьте путь к файлу.")
-	}
-	return music
 }
 
 func (sb *SoundBar) GetMusicVolume() float32 {

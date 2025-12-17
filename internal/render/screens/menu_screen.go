@@ -1,6 +1,7 @@
 package screens
 
 import (
+	"ShrimpSanctuary/assets"
 	"ShrimpSanctuary/internal/config"
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/input"
@@ -31,14 +32,14 @@ type MenuScreen struct {
 	Game    *game.Game
 	Buttons []*input.Button
 	sb      *sound_bar.SoundBar
-	ts      *config.TextureStorage
+	ts      *assets.AssetStorage
 }
 
-func NewMenuScreen(game *game.Game, sb *sound_bar.SoundBar, ts *config.TextureStorage) *MenuScreen {
+func NewMenuScreen(game *game.Game, sb *sound_bar.SoundBar, as *assets.AssetStorage) *MenuScreen {
 	ms := new(MenuScreen)
 	ms.Game = game
 	ms.sb = sb
-	ms.ts = ts
+	ms.ts = as
 
 	ms.Buttons = []*input.Button{
 		input.NewButton(
@@ -51,6 +52,7 @@ func NewMenuScreen(game *game.Game, sb *sound_bar.SoundBar, ts *config.TextureSt
 			MSPlayBtnName,
 			ms.HandlePlayBtnClick,
 			MSBtnFontSize,
+			as,
 		),
 		input.NewButton(
 			rl.NewRectangle(
@@ -62,6 +64,7 @@ func NewMenuScreen(game *game.Game, sb *sound_bar.SoundBar, ts *config.TextureSt
 			MSSettingsBtnName,
 			ms.HandleSettingsBtnClick,
 			MSBtnFontSize,
+			as,
 		),
 		input.NewButton(
 			rl.NewRectangle(
@@ -73,6 +76,7 @@ func NewMenuScreen(game *game.Game, sb *sound_bar.SoundBar, ts *config.TextureSt
 			MSExitBtnName,
 			ms.HandleExitBtnClick,
 			MSBtnFontSize,
+			as,
 		),
 		input.NewButton(
 			rl.NewRectangle(
@@ -84,6 +88,7 @@ func NewMenuScreen(game *game.Game, sb *sound_bar.SoundBar, ts *config.TextureSt
 			MSMuteBtnName,
 			ms.HandleMuteBtnClick,
 			MSBtnFontSize,
+			as,
 		),
 	}
 

@@ -34,23 +34,18 @@ if "%choice%"=="2" (
 REM Создаем папку для релиза с указанием архитектуры
 set RELEASE_FOLDER=release_%OS%_%ARCH%
 if not exist "%RELEASE_FOLDER%" mkdir "%RELEASE_FOLDER%"
-if not exist "%RELEASE_FOLDER%\assets" mkdir "%RELEASE_FOLDER%\assets"
 
 REM Сборка для выбранной платформы
 echo Start build for %OS% %ARCH%...
 set GOOS=%OS%
 set GOARCH=%ARCH%
-if "%choice%"=="1" (
-    go build -ldflags="-H windowsgui -s -w" -o "%RELEASE_FOLDER%\ShrimpSanctuary%SUFFIX%" ./cmd
-) else if "%choice%"=="2" (
+if "%OS%"=="windows" (
     go build -ldflags="-H windowsgui -s -w" -o "%RELEASE_FOLDER%\ShrimpSanctuary%SUFFIX%" ./cmd
 )  else (
     go build -ldflags="-s -w" -o "%RELEASE_FOLDER%\ShrimpSanctuary%SUFFIX%" ./cmd
 )
 
 
-REM Копирование ресурсов и создание архива
-xcopy /E /I /Y "assets\*" "%RELEASE_FOLDER%\assets\"
 cd "%RELEASE_FOLDER%"
 powershell "Compress-Archive -Path * -DestinationPath 'ShrimpSanctuary_%OS%_%ARCH%.zip' -Force"
 cd ..

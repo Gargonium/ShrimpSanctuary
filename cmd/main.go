@@ -1,6 +1,7 @@
 package main
 
 import (
+	"ShrimpSanctuary/assets"
 	"ShrimpSanctuary/internal/config"
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/render"
@@ -16,9 +17,12 @@ func main() {
 	rl.SetTargetFPS(config.FPS)
 	rl.SetConfigFlags(rl.FlagMsaa4xHint)
 
+	assetMgr := assets.NewAssetManager()
+	defer assetMgr.Cleanup()
+
 	sv := pkg.NewSaveManager()
-	ts := config.NewTextureStorage()
-	sb := sound_bar.NewSoundBar()
+	ts := assets.NewTextureStorage(assetMgr)
+	sb := sound_bar.NewSoundBar(ts)
 	g := game.NewGame()
 
 	if sv.SaveExists() {

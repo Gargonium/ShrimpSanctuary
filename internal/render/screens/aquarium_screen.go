@@ -1,6 +1,7 @@
 package screens
 
 import (
+	"ShrimpSanctuary/assets"
 	"ShrimpSanctuary/internal/config"
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/input"
@@ -30,14 +31,14 @@ const (
 type AquariumScreen struct {
 	Game    *game.Game
 	Buttons []*input.Button
-	ts      *config.TextureStorage
+	ts      *assets.AssetStorage
 }
 
-func NewAquariumScreen(game *game.Game, ts *config.TextureStorage) *AquariumScreen {
+func NewAquariumScreen(game *game.Game, assetStorage *assets.AssetStorage) *AquariumScreen {
 	as := new(AquariumScreen)
 
 	as.Game = game
-	as.ts = ts
+	as.ts = assetStorage
 
 	as.Buttons = []*input.Button{
 		input.NewButton(
@@ -50,6 +51,7 @@ func NewAquariumScreen(game *game.Game, ts *config.TextureStorage) *AquariumScre
 			ASFeedBtnName,
 			as.HandleFeedBtnClick,
 			ASBtnFontSize,
+			assetStorage,
 		),
 		input.NewButton(
 			rl.NewRectangle(
@@ -61,6 +63,7 @@ func NewAquariumScreen(game *game.Game, ts *config.TextureStorage) *AquariumScre
 			ASCleanBtnName,
 			as.HandleCleanBtnClick,
 			ASBtnFontSize,
+			assetStorage,
 		),
 		input.NewButton(
 			rl.NewRectangle(
@@ -72,6 +75,7 @@ func NewAquariumScreen(game *game.Game, ts *config.TextureStorage) *AquariumScre
 			ASShopBtnName,
 			as.HandleShopBtnClick,
 			ASBtnFontSize,
+			assetStorage,
 		),
 		input.NewButton(
 			rl.NewRectangle(
@@ -83,6 +87,7 @@ func NewAquariumScreen(game *game.Game, ts *config.TextureStorage) *AquariumScre
 			ASMenuBtnName,
 			as.HandleMenuBtnClick,
 			ASBtnFontSize,
+			assetStorage,
 		),
 	}
 

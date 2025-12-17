@@ -1,6 +1,7 @@
 package render
 
 import (
+	"ShrimpSanctuary/assets"
 	"ShrimpSanctuary/internal/config"
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/render/screens"
@@ -10,14 +11,14 @@ import (
 type Render struct {
 	Game           *game.Game
 	sb             *sound_bar.SoundBar
-	ts             *config.TextureStorage
+	ts             *assets.AssetStorage
 	AquariumScreen *screens.AquariumScreen
 	MenuScreen     *screens.MenuScreen
 	SettingsScreen *screens.SettingsScreen
 	ShopScreen     *screens.ShopScreen
 }
 
-func NewRender(g *game.Game, sb *sound_bar.SoundBar, ts *config.TextureStorage) *Render {
+func NewRender(g *game.Game, sb *sound_bar.SoundBar, ts *assets.AssetStorage) *Render {
 	r := new(Render)
 	r.AquariumScreen = screens.NewAquariumScreen(g, ts)
 	r.MenuScreen = screens.NewMenuScreen(g, sb, ts)

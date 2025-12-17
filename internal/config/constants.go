@@ -98,16 +98,6 @@ const (
 	BigSquareSpriteSide      = 64
 )
 
-// Fonts paths
-const (
-	WinterFont = "assets/fonts/Winter.ttf"
-)
-
-// Sound paths
-const (
-	BgMusicPath = "assets/sounds/Background.mp3"
-)
-
 // Food
 const (
 	FoodRadius   = 5

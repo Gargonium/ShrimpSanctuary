@@ -1,6 +1,7 @@
 package screens
 
 import (
+	"ShrimpSanctuary/assets"
 	"ShrimpSanctuary/internal/config"
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/game/entities"
@@ -58,14 +59,14 @@ type ShopScreen struct {
 	MenuButtons    []*input.Button
 	ShrimpItems    []*ShrimpItem
 	WallpaperItems []*WallpaperItem
-	ts             *config.TextureStorage
+	ts             *assets.AssetStorage
 	State          config.ShopState
 }
 
-func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
+func NewShopScreen(game *game.Game, as *assets.AssetStorage) *ShopScreen {
 	ss := new(ShopScreen)
 	ss.Game = game
-	ss.ts = ts
+	ss.ts = as
 	ss.State = config.ShopStateShrimps
 
 	ss.MenuButtons = []*input.Button{
@@ -79,6 +80,7 @@ func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
 			SSShrimpsBtnName,
 			ss.HandleShrimpsBtnClick,
 			SSBtnFontSize,
+			as,
 		),
 		input.NewButton(
 			rl.NewRectangle(
@@ -90,6 +92,7 @@ func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
 			SSWallpaperBtnName,
 			ss.HandleWallpaperBtnClick,
 			SSBtnFontSize,
+			as,
 		),
 		input.NewButton(
 			rl.NewRectangle(
@@ -101,6 +104,7 @@ func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
 			SSDecorBtnName,
 			ss.HandleDecorBtnClick,
 			SSBtnFontSize,
+			as,
 		),
 		input.NewButton(
 			rl.NewRectangle(
@@ -112,6 +116,7 @@ func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
 			SSBackBtnName,
 			ss.HandleBackBtnClick,
 			SSBtnFontSize,
+			as,
 		),
 	}
 
@@ -128,6 +133,7 @@ func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
 				SSBuyBtnName,
 				ss.HandleBuyBtnClick,
 				SSBuyBtnFontSize,
+				as,
 			)
 			ss.ShrimpItems = append(ss.ShrimpItems,
 				NewShrimpItem(btn, SSShrimpsItemRowCount*i+j))
@@ -147,6 +153,7 @@ func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
 				SSBuyBtnName,
 				ss.HandleBuyBtnClick,
 				SSBuyBtnFontSize,
+				as,
 			)
 			wi := NewWallpaperItem(btn, SSWallpapersItemRowCount*i+j)
 			ss.WallpaperItems = append(ss.WallpaperItems, wi)
