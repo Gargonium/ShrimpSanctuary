@@ -175,13 +175,13 @@ func (as *AquariumScreen) drawFood() {
 		foodColor := config.FoodColor
 		foodBorderColor := config.FoodBorderColor
 
-		//foodCondition := float32(f.GetLifeTime()) / float32(config.FoodLifeTime)
-		//
-		//if foodCondition < 0.5 {
-		//	foodCondition *= 2
-		//	foodColor.A = uint8(float32(foodColor.A) * foodCondition)
-		//	foodBorderColor.A = uint8(float32(foodBorderColor.A) * foodCondition)
-		//}
+		foodCondition := float32(f.GetLifeTime()) / float32(config.FoodLifeTime)
+
+		if foodCondition < 0.5 {
+			foodCondition *= 2
+			foodColor.A = uint8(float32(foodColor.A) * foodCondition)
+			foodBorderColor.A = uint8(float32(foodBorderColor.A) * foodCondition)
+		}
 
 		rl.DrawCircleV(f.Position, config.FoodRadius, foodColor)
 		rl.DrawCircleLinesV(f.Position, config.FoodRadius, foodBorderColor)
