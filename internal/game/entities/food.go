@@ -36,3 +36,7 @@ func (f *Food) MoveAndDisappear() {
 	}
 	f.lifeTime--
 }
+
+func (f *Food) GetLifeTime() int {
+	return f.lifeTime
+}

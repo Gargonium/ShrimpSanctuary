@@ -132,11 +132,28 @@ func (as *AquariumScreen) drawMoney() {
 }
 
 func (as *AquariumScreen) drawShrimps() {
-	for i := range as.Game.Shrimps {
-		if as.Game.Shrimps[i].Vx < 0 {
-			rl.DrawTextureV(as.ts.CherryShrimpReversed, as.Game.Shrimps[i].Position, rl.White)
+	for _, s := range as.Game.Shrimps {
+		if !s.IsAlive {
+			continue
+		}
+
+		var ShrimpTexture, ReversedShrimpTexture rl.Texture2D
+		switch s.Type {
+		case config.CherryShrimp:
+			ShrimpTexture = as.ts.CherryShrimp
+			ReversedShrimpTexture = as.ts.CherryShrimpReversed
+		}
+
+		shrimpConditionTint := rl.NewColor(
+			255,
+			uint8(float32(s.Hunger)/float32(config.ShrimpMaxHunger)*255),
+			uint8(float32(s.Hunger)/float32(config.ShrimpMaxHunger)*255),
+			255,
+		)
+		if s.Vx >= 0 {
+			rl.DrawTextureV(ShrimpTexture, s.Position, shrimpConditionTint)
 		} else {
-			rl.DrawTextureV(as.ts.CherryShrimp, as.Game.Shrimps[i].Position, rl.White)
+			rl.DrawTextureV(ReversedShrimpTexture, s.Position, shrimpConditionTint)
 		}
 	}
 }
@@ -154,8 +171,20 @@ func (as *AquariumScreen) drawFood() {
 		if !f.IsAlive {
 			continue
 		}
-		rl.DrawCircleV(f.Position, config.FoodRadius, config.FoodColor)
-		rl.DrawCircleLinesV(f.Position, config.FoodRadius, config.FoodBorderColor)
+
+		foodColor := config.FoodColor
+		foodBorderColor := config.FoodBorderColor
+
+		//foodCondition := float32(f.GetLifeTime()) / float32(config.FoodLifeTime)
+		//
+		//if foodCondition < 0.5 {
+		//	foodCondition *= 2
+		//	foodColor.A = uint8(float32(foodColor.A) * foodCondition)
+		//	foodBorderColor.A = uint8(float32(foodBorderColor.A) * foodCondition)
+		//}
+
+		rl.DrawCircleV(f.Position, config.FoodRadius, foodColor)
+		rl.DrawCircleLinesV(f.Position, config.FoodRadius, foodBorderColor)
 	}
 }
 

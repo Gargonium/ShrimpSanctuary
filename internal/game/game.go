@@ -32,7 +32,7 @@ func NewGame() *Game {
 		g.AddShrimpInstance(entities.NewShrimp(config.CherryShrimp))
 	}
 
-	g.PolluteDelay = 0 //config.PolluteSpawnDelay + rand.Int31n(config.PolluteSpawnDelaySpread * 2) - config.PolluteSpawnDelaySpread
+	g.PolluteDelay = config.PolluteSpawnDelay + rand.Int31n(config.PolluteSpawnDelaySpread*2) - config.PolluteSpawnDelaySpread
 	g.IsFeeding = false
 	g.IsCleaning = false
 	g.State = config.StateMenu
@@ -62,6 +62,7 @@ func (g *Game) Update() {
 		g.PolluteDelay--
 
 		g.deleteDeadFood()
+		g.deleteDeadShrimps()
 	}
 }
 
@@ -73,6 +74,16 @@ func (g *Game) deleteDeadFood() {
 		}
 	}
 	g.Foods = newFoods
+}
+
+func (g *Game) deleteDeadShrimps() {
+	var newShrimps []*entities.Shrimp
+	for _, s := range g.Shrimps {
+		if s.IsAlive {
+			newShrimps = append(newShrimps, s)
+		}
+	}
+	g.Shrimps = newShrimps
 }
 
 func (g *Game) AddPollute() {
@@ -131,6 +142,7 @@ func (g *Game) DeletePollute(toDel int) {
 func (g *Game) ShrimpFoodCollide(s *entities.Shrimp) {
 	for _, f := range g.Foods {
 		if utils.CollideCircleRect(f.Position, config.FoodRadius, s.Position.X, s.Position.Y, config.StandardSquareSpriteSide, config.StandardSquareSpriteSide) {
+			s.Hunger = config.ShrimpMaxHunger
 			f.SelfDestruct()
 		}
 	}

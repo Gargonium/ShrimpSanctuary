@@ -13,6 +13,8 @@ type Shrimp struct {
 	BehaviourDelay int32
 	MoneyDelay     int32
 	Type           config.ShrimpType
+	Hunger         int
+	IsAlive        bool
 }
 
 func NewShrimp(t config.ShrimpType) *Shrimp {
@@ -25,6 +27,8 @@ func NewShrimp(t config.ShrimpType) *Shrimp {
 	shrimp.Type = t
 	shrimp.MoneyDelay = config.ShrimpMoneyDelay
 	shrimp.ShrimpWallCollide()
+	shrimp.Hunger = config.ShrimpMaxHunger
+	shrimp.IsAlive = true
 	return shrimp
 }
 
@@ -51,13 +55,28 @@ func (s *Shrimp) Move() {
 	s.Position.X += s.Vx
 	s.Position.Y += s.Vy
 	s.ShrimpWallCollide()
+
+	s.Starve()
+}
+
+func (s *Shrimp) Starve() {
+	s.Hunger--
+	if s.Hunger == 0 {
+		s.Die()
+	}
+}
+
+func (s *Shrimp) Die() {
+	s.IsAlive = false
 }
 
 func (s *Shrimp) PoopMoney() int {
-	s.MoneyDelay--
-	if s.MoneyDelay == 0 {
-		s.MoneyDelay = config.ShrimpMoneyDelay
-		return config.MoneyByShrimp[s.Type]
+	if !s.IsAlive {
+		s.MoneyDelay--
+		if s.MoneyDelay == 0 {
+			s.MoneyDelay = config.ShrimpMoneyDelay
+			return config.MoneyByShrimp[s.Type]
+		}
 	}
 	return 0
 }
