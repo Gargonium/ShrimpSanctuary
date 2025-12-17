@@ -104,6 +104,12 @@ func (as *AquariumScreen) drawWallpaper() {
 	case config.DefaultWallpaperState:
 	case config.PvZWallpaperState:
 		rl.DrawTexture(as.ts.PvZWallpaper, config.WaterX, config.WaterY, rl.White)
+	case config.CityWallpaperState:
+		rl.DrawTexture(as.ts.CityWallpaper, config.WaterX, config.WaterY, rl.White)
+	case config.NiceWallpaperState:
+		rl.DrawTexture(as.ts.NiceWallpaper, config.WaterX, config.WaterY, rl.White)
+	case config.GundamWallpaperState:
+		rl.DrawTexture(as.ts.GundamWallpaper, config.WaterX, config.WaterY, rl.White)
 	}
 	rl.DrawRectangle(config.WaterX, config.WaterY, config.WaterWidth, config.WaterHeight, config.WaterColor)
 }

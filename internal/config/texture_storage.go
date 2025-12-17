@@ -7,24 +7,26 @@ import (
 
 // Sprites paths
 const (
-	MuteSprite   = "assets/sprites/Mute.png"
-	UnmuteSprite = "assets/sprites/Unmute.png"
+	AquariumBgSprite = "assets/sprites/Screens/Aquarium.png"
+	MenuBgSprite     = "assets/sprites/Screens/Menu.png"
+	SettingsBgSprite = "assets/sprites/Screens/Settings.png"
 
-	AquariumBgSprite = "assets/sprites/Aquarium.png"
-	MenuBgSprite     = "assets/sprites/Menu.png"
-	SettingsBgSprite = "assets/sprites/Settings.png"
+	ShopBgSprite        = "assets/sprites/Screens/Shop.png"
+	ShopShrimpsSprite   = "assets/sprites/Screens/ShopShrimps.png"
+	ShopWallpaperSprite = "assets/sprites/Screens/ShopWallpaper.png"
+	ShopDecorSprite     = "assets/sprites/Screens/ShopDecor.png"
 
-	ShopBgSprite        = "assets/sprites/Shop.png"
-	ShopShrimpsSprite   = "assets/sprites/ShopShrimps.png"
-	ShopWallpaperSprite = "assets/sprites/ShopWallpaper.png"
-	ShopDecorSprite     = "assets/sprites/ShopDecor.png"
+	CherryShrimpSprite         = "assets/sprites/Shrimps/CherryShrimp.png"
+	CherryShrimpReversedSprite = "assets/sprites/Shrimps/CherryShrimpReversed.png"
 
-	CherryShrimpSprite         = "assets/sprites/CherryShrimp.png"
-	CherryShrimpReversedSprite = "assets/sprites/CherryShrimpReversed.png"
+	PvZWallpaper    = "assets/sprites/Wallpapers/PvZWallpaper.png"
+	CityWallpaper   = "assets/sprites/Wallpapers/CityWallpaper.png"
+	NiceWallpaper   = "assets/sprites/Wallpapers/NiceWallpaper.png"
+	GundamWallpaper = "assets/sprites/Wallpapers/GundamWallpaper.png"
 
-	PvZWallpaper = "assets/sprites/PvZWallpaper.png"
-
-	CoinSprite = "assets/sprites/Coin.png"
+	CoinSprite   = "assets/sprites/Other/Coin.png"
+	MuteSprite   = "assets/sprites/Other/Mute.png"
+	UnmuteSprite = "assets/sprites/Other/Unmute.png"
 )
 
 type TextureStorage struct {
@@ -43,16 +45,16 @@ type TextureStorage struct {
 	CherryShrimp         rl.Texture2D
 	CherryShrimpReversed rl.Texture2D
 
-	PvZWallpaper rl.Texture2D
+	PvZWallpaper    rl.Texture2D
+	CityWallpaper   rl.Texture2D
+	NiceWallpaper   rl.Texture2D
+	GundamWallpaper rl.Texture2D
 
 	Coin rl.Texture2D
 }
 
 func NewTextureStorage() *TextureStorage {
 	ts := new(TextureStorage)
-
-	ts.Mute = utils.SpriteToTexture(MuteSprite)
-	ts.Unmute = utils.SpriteToTexture(UnmuteSprite)
 
 	ts.MenuScreen = utils.SpriteToTexture(MenuBgSprite)
 	ts.AquariumScreen = utils.SpriteToTexture(AquariumBgSprite)
@@ -67,8 +69,13 @@ func NewTextureStorage() *TextureStorage {
 	ts.CherryShrimpReversed = utils.SpriteToTexture(CherryShrimpReversedSprite)
 
 	ts.PvZWallpaper = utils.SpriteToTexture(PvZWallpaper)
+	ts.CityWallpaper = utils.SpriteToTexture(CityWallpaper)
+	ts.NiceWallpaper = utils.SpriteToTexture(NiceWallpaper)
+	ts.GundamWallpaper = utils.SpriteToTexture(GundamWallpaper)
 
 	ts.Coin = utils.SpriteToTexture(CoinSprite)
+	ts.Mute = utils.SpriteToTexture(MuteSprite)
+	ts.Unmute = utils.SpriteToTexture(UnmuteSprite)
 
 	return ts
 }

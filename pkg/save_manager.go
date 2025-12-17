@@ -50,7 +50,6 @@ func NewSaveManager() *SaveManager {
 
 	cwd, _ := os.Getwd()
 	saveDir := filepath.Join(cwd, "saves")
-	println("0.", saveDir)
 
 	// Создаем папку если не существует
 	err := os.MkdirAll(saveDir, 0755)
@@ -58,7 +57,6 @@ func NewSaveManager() *SaveManager {
 		println(err)
 	}
 
-	println("3.", saveDir)
 	return &SaveManager{
 		SaveDir: saveDir,
 	}

@@ -147,17 +147,23 @@ type WallpaperState int
 const (
 	DefaultWallpaperState WallpaperState = iota
 	PvZWallpaperState
+	CityWallpaperState
+	NiceWallpaperState
+	GundamWallpaperState
 )
 
 var WallpaperTypesInShop = []WallpaperState{
 	PvZWallpaperState,
-	PvZWallpaperState,
-	PvZWallpaperState,
-	PvZWallpaperState,
+	CityWallpaperState,
+	NiceWallpaperState,
+	GundamWallpaperState,
 }
 
 var WallpaperCost = map[WallpaperState]int{
-	PvZWallpaperState: 1000,
+	PvZWallpaperState:    1000,
+	CityWallpaperState:   1000,
+	NiceWallpaperState:   1000,
+	GundamWallpaperState: 10000,
 }
 
 const (

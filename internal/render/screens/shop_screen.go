@@ -154,6 +154,9 @@ func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
 			if wi.IsBought {
 				btn.Text = SSApplyBtnName
 			}
+			if wi.IsActive {
+				btn.Color = config.ButtonColorFromStatus[config.ClickedBtnStatus]
+			}
 		}
 	}
 
