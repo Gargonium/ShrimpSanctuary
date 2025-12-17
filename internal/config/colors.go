@@ -18,3 +18,5 @@ var FoodBorderColor = rl.DarkBrown
 
 // Pollute
 var PolluteColor = rl.NewColor(0, 0, 0, 200)
+
+var WaterColor = rl.NewColor(62, 85, 130, 75)

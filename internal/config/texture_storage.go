@@ -5,6 +5,28 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
+// Sprites paths
+const (
+	MuteSprite   = "assets/sprites/Mute.png"
+	UnmuteSprite = "assets/sprites/Unmute.png"
+
+	AquariumBgSprite = "assets/sprites/Aquarium.png"
+	MenuBgSprite     = "assets/sprites/Menu.png"
+	SettingsBgSprite = "assets/sprites/Settings.png"
+
+	ShopBgSprite        = "assets/sprites/Shop.png"
+	ShopShrimpsSprite   = "assets/sprites/ShopShrimps.png"
+	ShopWallpaperSprite = "assets/sprites/ShopWallpaper.png"
+	ShopDecorSprite     = "assets/sprites/ShopDecor.png"
+
+	CherryShrimpSprite         = "assets/sprites/CherryShrimp.png"
+	CherryShrimpReversedSprite = "assets/sprites/CherryShrimpReversed.png"
+
+	PvZWallpaper = "assets/sprites/PvZWallpaper.png"
+
+	CoinSprite = "assets/sprites/Coin.png"
+)
+
 type TextureStorage struct {
 	Mute   rl.Texture2D
 	Unmute rl.Texture2D
@@ -20,6 +42,8 @@ type TextureStorage struct {
 
 	CherryShrimp         rl.Texture2D
 	CherryShrimpReversed rl.Texture2D
+
+	PvZWallpaper rl.Texture2D
 
 	Coin rl.Texture2D
 }
@@ -41,6 +65,8 @@ func NewTextureStorage() *TextureStorage {
 
 	ts.CherryShrimp = utils.SpriteToTexture(CherryShrimpSprite)
 	ts.CherryShrimpReversed = utils.SpriteToTexture(CherryShrimpReversedSprite)
+
+	ts.PvZWallpaper = utils.SpriteToTexture(PvZWallpaper)
 
 	ts.Coin = utils.SpriteToTexture(CoinSprite)
 

@@ -9,14 +9,15 @@ import (
 )
 
 type Game struct {
-	State        config.GameState
-	Shrimps      []*entities.Shrimp
-	Foods        []*entities.Food
-	Pollution    []*entities.Pollute
-	PolluteDelay int32
-	Money        int
-	IsFeeding    bool
-	IsCleaning   bool
+	State          config.GameState
+	WallpaperState config.WallpaperState
+	Shrimps        []*entities.Shrimp
+	Foods          []*entities.Food
+	Pollution      []*entities.Pollute
+	PolluteDelay   int32
+	Money          int
+	IsFeeding      bool
+	IsCleaning     bool
 }
 
 func NewGame() *Game {
@@ -34,6 +35,7 @@ func NewGame() *Game {
 	g.IsFeeding = false
 	g.IsCleaning = false
 	g.State = config.StateMenu
+	g.WallpaperState = config.DefaultWallpaperState
 
 	return g
 }

@@ -91,11 +91,21 @@ func NewAquariumScreen(game *game.Game, ts *config.TextureStorage) *AquariumScre
 
 func (as *AquariumScreen) Draw() {
 	rl.DrawTexture(as.ts.AquariumScreen, 0, 0, rl.White)
+	as.drawWallpaper()
 	as.drawButtons()
 	as.drawShrimps()
 	as.drawFood()
 	as.drawPollute()
 	as.drawMoney()
+}
+
+func (as *AquariumScreen) drawWallpaper() {
+	switch as.Game.WallpaperState {
+	case config.DefaultWallpaperState:
+	case config.PvZWallpaperState:
+		rl.DrawTexture(as.ts.PvZWallpaper, config.WaterX, config.WaterY, rl.White)
+	}
+	rl.DrawRectangle(config.WaterX, config.WaterY, config.WaterWidth, config.WaterHeight, config.WaterColor)
 }
 
 func (as *AquariumScreen) drawButtons() {

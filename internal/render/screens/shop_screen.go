@@ -33,38 +33,33 @@ const (
 	SSDecorBtnName     = "DECOR"
 	SSBackBtnName      = "BACK"
 
-	SSBuyBtnX          = 500
-	SSBuyBtnY          = 200
-	SSBuyBtnSide       = 80
-	SSBuyBtnHorOffset  = 660
-	SSBuyBtnVertOffset = 120
-
-	SSBuyBtnName = "BUY"
-
+	SSShrimpsBuyBtnSide      = 80
+	SSShrimpBuyBtnX          = 500
+	SSShrimpBuyBtnY          = 40 + SSMenuY
+	SSShrimpBuyBtnHorOffset  = 660
+	SSShrimpBuyBtnVertOffset = 120
 	SSShrimpsItemColumnCount = 4
 	SSShrimpsItemRowCount    = 2
+
+	SSWallpaperBuyBtnSide       = 100
+	SSWallpaperBuyBtnX          = 510
+	SSWallpaperBuyBtnY          = 100 + SSMenuY
+	SSWallpaperBuyBtnHorOffset  = 620
+	SSWallpaperBuyBtnVertOffset = 275
+	SSWallpapersItemColumnCount = 2
+	SSWallpapersItemRowCount    = 2
+
+	SSBuyBtnName   = "BUY"
+	SSApplyBtnName = "APPLY"
 )
 
-type ShrimpItem struct {
-	BuyButton  *input.Button
-	Cost       int
-	ShrimpType config.ShrimpType
-}
-
-func NewShrimpItem(btn *input.Button, cost int, tp config.ShrimpType) *ShrimpItem {
-	si := new(ShrimpItem)
-	si.BuyButton = btn
-	si.Cost = cost
-	si.ShrimpType = tp
-	return si
-}
-
 type ShopScreen struct {
-	Game        *game.Game
-	MenuButtons []*input.Button
-	ShrimpItems []*ShrimpItem
-	ts          *config.TextureStorage
-	State       config.ShopState
+	Game           *game.Game
+	MenuButtons    []*input.Button
+	ShrimpItems    []*ShrimpItem
+	WallpaperItems []*WallpaperItem
+	ts             *config.TextureStorage
+	State          config.ShopState
 }
 
 func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
@@ -118,17 +113,6 @@ func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
 			ss.HandleBackBtnClick,
 			SSBtnFontSize,
 		),
-		input.NewButton(
-			rl.NewRectangle(
-				610,
-				200,
-				74,
-				74,
-			),
-			"S",
-			ss.HandleSBtnClick,
-			SSBtnFontSize,
-		),
 	}
 
 	ss.ShrimpItems = make([]*ShrimpItem, 0)
@@ -136,17 +120,36 @@ func NewShopScreen(game *game.Game, ts *config.TextureStorage) *ShopScreen {
 		for j := 0; j < SSShrimpsItemRowCount; j++ {
 			btn := input.NewButton(
 				rl.NewRectangle(
-					float32(SSBuyBtnX+SSBuyBtnHorOffset*j),
-					float32(SSBuyBtnY+SSBuyBtnVertOffset*i),
-					SSBuyBtnSide,
-					SSBuyBtnSide,
+					float32(SSShrimpBuyBtnX+SSShrimpBuyBtnHorOffset*j),
+					float32(SSShrimpBuyBtnY+SSShrimpBuyBtnVertOffset*i),
+					SSShrimpsBuyBtnSide,
+					SSShrimpsBuyBtnSide,
 				),
 				SSBuyBtnName,
 				ss.HandleBuyBtnClick,
 				SSBuyBtnFontSize,
 			)
 			ss.ShrimpItems = append(ss.ShrimpItems,
-				NewShrimpItem(btn, config.ShrimpCost[config.CherryShrimp], config.CherryShrimp))
+				NewShrimpItem(btn, SSShrimpsItemRowCount*i+j))
+		}
+	}
+
+	ss.WallpaperItems = make([]*WallpaperItem, 0)
+	for i := 0; i < SSWallpapersItemColumnCount; i++ {
+		for j := 0; j < SSWallpapersItemRowCount; j++ {
+			btn := input.NewButton(
+				rl.NewRectangle(
+					float32(SSWallpaperBuyBtnX+SSWallpaperBuyBtnHorOffset*j),
+					float32(SSWallpaperBuyBtnY+SSWallpaperBuyBtnVertOffset*i),
+					SSWallpaperBuyBtnSide,
+					SSWallpaperBuyBtnSide,
+				),
+				SSBuyBtnName,
+				ss.HandleBuyBtnClick,
+				SSBuyBtnFontSize,
+			)
+			ss.WallpaperItems = append(ss.WallpaperItems,
+				NewWallpaperItem(btn, SSWallpapersItemRowCount*i+j))
 		}
 	}
 
@@ -166,7 +169,7 @@ func (ss *ShopScreen) HandleInput() {
 	case config.ShopStateShrimps:
 		ss.handleInputShrimpsScreen()
 	case config.ShopStateWallpaper:
-
+		ss.handleInputWallpaperScreen()
 	case config.ShopStateDecor:
 
 	}
@@ -183,10 +186,32 @@ func (ss *ShopScreen) handleInputShrimpsScreen() {
 	}
 }
 
+func (ss *ShopScreen) handleInputWallpaperScreen() {
+	for _, wi := range ss.WallpaperItems {
+		btn := wi.BuyButton
+		btn.Status = input.MouseButtonCollide(btn)
+		if !wi.IsActive {
+			btn.Color = config.ButtonColorFromStatus[btn.Status]
+		}
+		if btn.Status == config.ClickedBtnStatus {
+			btn.Action()
+		}
+	}
+}
+
 func (ss *ShopScreen) findClickedShrimpItem() *ShrimpItem {
 	for _, si := range ss.ShrimpItems {
 		if si.BuyButton.Status == config.ClickedBtnStatus {
 			return si
+		}
+	}
+	return nil
+}
+
+func (ss *ShopScreen) findClickedWallpaperItem() *WallpaperItem {
+	for _, wi := range ss.WallpaperItems {
+		if wi.BuyButton.Status == config.ClickedBtnStatus {
+			return wi
 		}
 	}
 	return nil
@@ -201,7 +226,7 @@ func (ss *ShopScreen) Draw() {
 	case config.ShopStateShrimps:
 		ss.drawShrimpsScreen()
 	case config.ShopStateWallpaper:
-		rl.DrawTexture(ss.ts.ShopWallpaper, 0, SSMenuY, rl.White)
+		ss.drawWallpaperScreen()
 	case config.ShopStateDecor:
 		rl.DrawTexture(ss.ts.ShopDecor, 0, SSMenuY, rl.White)
 	}
@@ -216,11 +241,72 @@ func (ss *ShopScreen) drawShrimpsScreen() {
 			btn.Font,
 			btn.Text,
 			rl.Vector2{
-				X: btn.Bounds.X + (btn.Bounds.Width-textVector.X)/2 - config.BorderOffset,
-				Y: btn.Bounds.Y - (btn.Bounds.Height/2-textVector.Y)/2 + config.BorderOffset},
+				X: btn.Bounds.X + (btn.Bounds.Width-textVector.X)/2,
+				Y: btn.Bounds.Y - (btn.Bounds.Height/2-textVector.Y)/2 + config.Offset5},
 			btn.FontSize,
 			2,
 			btn.Color)
+		costTextWidth := float32(rl.MeasureText(strconv.Itoa(si.Cost), SSMoneyFontSize))
+		rl.DrawTexture(
+			ss.ts.Coin,
+			int32(btn.Bounds.X+(btn.Bounds.Width-config.StandardSquareSpriteSide-costTextWidth)/2),
+			int32(btn.Bounds.Y+btn.Bounds.Height/2+(btn.Bounds.Height/2-config.StandardSquareSpriteSide)/2),
+			rl.White,
+		)
+		rl.DrawText(
+			strconv.Itoa(si.Cost),
+			int32(btn.Bounds.X+config.StandardSquareSpriteSide+(btn.Bounds.Width-config.StandardSquareSpriteSide-costTextWidth)/2),
+			int32(btn.Bounds.Y+btn.Bounds.Height/2+(btn.Bounds.Height/2-SSMoneyFontSize)/2),
+			SSMoneyFontSize,
+			rl.Black,
+		)
+	}
+}
+
+func (ss *ShopScreen) drawWallpaperScreen() {
+	rl.DrawTexture(ss.ts.ShopWallpaper, 0, SSMenuY, rl.White)
+	for _, wi := range ss.WallpaperItems {
+		btn := wi.BuyButton
+		if btn.Text == SSBuyBtnName {
+			btnTextVector := rl.MeasureTextEx(btn.Font, btn.Text, btn.FontSize, 2)
+			rl.DrawTextEx(
+				btn.Font,
+				btn.Text,
+				rl.Vector2{
+					X: btn.Bounds.X + (btn.Bounds.Width-btnTextVector.X)/2,
+					Y: btn.Bounds.Y + (btn.Bounds.Height/2-btnTextVector.Y)/2},
+				btn.FontSize,
+				2,
+				btn.Color,
+			)
+			costTextWidth := float32(rl.MeasureText(strconv.Itoa(wi.Cost), SSMoneyFontSize))
+			rl.DrawTexture(
+				ss.ts.Coin,
+				int32(btn.Bounds.X+(btn.Bounds.Width-config.StandardSquareSpriteSide-costTextWidth)/2),
+				int32(btn.Bounds.Y+btn.Bounds.Height/2+(btn.Bounds.Height/2-config.StandardSquareSpriteSide)/2),
+				rl.White,
+			)
+			rl.DrawText(
+				strconv.Itoa(wi.Cost),
+				int32(btn.Bounds.X+config.StandardSquareSpriteSide+(btn.Bounds.Width-config.StandardSquareSpriteSide-costTextWidth)/2),
+				int32(btn.Bounds.Y+btn.Bounds.Height/2+(btn.Bounds.Height/2-SSMoneyFontSize)/2),
+				SSMoneyFontSize,
+				rl.Black,
+			)
+		} else {
+			btnTextVector := rl.MeasureTextEx(btn.Font, btn.Text, btn.FontSize, 2)
+			rl.DrawTextEx(
+				btn.Font,
+				btn.Text,
+				rl.Vector2{
+					X: btn.Bounds.X + (btn.Bounds.Width-btnTextVector.X)/2,
+					Y: btn.Bounds.Y + (btn.Bounds.Height-btnTextVector.Y)/2},
+				btn.FontSize,
+				2,
+				btn.Color,
+			)
+		}
+
 	}
 }
 
@@ -264,17 +350,38 @@ func (ss *ShopScreen) HandleBackBtnClick() {
 }
 
 func (ss *ShopScreen) HandleBuyBtnClick() {
-	si := ss.findClickedShrimpItem()
-	if si != nil {
-		if ss.Game.Money >= si.Cost {
-			ss.Game.AddShrimpInstance(entities.NewShrimp(si.ShrimpType))
-			ss.Game.Money -= si.Cost
+	switch ss.State {
+	case config.ShopStateShrimps:
+		si := ss.findClickedShrimpItem()
+		if si != nil {
+			if ss.Game.Money >= si.Cost {
+				ss.Game.AddShrimpInstance(entities.NewShrimp(si.ShrimpType))
+				ss.Game.Money -= si.Cost
+			}
 		}
-	}
-}
-
-func (ss *ShopScreen) HandleSBtnClick() {
-	for i := 0; i < 10000; i++ {
-		ss.Game.AddShrimpInstance(entities.NewShrimp(config.CherryShrimp))
+	case config.ShopStateWallpaper:
+		wi := ss.findClickedWallpaperItem()
+		if wi != nil {
+			if !wi.IsBought {
+				if ss.Game.Money >= wi.Cost {
+					ss.Game.Money -= wi.Cost
+					wi.IsBought = true
+					wi.BuyButton.Text = SSApplyBtnName
+				}
+			} else {
+				if wi.IsActive {
+					ss.Game.WallpaperState = config.DefaultWallpaperState
+				} else {
+					ss.Game.WallpaperState = wi.Type
+					for _, wi2 := range ss.WallpaperItems {
+						if wi2 != wi {
+							wi2.IsActive = false
+						}
+					}
+				}
+				wi.IsActive = !wi.IsActive
+			}
+		}
+	case config.ShopStateDecor:
 	}
 }

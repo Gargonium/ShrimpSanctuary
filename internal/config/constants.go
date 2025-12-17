@@ -19,6 +19,10 @@ const (
 	SandHeight          = 25
 	MoneyX              = 10
 	MoneyY              = 25
+	WaterX              = 145
+	WaterY              = 25
+	WaterWidth          = 990
+	WaterHeight         = 465
 	//SandWidth           = AquariumWidth - 2*AquariumBorderWidth
 	//SandX               = AquariumX + AquariumBorderWidth
 	//SandY               = AquariumY + AquariumHeight - AquariumBorderWidth - SandHeight
@@ -35,7 +39,12 @@ const (
 	PlayFieldY        = AquariumY + AquariumBorderWidth
 	PlayFieldWidth    = AquariumWidth - 2*AquariumBorderWidth
 	PlayerFieldHeight = AquariumHeight - 2*AquariumBorderWidth - SandHeight
-	BorderOffset      = 5
+	BorderOffset      = Offset5
+)
+
+// Offsets
+const (
+	Offset5 = 5
 )
 
 type ButtonStatus string
@@ -67,6 +76,17 @@ var MoneyByShrimp = map[ShrimpType]int{
 	CherryShrimp: 25,
 }
 
+var ShrimpsTypesInShop = []ShrimpType{
+	CherryShrimp,
+	CherryShrimp,
+	CherryShrimp,
+	CherryShrimp,
+	CherryShrimp,
+	CherryShrimp,
+	CherryShrimp,
+	CherryShrimp,
+}
+
 var ShrimpCost = map[ShrimpType]int{
 	CherryShrimp: 100,
 }
@@ -74,26 +94,6 @@ var ShrimpCost = map[ShrimpType]int{
 const (
 	StandardSquareSpriteSide = 32
 	BigSquareSpriteSide      = 64
-)
-
-// Sprites paths
-const (
-	MuteSprite   = "assets/sprites/Mute.png"
-	UnmuteSprite = "assets/sprites/Unmute.png"
-
-	AquariumBgSprite = "assets/sprites/Aquarium.png"
-	MenuBgSprite     = "assets/sprites/Menu.png"
-	SettingsBgSprite = "assets/sprites/Settings.png"
-
-	ShopBgSprite        = "assets/sprites/Shop.png"
-	ShopShrimpsSprite   = "assets/sprites/ShopShrimps.png"
-	ShopWallpaperSprite = "assets/sprites/ShopWallpaper.png"
-	ShopDecorSprite     = "assets/sprites/ShopDecor.png"
-
-	CherryShrimpSprite         = "assets/sprites/CherryShrimp.png"
-	CherryShrimpReversedSprite = "assets/sprites/CherryShrimpReversed.png"
-
-	CoinSprite = "assets/sprites/Coin.png"
 )
 
 // Fonts paths
@@ -140,6 +140,24 @@ const (
 	ShopStateDecor
 )
 
+type WallpaperState int
+
 const (
-	StartMoney = 100
+	DefaultWallpaperState WallpaperState = iota
+	PvZWallpaperState
+)
+
+var WallpaperTypesInShop = []WallpaperState{
+	PvZWallpaperState,
+	PvZWallpaperState,
+	PvZWallpaperState,
+	PvZWallpaperState,
+}
+
+var WallpaperCost = map[WallpaperState]int{
+	PvZWallpaperState: 1000,
+}
+
+const (
+	StartMoney = 100000
 )
