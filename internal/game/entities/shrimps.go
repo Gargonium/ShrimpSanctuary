@@ -71,7 +71,7 @@ func (s *Shrimp) Die() {
 }
 
 func (s *Shrimp) PoopMoney() int {
-	if !s.IsAlive {
+	if s.IsAlive {
 		s.MoneyDelay--
 		if s.MoneyDelay == 0 {
 			s.MoneyDelay = config.ShrimpMoneyDelay

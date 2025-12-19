@@ -24,14 +24,6 @@ const (
 	WaterY              = 25
 	WaterWidth          = 990
 	WaterHeight         = 465
-	//SandWidth           = AquariumWidth - 2*AquariumBorderWidth
-	//SandX               = AquariumX + AquariumBorderWidth
-	//SandY               = AquariumY + AquariumHeight - AquariumBorderWidth - SandHeight
-	//TableX              = AquariumX
-	//TableY              = AquariumY + AquariumHeight
-	//TableWidth          = AquariumWidth
-	//TableHeight         = 30
-	//TableLegWidth       = 25
 )
 
 // Dimensions of the playing field
@@ -72,25 +64,46 @@ type ShrimpType int
 
 const (
 	CherryShrimp ShrimpType = iota
+	BlackRoseShrimp
+	IsaacShrimp
+	MinecraftShrimp
+	GundamShrimp
+	SonicShrimp
+	MiskaShrimp
+	ChanelShrimp
 )
 
 var MoneyByShrimp = map[ShrimpType]int{
-	CherryShrimp: 25,
+	CherryShrimp:    25,
+	BlackRoseShrimp: 25,
+	IsaacShrimp:     50,
+	MinecraftShrimp: 50,
+	GundamShrimp:    75,
+	SonicShrimp:     75,
+	MiskaShrimp:     100,
+	ChanelShrimp:    100,
 }
 
 var ShrimpsTypesInShop = []ShrimpType{
 	CherryShrimp,
-	CherryShrimp,
-	CherryShrimp,
-	CherryShrimp,
-	CherryShrimp,
-	CherryShrimp,
-	CherryShrimp,
-	CherryShrimp,
+	BlackRoseShrimp,
+	IsaacShrimp,
+	MinecraftShrimp,
+	GundamShrimp,
+	SonicShrimp,
+	MiskaShrimp,
+	ChanelShrimp,
 }
 
 var ShrimpCost = map[ShrimpType]int{
-	CherryShrimp: 100,
+	CherryShrimp:    100,
+	BlackRoseShrimp: 100,
+	IsaacShrimp:     300,
+	MinecraftShrimp: 300,
+	GundamShrimp:    500,
+	SonicShrimp:     500,
+	MiskaShrimp:     700,
+	ChanelShrimp:    700,
 }
 
 const (
@@ -110,7 +123,6 @@ const (
 	PolluteSpawnDelay       = FPS * 120
 	PolluteSpawnDelaySpread = FPS * 30
 	PolluteMaxDurability    = 4
-	PolluteRadius           = 10
 )
 
 // GameState

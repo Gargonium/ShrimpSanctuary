@@ -96,10 +96,10 @@ func (g *Game) ClickInPlayField(pos rl.Vector2) {
 		g.AddFood(pos)
 	}
 	if g.IsCleaning {
-		for i := range g.Pollution {
-			if rl.CheckCollisionPointCircle(pos, g.Pollution[i].Position, config.PolluteRadius) {
-				g.Pollution[i].Durability--
-				if g.Pollution[i].Durability == 0 {
+		for i, p := range g.Pollution {
+			if rl.CheckCollisionPointRec(pos, rl.NewRectangle(p.Position.X, p.Position.Y, config.BigSquareSpriteSide, config.BigSquareSpriteSide)) {
+				p.Durability--
+				if p.Durability == 0 {
 					g.DeletePollute(i)
 				}
 				break

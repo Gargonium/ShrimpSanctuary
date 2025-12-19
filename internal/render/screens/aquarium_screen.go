@@ -136,10 +136,15 @@ func (as *AquariumScreen) drawButtons() {
 
 func (as *AquariumScreen) drawMoney() {
 	rl.DrawTexture(as.ts.Coin, config.MoneyX, config.MoneyY, rl.White)
-	rl.DrawText(strconv.Itoa(as.Game.Money),
-		config.MoneyX+config.StandardSquareSpriteSide+config.BorderOffset,
-		config.MoneyY+(config.StandardSquareSpriteSide-ASMoneyFontSize)/2,
-		ASMoneyFontSize, rl.White)
+	rl.DrawTextEx(as.ts.MolotFont,
+		strconv.Itoa(as.Game.Money),
+		rl.NewVector2(
+			config.MoneyX+config.StandardSquareSpriteSide+config.BorderOffset,
+			config.MoneyY+(config.StandardSquareSpriteSide-ASMoneyFontSize)/2),
+		ASMoneyFontSize,
+		2,
+		rl.White,
+	)
 }
 
 func (as *AquariumScreen) drawShrimps() {
@@ -153,6 +158,27 @@ func (as *AquariumScreen) drawShrimps() {
 		case config.CherryShrimp:
 			ShrimpTexture = as.ts.CherryShrimp
 			ReversedShrimpTexture = as.ts.CherryShrimpReversed
+		case config.GundamShrimp:
+			ShrimpTexture = as.ts.GundamShrimp
+			ReversedShrimpTexture = as.ts.GundamShrimpReversed
+		case config.IsaacShrimp:
+			ShrimpTexture = as.ts.IsaacShrimp
+			ReversedShrimpTexture = as.ts.IsaacShrimpReversed
+		case config.MinecraftShrimp:
+			ShrimpTexture = as.ts.MinecraftShrimp
+			ReversedShrimpTexture = as.ts.MinecraftShrimpReversed
+		case config.MiskaShrimp:
+			ShrimpTexture = as.ts.MiskaShrimp
+			ReversedShrimpTexture = as.ts.MiskaShrimpReversed
+		case config.ChanelShrimp:
+			ShrimpTexture = as.ts.ChanelShrimp
+			ReversedShrimpTexture = as.ts.ChanelShrimpReversed
+		case config.BlackRoseShrimp:
+			ShrimpTexture = as.ts.BlackRoseShrimp
+			ReversedShrimpTexture = as.ts.BlackRoseShrimpReversed
+		case config.SonicShrimp:
+			ShrimpTexture = as.ts.SonicShrimp
+			ReversedShrimpTexture = as.ts.SonicShrimpReversed
 		}
 
 		shrimpConditionTint := rl.NewColor(
@@ -170,10 +196,16 @@ func (as *AquariumScreen) drawShrimps() {
 }
 
 func (as *AquariumScreen) drawPollute() {
-	for i := range as.Game.Pollution {
-		polCol := config.PolluteColor
-		polCol.A = uint8(float32(polCol.A) * float32(as.Game.Pollution[i].Durability) / float32(config.PolluteMaxDurability))
-		rl.DrawCircleV(as.Game.Pollution[i].Position, config.PolluteRadius, polCol)
+	for _, p := range as.Game.Pollution {
+
+		polluteDurabilityTint := rl.NewColor(
+			255,
+			255,
+			255,
+			uint8(float32(p.Durability)/float32(config.PolluteMaxDurability)*255),
+		)
+
+		rl.DrawTextureV(as.ts.Pollute, p.Position, polluteDurabilityTint)
 	}
 }
 

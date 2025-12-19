@@ -7,6 +7,7 @@ import (
 // Fonts paths
 const (
 	WinterFontPath = "assets/fonts/Winter.ttf"
+	MolotFontPath  = "assets/fonts/Molot.ttf"
 )
 
 // Sound paths
@@ -25,28 +26,41 @@ const (
 	ShopWallpaperSprite = "assets/sprites/Screens/ShopWallpaper.png"
 	ShopDecorSprite     = "assets/sprites/Screens/ShopDecor.png"
 
-	CherryShrimpSprite         = "assets/sprites/Shrimps/CherryShrimp.png"
-	CherryShrimpReversedSprite = "assets/sprites/Shrimps/CherryShrimpReversed.png"
+	CherryShrimpSprite            = "assets/sprites/Shrimps/CherryShrimp.png"
+	CherryShrimpReversedSprite    = "assets/sprites/Shrimps/CherryShrimpReversed.png"
+	GundamShrimpSprite            = "assets/sprites/Shrimps/GundamShrimp.png"
+	GundamShrimpReversedSprite    = "assets/sprites/Shrimps/GundamShrimpReversed.png"
+	IsaacShrimpSprite             = "assets/sprites/Shrimps/IsaacShrimp.png"
+	IsaacShrimpReversedSprite     = "assets/sprites/Shrimps/IsaacShrimpReversed.png"
+	MinecraftShrimpSprite         = "assets/sprites/Shrimps/MinecraftShrimp.png"
+	MinecraftShrimpReversedSprite = "assets/sprites/Shrimps/MinecraftShrimpReversed.png"
+	MiskaShrimpSprite             = "assets/sprites/Shrimps/MiskaShrimp.png"
+	MiskaShrimpReversedSprite     = "assets/sprites/Shrimps/MiskaShrimpReversed.png"
+	ChanelShrimpSprite            = "assets/sprites/Shrimps/ChanelShrimp.png"
+	ChanelShrimpReversedSprite    = "assets/sprites/Shrimps/ChanelShrimpReversed.png"
+	BlackRoseShrimpSprite         = "assets/sprites/Shrimps/BlackRoseShrimp.png"
+	BlackRoseShrimpReversedSprite = "assets/sprites/Shrimps/BlackRoseShrimpReversed.png"
+	SonicShrimpSprite             = "assets/sprites/Shrimps/SonicShrimp.png"
+	SonicShrimpReversedSprite     = "assets/sprites/Shrimps/SonicShrimpReversed.png"
 
 	PvZWallpaper    = "assets/sprites/Wallpapers/PvZWallpaper.png"
 	CityWallpaper   = "assets/sprites/Wallpapers/CityWallpaper.png"
 	NiceWallpaper   = "assets/sprites/Wallpapers/NiceWallpaper.png"
 	GundamWallpaper = "assets/sprites/Wallpapers/GundamWallpaper.png"
 
-	CoinSprite   = "assets/sprites/Other/Coin.png"
-	MuteSprite   = "assets/sprites/Other/Mute.png"
-	UnmuteSprite = "assets/sprites/Other/Unmute.png"
+	CoinSprite    = "assets/sprites/Other/Coin.png"
+	MuteSprite    = "assets/sprites/Other/Mute.png"
+	UnmuteSprite  = "assets/sprites/Other/Unmute.png"
+	PolluteSprite = "assets/sprites/Other/Pollute.png"
 )
 
 type AssetStorage struct {
 	assetMgr *AssetManager
 
-	BackgroundMusic rl.Music
-
 	WinterFont rl.Font
+	MolotFont  rl.Font
 
-	Mute   rl.Texture2D
-	Unmute rl.Texture2D
+	BackgroundMusic rl.Music
 
 	MenuScreen     rl.Texture2D
 	AquariumScreen rl.Texture2D
@@ -57,23 +71,41 @@ type AssetStorage struct {
 	ShopWallpaper rl.Texture2D
 	ShopDecor     rl.Texture2D
 
-	CherryShrimp         rl.Texture2D
-	CherryShrimpReversed rl.Texture2D
+	CherryShrimp            rl.Texture2D
+	CherryShrimpReversed    rl.Texture2D
+	GundamShrimp            rl.Texture2D
+	GundamShrimpReversed    rl.Texture2D
+	IsaacShrimp             rl.Texture2D
+	IsaacShrimpReversed     rl.Texture2D
+	MinecraftShrimp         rl.Texture2D
+	MinecraftShrimpReversed rl.Texture2D
+	MiskaShrimp             rl.Texture2D
+	MiskaShrimpReversed     rl.Texture2D
+	ChanelShrimp            rl.Texture2D
+	ChanelShrimpReversed    rl.Texture2D
+	BlackRoseShrimp         rl.Texture2D
+	BlackRoseShrimpReversed rl.Texture2D
+	SonicShrimp             rl.Texture2D
+	SonicShrimpReversed     rl.Texture2D
 
 	PvZWallpaper    rl.Texture2D
 	CityWallpaper   rl.Texture2D
 	NiceWallpaper   rl.Texture2D
 	GundamWallpaper rl.Texture2D
 
-	Coin rl.Texture2D
+	Coin    rl.Texture2D
+	Mute    rl.Texture2D
+	Unmute  rl.Texture2D
+	Pollute rl.Texture2D
 }
 
 func NewTextureStorage(manager *AssetManager) *AssetStorage {
 	ts := new(AssetStorage)
 
-	ts.BackgroundMusic = manager.LoadMusic(BgMusicPath)
-
 	ts.WinterFont = manager.LoadFont(WinterFontPath)
+	ts.MolotFont = manager.LoadFont(MolotFontPath)
+
+	ts.BackgroundMusic = manager.LoadMusic(BgMusicPath)
 
 	ts.MenuScreen = manager.LoadScreensTexture(MenuBgSprite)
 	ts.AquariumScreen = manager.LoadScreensTexture(AquariumBgSprite)
@@ -86,6 +118,20 @@ func NewTextureStorage(manager *AssetManager) *AssetStorage {
 
 	ts.CherryShrimp = manager.LoadShrimpsTexture(CherryShrimpSprite)
 	ts.CherryShrimpReversed = manager.LoadShrimpsTexture(CherryShrimpReversedSprite)
+	ts.GundamShrimp = manager.LoadShrimpsTexture(GundamShrimpSprite)
+	ts.GundamShrimpReversed = manager.LoadShrimpsTexture(GundamShrimpReversedSprite)
+	ts.IsaacShrimp = manager.LoadShrimpsTexture(IsaacShrimpSprite)
+	ts.IsaacShrimpReversed = manager.LoadShrimpsTexture(IsaacShrimpReversedSprite)
+	ts.MinecraftShrimp = manager.LoadShrimpsTexture(MinecraftShrimpSprite)
+	ts.MinecraftShrimpReversed = manager.LoadShrimpsTexture(MinecraftShrimpReversedSprite)
+	ts.MiskaShrimp = manager.LoadShrimpsTexture(MiskaShrimpSprite)
+	ts.MiskaShrimpReversed = manager.LoadShrimpsTexture(MiskaShrimpReversedSprite)
+	ts.ChanelShrimp = manager.LoadShrimpsTexture(ChanelShrimpSprite)
+	ts.ChanelShrimpReversed = manager.LoadShrimpsTexture(ChanelShrimpReversedSprite)
+	ts.BlackRoseShrimp = manager.LoadShrimpsTexture(BlackRoseShrimpSprite)
+	ts.BlackRoseShrimpReversed = manager.LoadShrimpsTexture(BlackRoseShrimpReversedSprite)
+	ts.SonicShrimp = manager.LoadShrimpsTexture(SonicShrimpSprite)
+	ts.SonicShrimpReversed = manager.LoadShrimpsTexture(SonicShrimpReversedSprite)
 
 	ts.PvZWallpaper = manager.LoadWallpapersTexture(PvZWallpaper)
 	ts.CityWallpaper = manager.LoadWallpapersTexture(CityWallpaper)
@@ -95,6 +141,7 @@ func NewTextureStorage(manager *AssetManager) *AssetStorage {
 	ts.Coin = manager.LoadOtherTexture(CoinSprite)
 	ts.Mute = manager.LoadOtherTexture(MuteSprite)
 	ts.Unmute = manager.LoadOtherTexture(UnmuteSprite)
+	ts.Pollute = manager.LoadOtherTexture(PolluteSprite)
 
 	return ts
 }

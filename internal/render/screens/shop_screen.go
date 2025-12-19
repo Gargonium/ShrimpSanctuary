@@ -267,11 +267,14 @@ func (ss *ShopScreen) drawShrimpsScreen() {
 			int32(btn.Bounds.Y+btn.Bounds.Height/2+(btn.Bounds.Height/2-config.StandardSquareSpriteSide)/2),
 			rl.White,
 		)
-		rl.DrawText(
+		rl.DrawTextEx(
+			ss.ts.MolotFont,
 			strconv.Itoa(si.Cost),
-			int32(btn.Bounds.X+config.StandardSquareSpriteSide+(btn.Bounds.Width-config.StandardSquareSpriteSide-costTextWidth)/2),
-			int32(btn.Bounds.Y+btn.Bounds.Height/2+(btn.Bounds.Height/2-SSMoneyFontSize)/2),
+			rl.NewVector2(
+				btn.Bounds.X+config.StandardSquareSpriteSide+(btn.Bounds.Width-config.StandardSquareSpriteSide-costTextWidth)/2,
+				btn.Bounds.Y+btn.Bounds.Height/2+(btn.Bounds.Height/2-SSMoneyFontSize)/2),
 			SSMoneyFontSize,
+			2,
 			rl.Black,
 		)
 	}
@@ -300,11 +303,14 @@ func (ss *ShopScreen) drawWallpaperScreen() {
 				int32(btn.Bounds.Y+btn.Bounds.Height/2+(btn.Bounds.Height/2-config.StandardSquareSpriteSide)/2),
 				rl.White,
 			)
-			rl.DrawText(
+			rl.DrawTextEx(
+				ss.ts.MolotFont,
 				strconv.Itoa(wi.Cost),
-				int32(btn.Bounds.X+config.StandardSquareSpriteSide+(btn.Bounds.Width-config.StandardSquareSpriteSide-costTextWidth)/2),
-				int32(btn.Bounds.Y+btn.Bounds.Height/2+(btn.Bounds.Height/2-SSMoneyFontSize)/2),
+				rl.NewVector2(
+					btn.Bounds.X+config.StandardSquareSpriteSide+(btn.Bounds.Width-config.StandardSquareSpriteSide-costTextWidth)/2,
+					btn.Bounds.Y+btn.Bounds.Height/2+(btn.Bounds.Height/2-SSMoneyFontSize)/2),
 				SSMoneyFontSize,
+				2,
 				rl.Black,
 			)
 		} else {
@@ -341,10 +347,15 @@ func (ss *ShopScreen) drawButtons() {
 
 func (ss *ShopScreen) drawMoney() {
 	rl.DrawTexture(ss.ts.Coin, config.MoneyX, config.MoneyY, rl.White)
-	rl.DrawText(strconv.Itoa(ss.Game.Money),
-		config.MoneyX+config.StandardSquareSpriteSide+config.BorderOffset,
-		config.MoneyY+(config.StandardSquareSpriteSide-SSMoneyFontSize)/2,
-		SSMoneyFontSize, rl.White)
+	rl.DrawTextEx(ss.ts.MolotFont,
+		strconv.Itoa(ss.Game.Money),
+		rl.NewVector2(
+			config.MoneyX+config.StandardSquareSpriteSide+config.BorderOffset,
+			config.MoneyY+(config.StandardSquareSpriteSide-ASMoneyFontSize)/2),
+		ASMoneyFontSize,
+		2,
+		rl.White,
+	)
 }
 
 func (ss *ShopScreen) HandleShrimpsBtnClick() {

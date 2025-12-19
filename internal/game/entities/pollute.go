@@ -15,6 +15,6 @@ func NewPollute() *Pollute {
 	p := new(Pollute)
 	p.Position.X = (rand.Float32() * config.PlayFieldWidth) + config.PlayFieldX
 	p.Position.Y = (rand.Float32() * config.PlayerFieldHeight) + config.PlayFieldY
-	p.Durability = config.PolluteMaxDurability - 1
+	p.Durability = config.PolluteMaxDurability
 	return p
 }
