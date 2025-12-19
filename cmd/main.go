@@ -17,11 +17,15 @@ func main() {
 	rl.SetTargetFPS(config.FPS)
 	rl.SetConfigFlags(rl.FlagMsaa4xHint)
 
+	iconImage := rl.LoadImage("assets/assets/sprites/Shrimps/CherryShrimp.png")
+	rl.SetWindowIcon(*iconImage)
+	rl.UnloadImage(iconImage)
+
 	assetMgr := assets.NewAssetManager()
 	defer assetMgr.Cleanup()
+	ts := assets.NewTextureStorage(assetMgr)
 
 	sv := pkg.NewSaveManager()
-	ts := assets.NewTextureStorage(assetMgr)
 	sb := sound_bar.NewSoundBar(ts)
 	g := game.NewGame()
 
