@@ -27,7 +27,7 @@ func main() {
 
 	sv := pkg.NewSaveManager()
 	sb := sound_bar.NewSoundBar(ts)
-	g := game.NewGame()
+	g := game.NewGame(sb)
 
 	if sv.SaveExists() {
 		err := sv.LoadGame(g)
@@ -67,6 +67,7 @@ func main() {
 	}
 
 	sb.StopBgMusic()
+	sb.UnloadAll()
 
 	rl.CloseWindow()
 	rl.CloseAudioDevice()

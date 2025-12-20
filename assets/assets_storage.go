@@ -12,7 +12,10 @@ const (
 
 // Sound paths
 const (
-	BgMusicPath = "assets/sounds/Background.mp3"
+	BgMusicPath       = "assets/sounds/Background.mp3"
+	AquariumSoundPath = "assets/sounds/AquariumBackground.mp3"
+	CleanSoundPath    = "assets/sounds/CleanSound.mp3"
+	FoodDropSoundPath = "assets/sounds/FoodDropSound.mp3"
 )
 
 // Sprites paths
@@ -61,6 +64,9 @@ type AssetStorage struct {
 	MolotFont  rl.Font
 
 	BackgroundMusic rl.Music
+	AquariumSound   rl.Music
+	CleanSound      rl.Music
+	FoodDropSound   rl.Music
 
 	MenuScreen     rl.Texture2D
 	AquariumScreen rl.Texture2D
@@ -106,6 +112,9 @@ func NewTextureStorage(manager *AssetManager) *AssetStorage {
 	ts.MolotFont = manager.LoadFont(MolotFontPath)
 
 	ts.BackgroundMusic = manager.LoadMusic(BgMusicPath)
+	ts.AquariumSound = manager.LoadMusic(AquariumSoundPath)
+	ts.CleanSound = manager.LoadMusic(CleanSoundPath)
+	ts.FoodDropSound = manager.LoadMusic(FoodDropSoundPath)
 
 	ts.MenuScreen = manager.LoadScreensTexture(MenuBgSprite)
 	ts.AquariumScreen = manager.LoadScreensTexture(AquariumBgSprite)

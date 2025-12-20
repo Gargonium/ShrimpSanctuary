@@ -6,6 +6,7 @@ import (
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/input"
 	_ "ShrimpSanctuary/internal/input"
+	"ShrimpSanctuary/internal/sound_bar"
 	rl "github.com/gen2brain/raylib-go/raylib"
 	"strconv"
 )
@@ -32,12 +33,14 @@ type AquariumScreen struct {
 	Game    *game.Game
 	Buttons []*input.Button
 	ts      *assets.AssetStorage
+	sb      *sound_bar.SoundBar
 }
 
-func NewAquariumScreen(game *game.Game, assetStorage *assets.AssetStorage) *AquariumScreen {
+func NewAquariumScreen(game *game.Game, sb *sound_bar.SoundBar, assetStorage *assets.AssetStorage) *AquariumScreen {
 	as := new(AquariumScreen)
 
 	as.Game = game
+	as.sb = sb
 	as.ts = assetStorage
 
 	as.Buttons = []*input.Button{
@@ -234,6 +237,12 @@ func (as *AquariumScreen) drawFood() {
 func (as *AquariumScreen) HandleInput() {
 	if input.MousePlayFieldClick() {
 		as.Game.ClickInPlayField(input.GetMouseVector())
+		if as.Game.IsFeeding {
+			as.sb.PlayFoodDropSound()
+		}
+		if as.Game.IsCleaning {
+			as.sb.PlayCleanSound()
+		}
 	}
 
 	for _, btn := range as.Buttons {
@@ -271,9 +280,13 @@ func (as *AquariumScreen) HandleCleanBtnClick() {
 	as.Game.IsCleaning = !as.Game.IsCleaning
 	as.Game.IsFeeding = false
 }
+
 func (as *AquariumScreen) HandleShopBtnClick() {
 	as.Game.State = config.StateShop
+	as.sb.StopAquariumSound()
 }
+
 func (as *AquariumScreen) HandleMenuBtnClick() {
 	as.Game.State = config.StateMenu
+	as.sb.StopAquariumSound()
 }

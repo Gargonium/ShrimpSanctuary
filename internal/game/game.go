@@ -3,6 +3,7 @@ package game
 import (
 	"ShrimpSanctuary/internal/config"
 	"ShrimpSanctuary/internal/game/entities"
+	"ShrimpSanctuary/internal/sound_bar"
 	"ShrimpSanctuary/pkg/utils"
 	rl "github.com/gen2brain/raylib-go/raylib"
 	"math/rand"
@@ -19,20 +20,22 @@ type Game struct {
 	Money             int
 	IsFeeding         bool
 	IsCleaning        bool
+	SoundBar          *sound_bar.SoundBar
 }
 
-func NewGame() *Game {
+func NewGame(sb *sound_bar.SoundBar) *Game {
 	g := new(Game)
 	g.Shrimps = make([]*entities.Shrimp, 0)
 	g.Foods = make([]*entities.Food, 0)
 	g.Pollution = make([]*entities.Pollute, 0)
 	g.Money = config.StartMoney
+	g.SoundBar = sb
 
 	for i := 0; i < config.ShrimpStartCount; i++ {
 		g.AddShrimpInstance(entities.NewShrimp(config.CherryShrimp))
 	}
 
-	g.PolluteDelay = config.PolluteSpawnDelay + rand.Int31n(config.PolluteSpawnDelaySpread*2) - config.PolluteSpawnDelaySpread
+	g.PolluteDelay = 0 // config.PolluteSpawnDelay + rand.Int31n(config.PolluteSpawnDelaySpread*2) - config.PolluteSpawnDelaySpread
 	g.IsFeeding = false
 	g.IsCleaning = false
 	g.State = config.StateMenu

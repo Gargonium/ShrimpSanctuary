@@ -15,11 +15,12 @@ import (
 
 // SaveData - структура данных для сохранения
 type SaveData struct {
-	Version   string          `json:"version"`   // Версия игры для миграций
-	Timestamp time.Time       `json:"timestamp"` // Когда сохранено
-	Aquarium  AquariumData    `json:"aquarium"`  // Состояние аквариума
-	Shrimps   []ShrimpData    `json:"shrimps"`   // Состояние креветок
-	Pollution []PollutionData `json:"poluttion"`
+	Version      string          `json:"version"`   // Версия игры для миграций
+	Timestamp    time.Time       `json:"timestamp"` // Когда сохранено
+	Aquarium     AquariumData    `json:"aquarium"`  // Состояние аквариума
+	Shrimps      []ShrimpData    `json:"shrimps"`   // Состояние креветок
+	Pollution    []PollutionData `json:"poluttion"`
+	SettingsData SettingsData    `json:"settings"`
 }
 
 // Упрощенные структуры для сериализации (без каналов, функций и т.д.)
@@ -34,9 +35,14 @@ type ShrimpData struct {
 }
 
 type PollutionData struct {
-	PositionX  float32
-	PositionY  float32
-	Durability int32
+	PositionX  float32 `json:"position-x"`
+	PositionY  float32 `json:"position-y"`
+	Durability int32   `json:"durability"`
+}
+
+type SettingsData struct {
+	MusicVolume   float32 `json:"music-volume"`
+	EffectsVolume float32 `json:"effects-volume"`
 }
 
 // SaveManager - менеджер сохранений
@@ -93,6 +99,10 @@ func (sm *SaveManager) SaveGame(game *game.Game) error {
 			UnlockedWallpaper: game.UnlockedWallpaper,
 			Wallpaper:         game.WallpaperState,
 		},
+		SettingsData: SettingsData{
+			MusicVolume:   game.SoundBar.GetMusicVolume(),
+			EffectsVolume: game.SoundBar.GetEffectsVolume(),
+		},
 	}
 
 	// Сохраняем креветок
@@ -141,6 +151,9 @@ func (sm *SaveManager) LoadGame(game *game.Game) error {
 	}
 
 	game.Money = saveData.Aquarium.Money
+
+	game.SoundBar.ChangeMusicVolume(saveData.SettingsData.MusicVolume)
+	game.SoundBar.ChangeEffectsVolume(saveData.SettingsData.EffectsVolume)
 
 	// Восстанавливаем креветок
 	game.Shrimps = nil

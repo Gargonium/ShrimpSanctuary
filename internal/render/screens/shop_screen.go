@@ -6,6 +6,7 @@ import (
 	"ShrimpSanctuary/internal/game"
 	"ShrimpSanctuary/internal/game/entities"
 	"ShrimpSanctuary/internal/input"
+	"ShrimpSanctuary/internal/sound_bar"
 	rl "github.com/gen2brain/raylib-go/raylib"
 	"strconv"
 )
@@ -60,12 +61,14 @@ type ShopScreen struct {
 	ShrimpItems    []*ShrimpItem
 	WallpaperItems []*WallpaperItem
 	ts             *assets.AssetStorage
+	sb             *sound_bar.SoundBar
 	State          config.ShopState
 }
 
-func NewShopScreen(game *game.Game, as *assets.AssetStorage) *ShopScreen {
+func NewShopScreen(game *game.Game, sb *sound_bar.SoundBar, as *assets.AssetStorage) *ShopScreen {
 	ss := new(ShopScreen)
 	ss.Game = game
+	ss.sb = sb
 	ss.ts = as
 	ss.State = config.ShopStateShrimps
 
@@ -372,6 +375,7 @@ func (ss *ShopScreen) HandleDecorBtnClick() {
 
 func (ss *ShopScreen) HandleBackBtnClick() {
 	ss.Game.State = config.StateAquarium
+	ss.sb.PlayAquariumSound()
 }
 
 func (ss *ShopScreen) HandleBuyBtnClick() {
