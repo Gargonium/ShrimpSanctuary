@@ -9,24 +9,28 @@ import (
 )
 
 type Render struct {
-	Game           *game.Game
-	sb             *sound_bar.SoundBar
-	ts             *assets.AssetStorage
-	AquariumScreen *screens.AquariumScreen
-	MenuScreen     *screens.MenuScreen
-	SettingsScreen *screens.SettingsScreen
-	ShopScreen     *screens.ShopScreen
+	Game               *game.Game
+	sb                 *sound_bar.SoundBar
+	as                 *assets.AssetStorage
+	AquariumScreen     *screens.AquariumScreen
+	MenuScreen         *screens.MenuScreen
+	SettingsScreen     *screens.SettingsScreen
+	ShopScreen         *screens.ShopScreen
+	AchievementsScreen *screens.AchievementsScreen
+	StatsScreen        *screens.StatsScreen
 }
 
-func NewRender(g *game.Game, sb *sound_bar.SoundBar, ts *assets.AssetStorage) *Render {
+func NewRender(g *game.Game, sb *sound_bar.SoundBar, assetStorage *assets.AssetStorage) *Render {
 	r := new(Render)
-	r.AquariumScreen = screens.NewAquariumScreen(g, sb, ts)
-	r.MenuScreen = screens.NewMenuScreen(g, sb, ts)
-	r.SettingsScreen = screens.NewSettingsScreen(g, sb, ts)
-	r.ShopScreen = screens.NewShopScreen(g, sb, ts)
+	r.AquariumScreen = screens.NewAquariumScreen(g, sb, assetStorage)
+	r.MenuScreen = screens.NewMenuScreen(g, sb, assetStorage)
+	r.SettingsScreen = screens.NewSettingsScreen(g, sb, assetStorage)
+	r.ShopScreen = screens.NewShopScreen(g, sb, assetStorage)
+	r.AchievementsScreen = screens.NewAchievementsScreen(g, sb, assetStorage)
+	r.StatsScreen = screens.NewStatsScreen(g, sb, assetStorage)
 	r.Game = g
 	r.sb = sb
-	r.ts = ts
+	r.as = assetStorage
 
 	return r
 }
@@ -41,6 +45,10 @@ func (r *Render) Draw() {
 		r.SettingsScreen.Draw()
 	case config.StateShop:
 		r.ShopScreen.Draw()
+	case config.StateAchievements:
+		r.AchievementsScreen.Draw()
+	case config.StateStats:
+		r.StatsScreen.Draw()
 	case config.StateQuit:
 	}
 }
@@ -61,6 +69,10 @@ func (r *Render) HandleInput() {
 		r.SettingsScreen.HandleInput()
 	case config.StateShop:
 		r.ShopScreen.HandleInput()
+	case config.StateAchievements:
+		r.AchievementsScreen.HandleInput()
+	case config.StateStats:
+		r.StatsScreen.HandleInput()
 	case config.StateQuit:
 	}
 }

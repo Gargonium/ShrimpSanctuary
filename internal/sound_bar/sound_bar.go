@@ -24,6 +24,16 @@ func NewSoundBar(ts *assets.AssetStorage) *SoundBar {
 	sb.musicVolume = 0.1
 	sb.effectsVolume = 0.1
 
+	sb.ts.BackgroundMusic.Looping = true
+	sb.ts.AquariumSound.Looping = true
+	sb.ts.CleanSound.Looping = false
+	sb.ts.FoodDropSound.Looping = false
+
+	rl.SetMusicVolume(sb.ts.BackgroundMusic, sb.musicVolume)
+	rl.SetMusicVolume(sb.ts.AquariumSound, sb.effectsVolume)
+	rl.SetMusicVolume(sb.ts.CleanSound, sb.effectsVolume)
+	rl.SetMusicVolume(sb.ts.FoodDropSound, sb.effectsVolume)
+
 	return sb
 }
 
@@ -62,8 +72,6 @@ func (sb *SoundBar) Mute() {
 }
 
 func (sb *SoundBar) PlayBgMusic() {
-	sb.ts.BackgroundMusic.Looping = true
-	rl.SetMusicVolume(sb.ts.BackgroundMusic, sb.musicVolume)
 	rl.PlayMusicStream(sb.ts.BackgroundMusic)
 }
 
@@ -72,8 +80,6 @@ func (sb *SoundBar) StopBgMusic() {
 }
 
 func (sb *SoundBar) PlayAquariumSound() {
-	sb.ts.AquariumSound.Looping = true
-	rl.SetMusicVolume(sb.ts.AquariumSound, sb.effectsVolume)
 	rl.PlayMusicStream(sb.ts.AquariumSound)
 }
 
@@ -82,23 +88,11 @@ func (sb *SoundBar) StopAquariumSound() {
 }
 
 func (sb *SoundBar) PlayCleanSound() {
-	sb.ts.CleanSound.Looping = false
-	rl.SetMusicVolume(sb.ts.CleanSound, sb.effectsVolume)
 	rl.PlayMusicStream(sb.ts.CleanSound)
 }
 
-func (sb *SoundBar) StopCleanSound() {
-	rl.StopMusicStream(sb.ts.CleanSound)
-}
-
 func (sb *SoundBar) PlayFoodDropSound() {
-	sb.ts.FoodDropSound.Looping = false
-	rl.SetMusicVolume(sb.ts.FoodDropSound, sb.effectsVolume)
 	rl.PlayMusicStream(sb.ts.FoodDropSound)
-}
-
-func (sb *SoundBar) StopFoodDropSound() {
-	rl.StopMusicStream(sb.ts.FoodDropSound)
 }
 
 func (sb *SoundBar) UnloadAll() {

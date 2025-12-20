@@ -9,6 +9,14 @@ import (
 	"math/rand"
 )
 
+type Statistics struct {
+	Achievements    []bool
+	ShrimpsFed      int
+	AquariumCleaned int
+	ShrimpsCount    map[config.ShrimpType]int
+	WallpapersCount int
+}
+
 type Game struct {
 	State             config.GameState
 	WallpaperState    config.WallpaperState
@@ -21,6 +29,7 @@ type Game struct {
 	IsFeeding         bool
 	IsCleaning        bool
 	SoundBar          *sound_bar.SoundBar
+	Statistics        *Statistics
 }
 
 func NewGame(sb *sound_bar.SoundBar) *Game {
@@ -30,6 +39,19 @@ func NewGame(sb *sound_bar.SoundBar) *Game {
 	g.Pollution = make([]*entities.Pollute, 0)
 	g.Money = config.StartMoney
 	g.SoundBar = sb
+
+	g.Statistics = new(Statistics)
+	g.Statistics.Achievements = make([]bool, 0)
+	for i := 0; i < config.AchievementsCount; i++ {
+		g.Statistics.Achievements = append(g.Statistics.Achievements, false)
+	}
+	g.Statistics.ShrimpsFed = 0
+	g.Statistics.AquariumCleaned = 0
+	g.Statistics.WallpapersCount = 0
+	g.Statistics.ShrimpsCount = make(map[config.ShrimpType]int)
+	for _, st := range config.ShrimpsTypesInShop {
+		g.Statistics.ShrimpsCount[st] = 0
+	}
 
 	for i := 0; i < config.ShrimpStartCount; i++ {
 		g.AddShrimpInstance(entities.NewShrimp(config.CherryShrimp))
@@ -52,6 +74,10 @@ func (g *Game) Update() {
 			s.Move()
 			g.ShrimpFoodCollide(s)
 			g.Money += s.PoopMoney()
+		}
+
+		if g.Money >= config.MillionaireGoal {
+			g.Statistics.Achievements[config.Millionaire] = true
 		}
 
 		for i := 0; i < len(g.Foods); i++ {
@@ -84,6 +110,8 @@ func (g *Game) deleteDeadShrimps() {
 	for _, s := range g.Shrimps {
 		if s.IsAlive {
 			newShrimps = append(newShrimps, s)
+		} else {
+			g.Statistics.Achievements[config.StrengthTest] = true
 		}
 	}
 	g.Shrimps = newShrimps
@@ -104,6 +132,10 @@ func (g *Game) ClickInPlayField(pos rl.Vector2) {
 				p.Durability--
 				if p.Durability == 0 {
 					g.DeletePollute(i)
+					g.Statistics.AquariumCleaned++
+					if g.Statistics.AquariumCleaned == config.MrPropperGoal {
+						g.Statistics.Achievements[config.MrPropper] = true
+					}
 				}
 				break
 			}
@@ -130,6 +162,17 @@ func (g *Game) DeleteFood(foodsToDelete []int) {
 
 func (g *Game) AddShrimpInstance(shrimp *entities.Shrimp) {
 	g.Shrimps = append(g.Shrimps, shrimp)
+	g.Statistics.ShrimpsCount[shrimp.Type]++
+	allTypes := true
+	for _, s := range g.Shrimps {
+		if g.Statistics.ShrimpsCount[s.Type] < config.LegendOfDepthsGoal {
+			allTypes = false
+			break
+		}
+	}
+	if allTypes {
+		g.Statistics.Achievements[config.LegendOfDepths] = true
+	}
 }
 
 func (g *Game) DeletePollute(toDel int) {
@@ -147,6 +190,10 @@ func (g *Game) ShrimpFoodCollide(s *entities.Shrimp) {
 		if utils.CollideCircleRect(f.Position, config.FoodRadius, s.Position.X, s.Position.Y, config.StandardSquareSpriteSide, config.StandardSquareSpriteSide) {
 			s.Hunger = config.ShrimpMaxHunger
 			f.SelfDestruct()
+			g.Statistics.ShrimpsFed++
+			if g.Statistics.ShrimpsFed == config.GluttonyGoal {
+				g.Statistics.Achievements[config.Gluttony] = true
+			}
 		}
 	}
 }

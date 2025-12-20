@@ -15,12 +15,13 @@ import (
 
 // SaveData - структура данных для сохранения
 type SaveData struct {
-	Version      string          `json:"version"`   // Версия игры для миграций
-	Timestamp    time.Time       `json:"timestamp"` // Когда сохранено
-	Aquarium     AquariumData    `json:"aquarium"`  // Состояние аквариума
-	Shrimps      []ShrimpData    `json:"shrimps"`   // Состояние креветок
-	Pollution    []PollutionData `json:"poluttion"`
-	SettingsData SettingsData    `json:"settings"`
+	Version        string          `json:"version"`   // Версия игры для миграций
+	Timestamp      time.Time       `json:"timestamp"` // Когда сохранено
+	Aquarium       AquariumData    `json:"aquarium"`  // Состояние аквариума
+	Shrimps        []ShrimpData    `json:"shrimps"`   // Состояние креветок
+	Pollution      []PollutionData `json:"poluttion"`
+	SettingsData   SettingsData    `json:"settings"`
+	StatisticsData StatisticsData  `json:"statistics"`
 }
 
 // Упрощенные структуры для сериализации (без каналов, функций и т.д.)
@@ -43,6 +44,14 @@ type PollutionData struct {
 type SettingsData struct {
 	MusicVolume   float32 `json:"music-volume"`
 	EffectsVolume float32 `json:"effects-volume"`
+}
+
+type StatisticsData struct {
+	Achievements    []bool                    `json:"achievements"`
+	ShrimpsFed      int                       `json:"shrimpsFed"`
+	AquariumCleaned int                       `json:"aquariumCleaned"`
+	ShrimpsCount    map[config.ShrimpType]int `json:"shrimpsCount"`
+	WallpapersCount int                       `json:"wallpapersCount"`
 }
 
 // SaveManager - менеджер сохранений
@@ -102,6 +111,13 @@ func (sm *SaveManager) SaveGame(game *game.Game) error {
 		SettingsData: SettingsData{
 			MusicVolume:   game.SoundBar.GetMusicVolume(),
 			EffectsVolume: game.SoundBar.GetEffectsVolume(),
+		},
+		StatisticsData: StatisticsData{
+			Achievements:    game.Statistics.Achievements,
+			ShrimpsFed:      game.Statistics.ShrimpsFed,
+			AquariumCleaned: game.Statistics.AquariumCleaned,
+			ShrimpsCount:    game.Statistics.ShrimpsCount,
+			WallpapersCount: game.Statistics.WallpapersCount,
 		},
 	}
 
@@ -168,6 +184,12 @@ func (sm *SaveManager) LoadGame(game *game.Game) error {
 		pol.Durability = polData.Durability
 		game.Pollution = append(game.Pollution, pol)
 	}
+
+	game.Statistics.Achievements = saveData.StatisticsData.Achievements
+	game.Statistics.ShrimpsFed = saveData.StatisticsData.ShrimpsFed
+	game.Statistics.AquariumCleaned = saveData.StatisticsData.AquariumCleaned
+	game.Statistics.ShrimpsCount = saveData.StatisticsData.ShrimpsCount
+	game.Statistics.WallpapersCount = saveData.StatisticsData.WallpapersCount
 
 	game.WallpaperState = saveData.Aquarium.Wallpaper
 	game.UnlockedWallpaper = saveData.Aquarium.UnlockedWallpaper

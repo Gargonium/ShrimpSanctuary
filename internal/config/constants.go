@@ -134,6 +134,8 @@ const (
 	StateAquarium
 	StateSettings
 	StateShop
+	StateAchievements
+	StateStats
 	StateQuit
 )
 
@@ -142,7 +144,6 @@ type ShopState int
 const (
 	ShopStateShrimps ShopState = iota
 	ShopStateWallpaper
-	ShopStateDecor
 )
 
 type WallpaperState int
@@ -171,4 +172,25 @@ var WallpaperCost = map[WallpaperState]int{
 
 const (
 	AutoSaveDelay = FPS * 5 * 60
+)
+
+const (
+	AchievementsCount = 6
+)
+
+const (
+	StrengthTest = iota
+	LegendOfDepths
+	Gluttony
+	Collector
+	MrPropper
+	Millionaire
+)
+
+const (
+	LegendOfDepthsGoal = 10
+	GluttonyGoal       = 500
+	CollectorGoal      = 4
+	MrPropperGoal      = 20
+	MillionaireGoal    = 1000000
 )

@@ -27,12 +27,16 @@ const (
 	ASCleanBtnName = "CLEAN"
 	ASShopBtnName  = "SHOP"
 	ASMenuBtnName  = "MENU"
+
+	ASAchievBtnX    = 1168 * config.ScreenCoeff
+	ASAchievBtnY    = 20 * config.ScreenCoeff
+	ASAchievBtnSide = 86 * config.ScreenCoeff
 )
 
 type AquariumScreen struct {
 	Game    *game.Game
 	Buttons []*input.Button
-	ts      *assets.AssetStorage
+	as      *assets.AssetStorage
 	sb      *sound_bar.SoundBar
 }
 
@@ -41,7 +45,7 @@ func NewAquariumScreen(game *game.Game, sb *sound_bar.SoundBar, assetStorage *as
 
 	as.Game = game
 	as.sb = sb
-	as.ts = assetStorage
+	as.as = assetStorage
 
 	as.Buttons = []*input.Button{
 		input.NewButton(
@@ -92,13 +96,25 @@ func NewAquariumScreen(game *game.Game, sb *sound_bar.SoundBar, assetStorage *as
 			ASBtnFontSize,
 			assetStorage,
 		),
+		input.NewButton(
+			rl.NewRectangle(
+				ASAchievBtnX,
+				ASAchievBtnY,
+				ASAchievBtnSide,
+				ASAchievBtnSide,
+			),
+			"",
+			as.HandleAchievementsBtnClick,
+			ASBtnFontSize,
+			assetStorage,
+		),
 	}
 
 	return as
 }
 
 func (as *AquariumScreen) Draw() {
-	rl.DrawTexture(as.ts.AquariumScreen, 0, 0, rl.White)
+	rl.DrawTexture(as.as.AquariumScreen, 0, 0, rl.White)
 	as.drawWallpaper()
 	as.drawButtons()
 	as.drawShrimps()
@@ -111,13 +127,13 @@ func (as *AquariumScreen) drawWallpaper() {
 	switch as.Game.WallpaperState {
 	case config.DefaultWallpaperState:
 	case config.PvZWallpaperState:
-		rl.DrawTextureV(as.ts.PvZWallpaper, rl.NewVector2(config.WaterX, config.WaterY), rl.White)
+		rl.DrawTextureV(as.as.PvZWallpaper, rl.NewVector2(config.WaterX, config.WaterY), rl.White)
 	case config.CityWallpaperState:
-		rl.DrawTextureV(as.ts.CityWallpaper, rl.NewVector2(config.WaterX, config.WaterY), rl.White)
+		rl.DrawTextureV(as.as.CityWallpaper, rl.NewVector2(config.WaterX, config.WaterY), rl.White)
 	case config.NiceWallpaperState:
-		rl.DrawTextureV(as.ts.NiceWallpaper, rl.NewVector2(config.WaterX, config.WaterY), rl.White)
+		rl.DrawTextureV(as.as.NiceWallpaper, rl.NewVector2(config.WaterX, config.WaterY), rl.White)
 	case config.GundamWallpaperState:
-		rl.DrawTextureV(as.ts.GundamWallpaper, rl.NewVector2(config.WaterX, config.WaterY), rl.White)
+		rl.DrawTextureV(as.as.GundamWallpaper, rl.NewVector2(config.WaterX, config.WaterY), rl.White)
 	}
 	rl.DrawRectangleV(rl.NewVector2(config.WaterX, config.WaterY), rl.NewVector2(config.WaterWidth, config.WaterHeight), config.WaterColor)
 }
@@ -138,8 +154,8 @@ func (as *AquariumScreen) drawButtons() {
 }
 
 func (as *AquariumScreen) drawMoney() {
-	rl.DrawTextureV(as.ts.Coin, rl.NewVector2(config.MoneyX, config.MoneyY), rl.White)
-	rl.DrawTextEx(as.ts.MolotFont,
+	rl.DrawTextureV(as.as.Coin, rl.NewVector2(config.MoneyX, config.MoneyY), rl.White)
+	rl.DrawTextEx(as.as.MolotFont,
 		strconv.Itoa(as.Game.Money),
 		rl.NewVector2(
 			config.MoneyX+config.StandardSquareSpriteSide+config.BorderOffset,
@@ -159,29 +175,29 @@ func (as *AquariumScreen) drawShrimps() {
 		var ShrimpTexture, ReversedShrimpTexture rl.Texture2D
 		switch s.Type {
 		case config.CherryShrimp:
-			ShrimpTexture = as.ts.CherryShrimp
-			ReversedShrimpTexture = as.ts.CherryShrimpReversed
+			ShrimpTexture = as.as.CherryShrimp
+			ReversedShrimpTexture = as.as.CherryShrimpReversed
 		case config.GundamShrimp:
-			ShrimpTexture = as.ts.GundamShrimp
-			ReversedShrimpTexture = as.ts.GundamShrimpReversed
+			ShrimpTexture = as.as.GundamShrimp
+			ReversedShrimpTexture = as.as.GundamShrimpReversed
 		case config.IsaacShrimp:
-			ShrimpTexture = as.ts.IsaacShrimp
-			ReversedShrimpTexture = as.ts.IsaacShrimpReversed
+			ShrimpTexture = as.as.IsaacShrimp
+			ReversedShrimpTexture = as.as.IsaacShrimpReversed
 		case config.MinecraftShrimp:
-			ShrimpTexture = as.ts.MinecraftShrimp
-			ReversedShrimpTexture = as.ts.MinecraftShrimpReversed
+			ShrimpTexture = as.as.MinecraftShrimp
+			ReversedShrimpTexture = as.as.MinecraftShrimpReversed
 		case config.MiskaShrimp:
-			ShrimpTexture = as.ts.MiskaShrimp
-			ReversedShrimpTexture = as.ts.MiskaShrimpReversed
+			ShrimpTexture = as.as.MiskaShrimp
+			ReversedShrimpTexture = as.as.MiskaShrimpReversed
 		case config.ChanelShrimp:
-			ShrimpTexture = as.ts.ChanelShrimp
-			ReversedShrimpTexture = as.ts.ChanelShrimpReversed
+			ShrimpTexture = as.as.ChanelShrimp
+			ReversedShrimpTexture = as.as.ChanelShrimpReversed
 		case config.BlackRoseShrimp:
-			ShrimpTexture = as.ts.BlackRoseShrimp
-			ReversedShrimpTexture = as.ts.BlackRoseShrimpReversed
+			ShrimpTexture = as.as.BlackRoseShrimp
+			ReversedShrimpTexture = as.as.BlackRoseShrimpReversed
 		case config.SonicShrimp:
-			ShrimpTexture = as.ts.SonicShrimp
-			ReversedShrimpTexture = as.ts.SonicShrimpReversed
+			ShrimpTexture = as.as.SonicShrimp
+			ReversedShrimpTexture = as.as.SonicShrimpReversed
 		}
 
 		shrimpConditionTint := rl.NewColor(
@@ -208,7 +224,7 @@ func (as *AquariumScreen) drawPollute() {
 			uint8(float32(p.Durability)/float32(config.PolluteMaxDurability)*255),
 		)
 
-		rl.DrawTextureV(as.ts.Pollute, p.Position, polluteDurabilityTint)
+		rl.DrawTextureV(as.as.Pollute, p.Position, polluteDurabilityTint)
 	}
 }
 
@@ -288,5 +304,10 @@ func (as *AquariumScreen) HandleShopBtnClick() {
 
 func (as *AquariumScreen) HandleMenuBtnClick() {
 	as.Game.State = config.StateMenu
+	as.sb.StopAquariumSound()
+}
+
+func (as *AquariumScreen) HandleAchievementsBtnClick() {
+	as.Game.State = config.StateAchievements
 	as.sb.StopAquariumSound()
 }

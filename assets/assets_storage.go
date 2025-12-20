@@ -20,14 +20,14 @@ const (
 
 // Sprites paths
 const (
-	AquariumBgSprite = "assets/sprites/Screens/Aquarium.png"
-	MenuBgSprite     = "assets/sprites/Screens/Menu.png"
-	SettingsBgSprite = "assets/sprites/Screens/Settings.png"
+	AquariumBgSprite     = "assets/sprites/Screens/Aquarium.png"
+	MenuBgSprite         = "assets/sprites/Screens/Menu.png"
+	SettingsBgSprite     = "assets/sprites/Screens/Settings.png"
+	AchievementsBgSprite = "assets/sprites/Screens/Achievements.png"
 
 	ShopBgSprite        = "assets/sprites/Screens/Shop.png"
 	ShopShrimpsSprite   = "assets/sprites/Screens/ShopShrimps.png"
 	ShopWallpaperSprite = "assets/sprites/Screens/ShopWallpaper.png"
-	ShopDecorSprite     = "assets/sprites/Screens/ShopDecor.png"
 
 	CherryShrimpSprite            = "assets/sprites/Shrimps/CherryShrimp.png"
 	CherryShrimpReversedSprite    = "assets/sprites/Shrimps/CherryShrimpReversed.png"
@@ -51,10 +51,12 @@ const (
 	NiceWallpaper   = "assets/sprites/Wallpapers/NiceWallpaper.png"
 	GundamWallpaper = "assets/sprites/Wallpapers/GundamWallpaper.png"
 
-	CoinSprite    = "assets/sprites/Other/Coin.png"
-	MuteSprite    = "assets/sprites/Other/Mute.png"
-	UnmuteSprite  = "assets/sprites/Other/Unmute.png"
-	PolluteSprite = "assets/sprites/Other/Pollute.png"
+	CoinSprite       = "assets/sprites/Other/Coin.png"
+	MuteSprite       = "assets/sprites/Other/Mute.png"
+	UnmuteSprite     = "assets/sprites/Other/Unmute.png"
+	PolluteSprite    = "assets/sprites/Other/Pollute.png"
+	TrophySprite     = "assets/sprites/Other/Trophy.png"
+	GrayTrophySprite = "assets/sprites/Other/GrayTrophy.png"
 )
 
 type AssetStorage struct {
@@ -68,14 +70,14 @@ type AssetStorage struct {
 	CleanSound      rl.Music
 	FoodDropSound   rl.Music
 
-	MenuScreen     rl.Texture2D
-	AquariumScreen rl.Texture2D
-	SettingsScreen rl.Texture2D
+	MenuScreen         rl.Texture2D
+	AquariumScreen     rl.Texture2D
+	SettingsScreen     rl.Texture2D
+	AchievementsScreen rl.Texture2D
 
 	ShopScreen    rl.Texture2D
 	ShopShrimps   rl.Texture2D
 	ShopWallpaper rl.Texture2D
-	ShopDecor     rl.Texture2D
 
 	CherryShrimp            rl.Texture2D
 	CherryShrimpReversed    rl.Texture2D
@@ -99,10 +101,12 @@ type AssetStorage struct {
 	NiceWallpaper   rl.Texture2D
 	GundamWallpaper rl.Texture2D
 
-	Coin    rl.Texture2D
-	Mute    rl.Texture2D
-	Unmute  rl.Texture2D
-	Pollute rl.Texture2D
+	Coin       rl.Texture2D
+	Mute       rl.Texture2D
+	Unmute     rl.Texture2D
+	Pollute    rl.Texture2D
+	Trophy     rl.Texture2D
+	GrayTrophy rl.Texture2D
 }
 
 func NewTextureStorage(manager *AssetManager) *AssetStorage {
@@ -119,11 +123,11 @@ func NewTextureStorage(manager *AssetManager) *AssetStorage {
 	ts.MenuScreen = manager.LoadScreensTexture(MenuBgSprite)
 	ts.AquariumScreen = manager.LoadScreensTexture(AquariumBgSprite)
 	ts.SettingsScreen = manager.LoadScreensTexture(SettingsBgSprite)
+	ts.AchievementsScreen = manager.LoadScreensTexture(AchievementsBgSprite)
 
 	ts.ShopScreen = manager.LoadScreensTexture(ShopBgSprite)
 	ts.ShopShrimps = manager.LoadScreensTexture(ShopShrimpsSprite)
 	ts.ShopWallpaper = manager.LoadScreensTexture(ShopWallpaperSprite)
-	ts.ShopDecor = manager.LoadScreensTexture(ShopDecorSprite)
 
 	ts.CherryShrimp = manager.LoadShrimpsTexture(CherryShrimpSprite)
 	ts.CherryShrimpReversed = manager.LoadShrimpsTexture(CherryShrimpReversedSprite)
@@ -151,6 +155,8 @@ func NewTextureStorage(manager *AssetManager) *AssetStorage {
 	ts.Mute = manager.LoadOtherTexture(MuteSprite)
 	ts.Unmute = manager.LoadOtherTexture(UnmuteSprite)
 	ts.Pollute = manager.LoadOtherTexture(PolluteSprite)
+	ts.Trophy = manager.LoadOtherTexture(TrophySprite)
+	ts.GrayTrophy = manager.LoadOtherTexture(GrayTrophySprite)
 
 	return ts
 }

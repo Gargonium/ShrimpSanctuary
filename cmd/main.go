@@ -29,12 +29,13 @@ func main() {
 	sb := sound_bar.NewSoundBar(ts)
 	g := game.NewGame(sb)
 
-	if sv.SaveExists() {
-		err := sv.LoadGame(g)
-		if err != nil {
-			fmt.Println("Load Error:", err)
-		}
-	}
+	// TODO Убрать комментарий
+	//if sv.SaveExists() {
+	//	err := sv.LoadGame(g)
+	//	if err != nil {
+	//		fmt.Println("Load Error:", err)
+	//	}
+	//}
 
 	r := render.NewRender(g, sb, ts)
 
