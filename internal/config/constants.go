@@ -8,7 +8,7 @@ const (
 	ScreenCoeff  = 1.5
 	ScreenWidth  = 1280 * ScreenCoeff
 	ScreenHeight = 720 * ScreenCoeff
-	StartMoney   = 100000
+	StartMoney   = 100
 )
 
 // Aquarium constants
