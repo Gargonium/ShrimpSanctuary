@@ -11,22 +11,22 @@ import (
 )
 
 const (
-	SeSBtnFontSize = 55
+	SeSBtnFontSize = 55 * config.ScreenCoeff
 
 	SeSBackBtnName  = "BACK"
 	SeSApplyBtnName = "APPLY"
 
-	SeSButtonsY      = 610
-	SeSButtonsWidth  = 300
-	SeSButtonsHeight = 60
-	SeSBackBtnX      = 300
-	SeSApplyBtnX     = 680
+	SeSButtonsY      = 610 * config.ScreenCoeff
+	SeSButtonsWidth  = 300 * config.ScreenCoeff
+	SeSButtonsHeight = 60 * config.ScreenCoeff
+	SeSBackBtnX      = 300 * config.ScreenCoeff
+	SeSApplyBtnX     = 680 * config.ScreenCoeff
 
-	SeSSliderMinX       = 700
-	SeSSliderMaxX       = 1000
-	SeSSliderSquareSide = 25
-	SeSMusicSliderY     = 385
-	SeSEffectsSliderY   = 505
+	SeSSliderMinX       = 700 * config.ScreenCoeff
+	SeSSliderMaxX       = 1000 * config.ScreenCoeff
+	SeSSliderSquareSide = 25 * config.ScreenCoeff
+	SeSMusicSliderY     = 385 * config.ScreenCoeff
+	SeSEffectsSliderY   = 505 * config.ScreenCoeff
 
 	SeSSliderStickX        = SeSSliderMinX
 	SeSMusicSliderStickY   = SeSMusicSliderY

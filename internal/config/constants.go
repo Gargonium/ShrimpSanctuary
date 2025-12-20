@@ -5,25 +5,26 @@ import rl "github.com/gen2brain/raylib-go/raylib"
 // Game constants
 const (
 	FPS          = 60
-	ScreenWidth  = 1280
-	ScreenHeight = 720
+	ScreenCoeff  = 1.5
+	ScreenWidth  = 1280 * ScreenCoeff
+	ScreenHeight = 720 * ScreenCoeff
 	StartMoney   = 100000
 )
 
 // Aquarium constants
 const (
-	AquariumX           = 140
-	AquariumY           = 20
-	AquariumWidth       = 1000
-	AquariumHeight      = 500
-	AquariumBorderWidth = 5
-	SandHeight          = 25
-	MoneyX              = 10
-	MoneyY              = 25
-	WaterX              = 145
-	WaterY              = 25
-	WaterWidth          = 990
-	WaterHeight         = 465
+	AquariumX           = 140 * ScreenCoeff
+	AquariumY           = 20 * ScreenCoeff
+	AquariumWidth       = 1000 * ScreenCoeff
+	AquariumHeight      = 500 * ScreenCoeff
+	AquariumBorderWidth = 5 * ScreenCoeff
+	SandHeight          = 25 * ScreenCoeff
+	MoneyX              = 10 * ScreenCoeff
+	MoneyY              = 25 * ScreenCoeff
+	WaterX              = 145 * ScreenCoeff
+	WaterY              = 25 * ScreenCoeff
+	WaterWidth          = 990 * ScreenCoeff
+	WaterHeight         = 465 * ScreenCoeff
 )
 
 // Dimensions of the playing field
@@ -107,13 +108,13 @@ var ShrimpCost = map[ShrimpType]int{
 }
 
 const (
-	StandardSquareSpriteSide = 32
-	BigSquareSpriteSide      = 64
+	StandardSquareSpriteSide = 64
+	BigSquareSpriteSide      = 128
 )
 
 // Food
 const (
-	FoodRadius   = 5
+	FoodRadius   = 5 * ScreenCoeff
 	FoodVelocity = 1
 	FoodLifeTime = FPS * 5
 )

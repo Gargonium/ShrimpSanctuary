@@ -11,16 +11,16 @@ import (
 )
 
 const (
-	ASBtnFontSize   = 55
-	ASMoneyFontSize = 30
+	ASBtnFontSize   = 55 * config.ScreenCoeff
+	ASMoneyFontSize = 30 * config.ScreenCoeff
 
-	ASButtonsY      = 520
-	ASButtonsWidth  = 140
-	ASButtonsHeight = 134
-	ASFeedBtnX      = 270
-	ASCleanBtnX     = 470
-	ASShopBtnX      = 670
-	ASMenuBtnX      = 870
+	ASButtonsY      = 520 * config.ScreenCoeff
+	ASButtonsWidth  = 140 * config.ScreenCoeff
+	ASButtonsHeight = 134 * config.ScreenCoeff
+	ASFeedBtnX      = 270 * config.ScreenCoeff
+	ASCleanBtnX     = 470 * config.ScreenCoeff
+	ASShopBtnX      = 670 * config.ScreenCoeff
+	ASMenuBtnX      = 870 * config.ScreenCoeff
 
 	ASFeedBtnName  = "FEED"
 	ASCleanBtnName = "CLEAN"
@@ -108,15 +108,15 @@ func (as *AquariumScreen) drawWallpaper() {
 	switch as.Game.WallpaperState {
 	case config.DefaultWallpaperState:
 	case config.PvZWallpaperState:
-		rl.DrawTexture(as.ts.PvZWallpaper, config.WaterX, config.WaterY, rl.White)
+		rl.DrawTextureV(as.ts.PvZWallpaper, rl.NewVector2(config.WaterX, config.WaterY), rl.White)
 	case config.CityWallpaperState:
-		rl.DrawTexture(as.ts.CityWallpaper, config.WaterX, config.WaterY, rl.White)
+		rl.DrawTextureV(as.ts.CityWallpaper, rl.NewVector2(config.WaterX, config.WaterY), rl.White)
 	case config.NiceWallpaperState:
-		rl.DrawTexture(as.ts.NiceWallpaper, config.WaterX, config.WaterY, rl.White)
+		rl.DrawTextureV(as.ts.NiceWallpaper, rl.NewVector2(config.WaterX, config.WaterY), rl.White)
 	case config.GundamWallpaperState:
-		rl.DrawTexture(as.ts.GundamWallpaper, config.WaterX, config.WaterY, rl.White)
+		rl.DrawTextureV(as.ts.GundamWallpaper, rl.NewVector2(config.WaterX, config.WaterY), rl.White)
 	}
-	rl.DrawRectangle(config.WaterX, config.WaterY, config.WaterWidth, config.WaterHeight, config.WaterColor)
+	rl.DrawRectangleV(rl.NewVector2(config.WaterX, config.WaterY), rl.NewVector2(config.WaterWidth, config.WaterHeight), config.WaterColor)
 }
 
 func (as *AquariumScreen) drawButtons() {
@@ -135,7 +135,7 @@ func (as *AquariumScreen) drawButtons() {
 }
 
 func (as *AquariumScreen) drawMoney() {
-	rl.DrawTexture(as.ts.Coin, config.MoneyX, config.MoneyY, rl.White)
+	rl.DrawTextureV(as.ts.Coin, rl.NewVector2(config.MoneyX, config.MoneyY), rl.White)
 	rl.DrawTextEx(as.ts.MolotFont,
 		strconv.Itoa(as.Game.Money),
 		rl.NewVector2(

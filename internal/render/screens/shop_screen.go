@@ -11,42 +11,42 @@ import (
 )
 
 const (
-	SSBtnFontSize    = 55
-	SSMoneyFontSize  = 30
-	SSBuyBtnFontSize = 40
+	SSBtnFontSize    = 55 * config.ScreenCoeff
+	SSMoneyFontSize  = 30 * config.ScreenCoeff
+	SSBuyBtnFontSize = 40 * config.ScreenCoeff
 
-	SSMenuButtonsY  = 111
-	SSButtonsWidth  = 427
-	SSButtonsHeight = 50
-	SSShrimpsBtnX   = 0
+	SSMenuButtonsY  = 111 * config.ScreenCoeff
+	SSButtonsWidth  = 427 * config.ScreenCoeff
+	SSButtonsHeight = 50 * config.ScreenCoeff
+	SSShrimpsBtnX   = 0 * config.ScreenCoeff
 	SSWallpaperBtnX = SSShrimpsBtnX + SSButtonsWidth
 	SSDecorBtnX     = SSWallpaperBtnX + SSButtonsWidth
 
-	SSBackBtnX      = 1115
-	SSBackBtnY      = 15
-	SSBackBtnWidth  = 150
-	SSBackBtnHeight = 60
+	SSBackBtnX      = 1115 * config.ScreenCoeff
+	SSBackBtnY      = 15 * config.ScreenCoeff
+	SSBackBtnWidth  = 150 * config.ScreenCoeff
+	SSBackBtnHeight = 60 * config.ScreenCoeff
 
-	SSMenuY = 160
+	SSMenuY = 160 * config.ScreenCoeff
 
 	SSShrimpsBtnName   = "SHRIMPS"
 	SSWallpaperBtnName = "WALLPAPER"
 	SSDecorBtnName     = "DECOR"
 	SSBackBtnName      = "BACK"
 
-	SSShrimpsBuyBtnSide      = 80
-	SSShrimpBuyBtnX          = 500
-	SSShrimpBuyBtnY          = 40 + SSMenuY
-	SSShrimpBuyBtnHorOffset  = 660
-	SSShrimpBuyBtnVertOffset = 120
+	SSShrimpsBuyBtnSide      = 80 * config.ScreenCoeff
+	SSShrimpBuyBtnX          = 500 * config.ScreenCoeff
+	SSShrimpBuyBtnY          = 40*config.ScreenCoeff + SSMenuY
+	SSShrimpBuyBtnHorOffset  = 660 * config.ScreenCoeff
+	SSShrimpBuyBtnVertOffset = 120 * config.ScreenCoeff
 	SSShrimpsItemColumnCount = 4
 	SSShrimpsItemRowCount    = 2
 
-	SSWallpaperBuyBtnSide       = 100
-	SSWallpaperBuyBtnX          = 510
-	SSWallpaperBuyBtnY          = 100 + SSMenuY
-	SSWallpaperBuyBtnHorOffset  = 620
-	SSWallpaperBuyBtnVertOffset = 275
+	SSWallpaperBuyBtnSide       = 100 * config.ScreenCoeff
+	SSWallpaperBuyBtnX          = 510 * config.ScreenCoeff
+	SSWallpaperBuyBtnY          = 100*config.ScreenCoeff + SSMenuY
+	SSWallpaperBuyBtnHorOffset  = 620 * config.ScreenCoeff
+	SSWallpaperBuyBtnVertOffset = 275 * config.ScreenCoeff
 	SSWallpapersItemColumnCount = 2
 	SSWallpapersItemRowCount    = 2
 
@@ -145,8 +145,8 @@ func NewShopScreen(game *game.Game, as *assets.AssetStorage) *ShopScreen {
 		for j := 0; j < SSWallpapersItemRowCount; j++ {
 			btn := input.NewButton(
 				rl.NewRectangle(
-					float32(SSWallpaperBuyBtnX+SSWallpaperBuyBtnHorOffset*j),
-					float32(SSWallpaperBuyBtnY+SSWallpaperBuyBtnVertOffset*i),
+					SSWallpaperBuyBtnX+SSWallpaperBuyBtnHorOffset*float32(j),
+					SSWallpaperBuyBtnY+SSWallpaperBuyBtnVertOffset*float32(i),
 					SSWallpaperBuyBtnSide,
 					SSWallpaperBuyBtnSide,
 				),
@@ -346,7 +346,7 @@ func (ss *ShopScreen) drawButtons() {
 }
 
 func (ss *ShopScreen) drawMoney() {
-	rl.DrawTexture(ss.ts.Coin, config.MoneyX, config.MoneyY, rl.White)
+	rl.DrawTextureV(ss.ts.Coin, rl.NewVector2(config.MoneyX, config.MoneyY), rl.White)
 	rl.DrawTextEx(ss.ts.MolotFont,
 		strconv.Itoa(ss.Game.Money),
 		rl.NewVector2(

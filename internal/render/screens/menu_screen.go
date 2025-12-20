@@ -10,21 +10,21 @@ import (
 )
 
 const (
-	MSBtnFontSize = 55
+	MSBtnFontSize = 55 * config.ScreenCoeff
 
 	MSPlayBtnName     = "PLAY"
 	MSSettingsBtnName = "SETTINGS"
 	MSExitBtnName     = "EXIT"
 
-	MSButtonsX      = 490
-	MSButtonsWidth  = 300
-	MSButtonsHeight = 60
-	MSPlayBtnY      = 280
-	MSSettingsBtnY  = 370
-	MSExitBtnY      = 460
+	MSButtonsX      = 490 * config.ScreenCoeff
+	MSButtonsWidth  = 300 * config.ScreenCoeff
+	MSButtonsHeight = 60 * config.ScreenCoeff
+	MSPlayBtnY      = 280 * config.ScreenCoeff
+	MSSettingsBtnY  = 370 * config.ScreenCoeff
+	MSExitBtnY      = 460 * config.ScreenCoeff
 
-	MSMuteX       = 15
-	MSMuteY       = 15
+	MSMuteX       = 15 * config.ScreenCoeff
+	MSMuteY       = 15 * config.ScreenCoeff
 	MSMuteBtnName = "MUTE"
 )
 
