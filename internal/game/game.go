@@ -65,7 +65,7 @@ func NewGame(sb *sound_bar.SoundBar) *Game {
 		g.AddShrimpInstance(entities.NewShrimp(config.CherryShrimp))
 	}
 
-	g.PolluteDelay = 0 // config.PolluteSpawnDelay + rand.Int31n(config.PolluteSpawnDelaySpread*2) - config.PolluteSpawnDelaySpread
+	g.PolluteDelay = config.PolluteSpawnDelay + rand.Int31n(config.PolluteSpawnDelaySpread*2) - config.PolluteSpawnDelaySpread
 	g.IsFeeding = false
 	g.IsCleaning = false
 	g.State = config.StateMenu
