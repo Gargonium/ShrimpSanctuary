@@ -40,7 +40,7 @@ echo "⚡ Compiling..."
 CGO_ENABLED=1 GOOS=linux GOARCH=amd64 \
 go build -ldflags="-s -w" \
 -o ShrimpSanctuary_linux \
-./cmd
+../cmd
 
 # 6. Проверяем результат
 if [ -f "ShrimpSanctuary_linux" ]; then

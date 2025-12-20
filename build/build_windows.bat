@@ -8,4 +8,4 @@ echo Start build for windows amd64...
 set GOOS=windows
 set GOARCH=amd64
 
-go build -ldflags="-H windowsgui -s -w" -o "ShrimpSanctuary_windows.exe" ./cmd
+go build -ldflags="-H windowsgui -s -w" -o "ShrimpSanctuary_windows.exe" ../cmd
