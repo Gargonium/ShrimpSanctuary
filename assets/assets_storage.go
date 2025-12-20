@@ -24,6 +24,7 @@ const (
 	MenuBgSprite         = "assets/sprites/Screens/Menu.png"
 	SettingsBgSprite     = "assets/sprites/Screens/Settings.png"
 	AchievementsBgSprite = "assets/sprites/Screens/Achievements.png"
+	StatsBgSprite        = "assets/sprites/Screens/Stats.png"
 
 	ShopBgSprite        = "assets/sprites/Screens/Shop.png"
 	ShopShrimpsSprite   = "assets/sprites/Screens/ShopShrimps.png"
@@ -74,6 +75,7 @@ type AssetStorage struct {
 	AquariumScreen     rl.Texture2D
 	SettingsScreen     rl.Texture2D
 	AchievementsScreen rl.Texture2D
+	StatsScreen        rl.Texture2D
 
 	ShopScreen    rl.Texture2D
 	ShopShrimps   rl.Texture2D
@@ -124,6 +126,7 @@ func NewTextureStorage(manager *AssetManager) *AssetStorage {
 	ts.AquariumScreen = manager.LoadScreensTexture(AquariumBgSprite)
 	ts.SettingsScreen = manager.LoadScreensTexture(SettingsBgSprite)
 	ts.AchievementsScreen = manager.LoadScreensTexture(AchievementsBgSprite)
+	ts.StatsScreen = manager.LoadScreensTexture(StatsBgSprite)
 
 	ts.ShopScreen = manager.LoadScreensTexture(ShopBgSprite)
 	ts.ShopShrimps = manager.LoadScreensTexture(ShopShrimpsSprite)

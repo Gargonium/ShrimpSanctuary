@@ -52,6 +52,9 @@ type StatisticsData struct {
 	AquariumCleaned int                       `json:"aquariumCleaned"`
 	ShrimpsCount    map[config.ShrimpType]int `json:"shrimpsCount"`
 	WallpapersCount int                       `json:"wallpapersCount"`
+	MoneyEarned     int                       `json:"moneyEarned"`
+	ShrimpDied      int                       `json:"shrimpDied"`
+	MuteBtnClicked  int                       `json:"muteBtnClicked"`
 }
 
 // SaveManager - менеджер сохранений
@@ -118,6 +121,9 @@ func (sm *SaveManager) SaveGame(game *game.Game) error {
 			AquariumCleaned: game.Statistics.AquariumCleaned,
 			ShrimpsCount:    game.Statistics.ShrimpsCount,
 			WallpapersCount: game.Statistics.WallpapersCount,
+			MoneyEarned:     game.Statistics.MoneyEarned,
+			ShrimpDied:      game.Statistics.ShrimpDied,
+			MuteBtnClicked:  game.Statistics.MuteBtnClicked,
 		},
 	}
 
@@ -190,6 +196,9 @@ func (sm *SaveManager) LoadGame(game *game.Game) error {
 	game.Statistics.AquariumCleaned = saveData.StatisticsData.AquariumCleaned
 	game.Statistics.ShrimpsCount = saveData.StatisticsData.ShrimpsCount
 	game.Statistics.WallpapersCount = saveData.StatisticsData.WallpapersCount
+	game.Statistics.MoneyEarned = saveData.StatisticsData.MoneyEarned
+	game.Statistics.ShrimpDied = saveData.StatisticsData.ShrimpDied
+	game.Statistics.MuteBtnClicked = saveData.StatisticsData.MuteBtnClicked
 
 	game.WallpaperState = saveData.Aquarium.Wallpaper
 	game.UnlockedWallpaper = saveData.Aquarium.UnlockedWallpaper

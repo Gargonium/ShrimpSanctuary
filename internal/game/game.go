@@ -10,11 +10,15 @@ import (
 )
 
 type Statistics struct {
+	ShrimpDied      int
 	Achievements    []bool
 	ShrimpsFed      int
 	AquariumCleaned int
 	ShrimpsCount    map[config.ShrimpType]int
 	WallpapersCount int
+	MoneyEarned     int
+	MoneySpent      int
+	MuteBtnClicked  int
 }
 
 type Game struct {
@@ -52,6 +56,10 @@ func NewGame(sb *sound_bar.SoundBar) *Game {
 	for _, st := range config.ShrimpsTypesInShop {
 		g.Statistics.ShrimpsCount[st] = 0
 	}
+	g.Statistics.MoneyEarned = config.StartMoney
+	g.Statistics.ShrimpDied = 0
+	g.Statistics.MoneySpent = 0
+	g.Statistics.MuteBtnClicked = 0
 
 	for i := 0; i < config.ShrimpStartCount; i++ {
 		g.AddShrimpInstance(entities.NewShrimp(config.CherryShrimp))
@@ -73,10 +81,12 @@ func (g *Game) Update() {
 		for _, s := range g.Shrimps {
 			s.Move()
 			g.ShrimpFoodCollide(s)
-			g.Money += s.PoopMoney()
+			m := s.PoopMoney()
+			g.Money += m
+			g.Statistics.MoneyEarned += m
 		}
 
-		if g.Money >= config.MillionaireGoal {
+		if g.Statistics.MoneyEarned >= config.MillionaireGoal {
 			g.Statistics.Achievements[config.Millionaire] = true
 		}
 
@@ -112,6 +122,7 @@ func (g *Game) deleteDeadShrimps() {
 			newShrimps = append(newShrimps, s)
 		} else {
 			g.Statistics.Achievements[config.StrengthTest] = true
+			g.Statistics.ShrimpDied++
 		}
 	}
 	g.Shrimps = newShrimps

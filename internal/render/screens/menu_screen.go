@@ -147,5 +147,6 @@ func (ms *MenuScreen) HandleExitBtnClick() {
 }
 
 func (ms *MenuScreen) HandleMuteBtnClick() {
+	ms.Game.Statistics.MuteBtnClicked++
 	ms.sb.Mute()
 }

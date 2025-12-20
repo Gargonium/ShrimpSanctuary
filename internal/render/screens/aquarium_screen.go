@@ -28,9 +28,11 @@ const (
 	ASShopBtnName  = "SHOP"
 	ASMenuBtnName  = "MENU"
 
-	ASAchievBtnX    = 1168 * config.ScreenCoeff
-	ASAchievBtnY    = 20 * config.ScreenCoeff
-	ASAchievBtnSide = 86 * config.ScreenCoeff
+	ASAchievStatBtnX     = 1168 * config.ScreenCoeff
+	ASAchievStatsBtnSide = 86 * config.ScreenCoeff
+
+	ASAchievBtnY = 20 * config.ScreenCoeff
+	ASStatsBtnY  = 140 * config.ScreenCoeff
 )
 
 type AquariumScreen struct {
@@ -98,13 +100,25 @@ func NewAquariumScreen(game *game.Game, sb *sound_bar.SoundBar, assetStorage *as
 		),
 		input.NewButton(
 			rl.NewRectangle(
-				ASAchievBtnX,
+				ASAchievStatBtnX,
 				ASAchievBtnY,
-				ASAchievBtnSide,
-				ASAchievBtnSide,
+				ASAchievStatsBtnSide,
+				ASAchievStatsBtnSide,
 			),
 			"",
 			as.HandleAchievementsBtnClick,
+			ASBtnFontSize,
+			assetStorage,
+		),
+		input.NewButton(
+			rl.NewRectangle(
+				ASAchievStatBtnX,
+				ASStatsBtnY,
+				ASAchievStatsBtnSide,
+				ASAchievStatsBtnSide,
+			),
+			"",
+			as.HandleStatsBtnClick,
 			ASBtnFontSize,
 			assetStorage,
 		),
@@ -309,5 +323,10 @@ func (as *AquariumScreen) HandleMenuBtnClick() {
 
 func (as *AquariumScreen) HandleAchievementsBtnClick() {
 	as.Game.State = config.StateAchievements
+	as.sb.StopAquariumSound()
+}
+
+func (as *AquariumScreen) HandleStatsBtnClick() {
+	as.Game.State = config.StateStats
 	as.sb.StopAquariumSound()
 }

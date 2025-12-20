@@ -364,6 +364,7 @@ func (ss *ShopScreen) HandleBuyBtnClick() {
 			if ss.Game.Money >= si.Cost {
 				ss.Game.AddShrimpInstance(entities.NewShrimp(si.ShrimpType))
 				ss.Game.Money -= si.Cost
+				ss.Game.Statistics.MoneySpent += si.Cost
 			}
 		}
 	case config.ShopStateWallpaper:
@@ -372,6 +373,7 @@ func (ss *ShopScreen) HandleBuyBtnClick() {
 			if !wi.IsBought {
 				if ss.Game.Money >= wi.Cost {
 					ss.Game.Money -= wi.Cost
+					ss.Game.Statistics.MoneySpent += wi.Cost
 					wi.IsBought = true
 					wi.BuyButton.Text = SSApplyBtnName
 					ss.Game.UnlockedWallpaper = append(ss.Game.UnlockedWallpaper, wi.Type)
